@@ -9,10 +9,9 @@ import SelectedRecipe from '../components/SelectedRecipe'
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Layout />} >
-      <Route path='/' element={<h1>Welcome!</h1>} />
+      <Route path='/' element={<MainPage />} />
       <Route path='/login' element={<LoginFormPage />} />
       <Route path='/signup' element={<SignupFormPage />} />
-      <Route path='/main' element={<MainPage />} />
       <Route path='/recipes/:recipeId' element={<SelectedRecipe />} />
       <Route path='*' element={<Redirect />} />
     </Route>
