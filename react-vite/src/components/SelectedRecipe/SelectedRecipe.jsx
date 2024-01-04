@@ -117,15 +117,27 @@ export default function SelectedRecipe() {
                     </div>
                     <span className='time_format'>
                         <h3>Rating</h3>
-                        <p>
-                            {recipe.avg_rating} &nbsp;
-                            {starCreator(recipe)} &nbsp;
-                            ({recipe.all_ratings})
-                        </p>
+                        {recipe.avg_rating &&
+                            <p>
+                                {recipe.avg_rating} &nbsp;
+                                {starCreator(recipe)} &nbsp;
+                                ({recipe.all_ratings})
+                            </p>
+                        }
+
+                        {!recipe.avg_rating &&
+                            <p>
+                                Be the first to leave a rating!
+                            </p>
+                        }
 
                     </span>
                     <span className='time_format'>
                         <h3>Notes</h3>
+                        <p style={{display: "flex", gap: "10px", alignItems: "center"}}>
+                            {recipe.all_ratings ? `Read ${recipe.all_ratings} community notes` : 'Be the first to leave a note!'}
+                            <i className='fa-solid fa-turn-down fa-xs' />
+                        </p>
                     </span>
 
                 </div>

@@ -38,10 +38,17 @@ const initialState = {}
 function recipeReducer(state=initialState, action){
     switch (action.type){
         case GET_ALL_RECIPES: {
-            const newState = { ...state }
-            for (let recipe of action.recipes) {
-                newState[recipe.id] = recipe
+            const newState = { ...state, categories: {} }
+
+            for (let category in action.recipes) {
+                newState.categories[category] = {}
+
+                for (let recipe of action.recipes[category]){
+                    newState.categories[category][recipe.id] = recipe
+                    newState[recipe.id] = recipe
+                }
             }
+
             return newState
         }
         case GET_SELECTED_RECIPE: {

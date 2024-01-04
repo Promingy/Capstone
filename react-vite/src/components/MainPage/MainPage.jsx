@@ -6,7 +6,7 @@ import RecipeTile from './RecipeTile'
 
 export default function MainPage() {
     const dispatch = useDispatch()
-    const recipes = useSelector(state => state.recipes)
+    const recipes = useSelector(state => state.recipes.categories)
 
     useEffect(() => {
         dispatch(thunkGetAllRecipes())
@@ -14,11 +14,19 @@ export default function MainPage() {
 
     return (
         <>
-        <div className="recipe_tile_container">
-            {recipes && Object.values(recipes).map(recipe => {
-                return <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} />
+            {recipes && Object.keys(recipes).map(category => {
+                const categoryRecipes = Object.values(recipes[category])
+
+                return (
+                    <div className='recipe_tile_category_container'>
+                        <h2>{category}</h2>
+                        <div className={`recipe_tile_container`}>
+                            {categoryRecipes.map(recipe => <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} />)}
+                        </div>
+                    </div>
+                )
             })}
-        </div>
         </>
+
     )
 }

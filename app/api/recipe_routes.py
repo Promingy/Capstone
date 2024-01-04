@@ -8,19 +8,21 @@ def get_all_recipes():
     """
     Route that returns all of the recipes needed for the homepage
     """
-    all_recipes = [recipe.to_dict(rating=True) for recipe in Recipe.query.all()]
+    categorized_recipes = {}
+
+    for index, category in enumerate(Category.query.all()):
+        recipes = Recipe.query.filter(Recipe.category_id == index + 1).all()
+
+        if not len(recipes):
+            continue
+
+        category = category.to_dict()['category']
+
+        categorized_recipes[category] = \
+        [recipe.to_dict() for recipe in recipes]
+
+    return categorized_recipes
     return all_recipes
-    # categories = [f"{category.to_dict()['id']}  {category.to_dict()['category']}" for category in Category.query.all()]
-
-    # category1_recipes = [recipe.to_dict() for recipe in Recipe.query.filter(Recipe.category_id == 1).all()]
-    # category2_recipes = [recipe.to_dict() for recipe in Recipe.query.filter(Recipe.category_id == 2).all()]
-
-    # categorized_recipes = {
-    #     "categories": categories,
-    #     "Appetizer": category1_recipes,
-    #     "Main Course": category2_recipes
-    # }
-    # return categorized_recipes
 
 @recipe.route('/<int:recipeId>')
 def get_single_recipe(recipeId):
