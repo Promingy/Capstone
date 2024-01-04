@@ -2,32 +2,36 @@ import { useNavigate } from 'react-router-dom'
 import './RecipeTile.css'
 import { useState } from 'react'
 
+export function starCreator(recipe) {
+    const stars = []
+
+    for (let i = 0; i < 5; i++){
+        stars.push(
+            <i
+            key={`${recipe.id}star${i}`}
+            className={`fa-${i >= recipe.avg_rating? 'regular' : 'solid'} fa-star fa-sm`}/>
+        )
+    }
+
+    return stars
+}
+
 export default function RecipeTile({ recipe }) {
     const navigate = useNavigate()
     const cookTimeHours = Math.floor((recipe.cook_time + recipe.prep_time) / 60)
-    const cookTimeMinutes = recipe.cook_time % 60
+    const cookTimeMinutes = (recipe.cook_time + recipe.prep_time) % 60
     const ownerFirstName = recipe.owner.first_name[0].toUpperCase() + recipe.owner.first_name.slice(1)
     const ownerLastName = recipe.owner.last_name[0].toUpperCase() + recipe.owner.last_name.slice(1)
-    const [bookmark, setBookmark] = useState('fa-regular fa-bookmark')
+    const [bookmark, setBookmark] = useState('fa-regular fa-bookmark fa-lg')
     const [saved, setSaved] = useState(false)
 
-    function starCreator() {
-        const stars = []
-
-        for (let i = 0; i < 5; i++){
-            stars.push(
-                <i
-                key={`${recipe.id}star${i}`}
-                className={`fa-${i >= recipe.avg_rating? 'regular' : 'solid'} fa-star fa-sm`}/>
-            )
-        }
-
-        return stars
+    function onClickHandle () {
+        navigate(`/recipes/${recipe.id}-${recipe.title.toLowerCase().split(' ').join('-')}`, {state: recipe})
     }
 
     return (
         <div className='recipeTile'
-        onClick={() => navigate(`/recipes/${recipe.id}-${recipe.title.toLowerCase().split(' ').join('-')}`, {state: recipe})}
+        onClick={onClickHandle}
         >
             <img className='card_image' src={recipe.preview_image} />
             <div className='card_bottom'>
@@ -39,39 +43,48 @@ export default function RecipeTile({ recipe }) {
 
                 <div className='card_rating_time_container'>
 
-                    <p>{starCreator()} {recipe.all_ratings}</p>
+                    <p>{starCreator(recipe)} {recipe.all_ratings}</p>
 
                     <div className='time_and_bookmark'>
 
                         <p>
                             {!!cookTimeHours &&
                             <span>
+                                {cookTimeMinutes ? "" : "About"}
+                                &nbsp;
                                 {cookTimeHours} {cookTimeHours > 1 ? "hours" : "hour"}
-                            </span>}&nbsp;
-                            {cookTimeMinutes} Minutes
+                            </span>
+                            }
+
+                            &nbsp;
+
+                            {!!cookTimeMinutes &&
+                            <span>
+                                {cookTimeMinutes} Minutes
+                            </span>
+                            }
                         </p>
 
                         <span
                             className={bookmark}
                             onMouseOver={() => {
                                 if (!saved){
-                                    setBookmark('fa-solid fa-bookmark')}}
+                                    setBookmark('fa-solid fa-bookmark fa-lg')}}
                                 }
                             onMouseLeave={() =>{
                                 if (!saved){
-                                    setBookmark('fa-regular fa-bookmark')
+                                    setBookmark('fa-regular fa-bookmark fa-lg')
                                 }
                             }}
                             onClick={() => {
                                 if (!saved){
-                                    setBookmark('fa-solid fa-bookmark')
+                                    setBookmark('fa-solid fa-bookmark fa-lg')
                                 } else {
-                                    setBookmark("fa-regular fa-bookmark")
+                                    setBookmark("fa-regular fa-bookmark fa-lg")
                                 }
                                 setSaved(!saved)
                             }}
                             />
-
                     </div>
                 </div>
             </div>
