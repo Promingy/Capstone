@@ -1,5 +1,6 @@
-.test {
-    height: 100px;
-    width: 100px;
-    object-fit: cover;
+.recipe_tile_container {
+    display: flex;
+    overflow: auto;
+    width: 1000px;
+    margin: 0 auto;
 }

@@ -14,7 +14,7 @@ export default function MainPage() {
 
     return (
         <>
-        <div>
+        <div className="recipe_tile_container">
             {recipes && Object.values(recipes).map(recipe => {
                 return <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} />
             })}
