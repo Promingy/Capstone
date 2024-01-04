@@ -11,7 +11,7 @@ export default function SelectedRecipe() {
 
     useEffect(() => {
         dispatch(thunkGetSelectedRecipe(recipeId))
-    }, [dispatch])
+    }, [dispatch, recipeId])
 
     if (!recipe) return
     return (
