@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from datetime import datetime
 
 class Recipe(db.Model, UserMixin):
     __tablename__ = 'recipes'
@@ -19,7 +20,9 @@ class Recipe(db.Model, UserMixin):
     preview_image = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), default=func.now())
 
-    def to_dict(self):
+    reviews = db.relationship('Review', back_populates='recipe')
+
+    def to_dict(self, rating=False, reviews=False):
         dictionary = {
             "id": self.id,
             "owner_id": self.owner_id,
@@ -33,4 +36,10 @@ class Recipe(db.Model, UserMixin):
             "created_at": self.created_at
         }
 
+        if rating:
+            avg_rating = sum([review.to_dict()['rating'] for review in self.reviews]) / len(self.reviews)
+            dictionary['avg_rating'] = avg_rating
+
+        if reviews:
+            dictionary['reviews'] = sorted([review.to_dict() for review in self.reviews], key=lambda msg: datetime(msg['created_at'].year, msg['created_at'].month, msg['created_at'].day, msg['created_at'].hour, msg['created_at'].minute, msg['created_at'].second), reverse=True)
         return dictionary

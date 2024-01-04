@@ -17,6 +17,8 @@ class Review(db.Model, UserMixin):
     created_at = db.Column(db.DateTime(timezone=True), default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), default=func.now())
 
+    recipe = db.relationship('Recipe', back_populates='reviews')
+
     def to_dict(self):
         dictionary = {
             "id": self.id,
