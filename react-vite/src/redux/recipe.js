@@ -34,6 +34,24 @@ export const thunkGetSelectedRecipe = (recipeId) => async (dispatch) => {
     }
 }
 
+export const thunkCreateRecipe = (recipe) => async (dispatch) => {
+    const res = await fetch("/api/recipes", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            "category_id": 1,
+            "title": "the best meal ever",
+            "description": "I just said it was the best thing in the entire universe",
+            "servings": 3,
+            "prep_time": 5,
+            "cook_time": 20,
+            "preview_image": "http://.png"
+        })
+    })
+    console.log('TEST', await res.json())
+    return res
+}
+
 const initialState = {}
 function recipeReducer(state=initialState, action){
     switch (action.type){

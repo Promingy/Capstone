@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import './SelectedRecipe.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetSelectedRecipe } from '../../redux/recipe'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { starCreator } from '../MainPage/RecipeTile'
 
 export default function SelectedRecipe() {
@@ -10,7 +10,7 @@ export default function SelectedRecipe() {
     let { recipeId } = useParams()
 
     recipeId = recipeId.split('-')[0]
-    const recipe = useLocation().state || useSelector(state => state.recipes[recipeId])
+    const recipe = useSelector(state => state.recipes[recipeId])
     const postDate = new Date(recipe.created_at)
 
     const ownerFirstName = recipe.owner.first_name[0].toUpperCase() + recipe.owner.first_name.slice(1)
@@ -148,3 +148,17 @@ export default function SelectedRecipe() {
         </div>
     )
 }
+
+// fetch("/api/recipes", {
+//     method: "POST",
+//     headers: {"Content-Type": "application/json"},
+//     body: {
+//         "category_id": 1,
+//         "title": "the best meal ever",
+//         "description": "I just said it was the best thing in the entire universe",
+//         "servings": 3,
+//         "prep_time": 5,
+//         "cook_time": 20,
+//         "preview_image": "http://.png"
+//     }
+// })
