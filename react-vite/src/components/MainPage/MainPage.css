@@ -1,5 +1,13 @@
-.test {
-    height: 100px;
-    width: 100px;
-    object-fit: cover;
+.recipe_tile_container {
+    display: flex;
+    overflow: auto;
+    width: 100%;
+    margin: 0;
+}
+
+.recipe_tile_category_container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 1000px;
 }

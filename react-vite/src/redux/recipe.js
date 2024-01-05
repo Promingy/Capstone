@@ -34,14 +34,66 @@ export const thunkGetSelectedRecipe = (recipeId) => async (dispatch) => {
     }
 }
 
+export const thunkCreateRecipe = (recipe) => async (dispatch) => {
+    const res = await fetch("/api/recipes", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            "category_id": 1,
+            "title": "the best meal ever",
+            "description": "I just said it was the best thing in the entire universe",
+            "servings": 3,
+            "prep_time": 5,
+            "cook_time": 20,
+            "preview_image": "http://.png"
+        })
+    })
+
+    return res
+}
+
+export const thunkUpdateRecipe = (recipeId) => async (dispatch) => {
+    const res = await fetch(`/api/recipes/${recipeId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            "category_id": 2,
+            "title": "the SECOND best meal ever",
+            "description": "THIS MEAL IS ONLY PARITLALLY THE BEST",
+            "servings": 4,
+            "prep_time": 15,
+            "cook_time": 30,
+            "preview_image": "http://.png"
+        })
+    })
+
+    return res
+}
+
+export const thunkDeleteRecipe = (recipeId) => async (dispatch) => {
+    const res = await fetch(`/api/recipes/${recipeId}`, {
+        method: "DELETE"
+    })
+
+    console.log('TEST', await res.json())
+    return res
+}
+
 const initialState = {}
 function recipeReducer(state=initialState, action){
     switch (action.type){
         case GET_ALL_RECIPES: {
-            const newState = { ...state }
-            for (let recipe of action.recipes) {
-                newState[recipe.id] = recipe
+            const newState = { ...state, categories: {} }
+
+            for (let category in action.recipes) {
+                newState.categories[category] = {}
+
+                for (let recipe of action.recipes[category]){
+                    newState.categories[category][recipe.id] = recipe
+                    newState[recipe.id] = recipe
+                }
             }
+
             return newState
         }
         case GET_SELECTED_RECIPE: {

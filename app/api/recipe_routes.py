@@ -1,26 +1,57 @@
-from flask import Blueprint
-from ..models import Recipe, Category
+from flask import Blueprint, request, session
+from ..models import Recipe, Category, db
+from ..forms import RecipeForm
+from flask_login import login_required
 
 recipe = Blueprint('recipes', __name__)
 
-@recipe.route('/')
+@recipe.route('')
+@login_required
 def get_all_recipes():
     """
     Route that returns all of the recipes needed for the homepage
     """
-    all_recipes = [recipe.to_dict(rating=True) for recipe in Recipe.query.all()]
-    return all_recipes
-    # categories = [f"{category.to_dict()['id']}  {category.to_dict()['category']}" for category in Category.query.all()]
+    categorized_recipes = {}
+    for index, category in enumerate(Category.query.all()):
+        recipes = Recipe.query.filter(Recipe.category_id == index + 1).all()
 
-    # category1_recipes = [recipe.to_dict() for recipe in Recipe.query.filter(Recipe.category_id == 1).all()]
-    # category2_recipes = [recipe.to_dict() for recipe in Recipe.query.filter(Recipe.category_id == 2).all()]
+        if not len(recipes):
+            continue
 
-    # categorized_recipes = {
-    #     "categories": categories,
-    #     "Appetizer": category1_recipes,
-    #     "Main Course": category2_recipes
-    # }
-    # return categorized_recipes
+        category = category.to_dict()['category']
+
+        categorized_recipes[category] = \
+        [recipe.to_dict() for recipe in recipes]
+
+    return categorized_recipes
+
+@recipe.route('', methods=['POST'])
+@login_required
+def create_new_recipe():
+    """
+    Route to handle the creation of new recipes
+    """
+    form = RecipeForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        data = form.data
+        newRecipe = Recipe(
+            owner_id = int(session['_user_id']),
+            category_id = int(data["category_id"]),
+            title = data["title"],
+            description = data["description"],
+            servings = int(data["servings"]),
+            prep_time = int(data["prep_time"]),
+            cook_time = int(data["cook_time"]),
+            preview_image = data["preview_image"],
+        )
+
+        db.session.add(newRecipe)
+        db.session.commit()
+        return newRecipe.to_dict()
+
+    return form.errors, 400
 
 @recipe.route('/<int:recipeId>')
 def get_single_recipe(recipeId):
@@ -31,3 +62,49 @@ def get_single_recipe(recipeId):
     recipe = Recipe.query.get(recipeId)
 
     return recipe.to_dict(rating=True, reviews=True)
+
+@recipe.route('/<int:recipeId>', methods=['PUT'])
+@login_required
+def update_recipe(recipeId):
+
+    form = RecipeForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    recipe = Recipe.query.get(recipeId)
+    if not recipe:
+        return {"error": "Resource not found"}, 404
+
+    if form.validate_on_submit():
+        data = form.data
+
+        recipe.category_id = data['category_id']
+        recipe.title = data['title']
+        recipe.description = data['description']
+        recipe.servings = data['servings']
+        recipe.prep_time = data['prep_time']
+        recipe.cook_time = data['cook_time']
+        recipe.preview_image = data['preview_image']
+
+        db.session.commit()
+        return recipe.to_dict()
+
+    else:
+        return form.errors
+
+
+
+
+
+@recipe.route('/<int:recipeId>', methods=['DELETE'])
+@login_required
+def delete_recipe(recipeId):
+    recipe = Recipe.query.get(recipeId)
+
+    if recipe and recipe.owner_id == int(session['_user_id']):
+        db.session.delete(recipe)
+        db.session.commit()
+        return {"message": "successful"}
+    elif not recipe:
+        return {"error": "resource not found"}, 404
+    else:
+        return {"error": "Unauthorized"}, 403

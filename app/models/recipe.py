@@ -21,6 +21,7 @@ class Recipe(db.Model, UserMixin):
     created_at = db.Column(db.DateTime(timezone=True), default=func.now())
 
     reviews = db.relationship('Review', back_populates='recipe')
+    owner = db.relationship('User', back_populates=('recipes'))
 
     def to_dict(self, rating=False, reviews=False):
         dictionary = {
@@ -33,13 +34,16 @@ class Recipe(db.Model, UserMixin):
             "prep_time": self.prep_time,
             "cook_time": self.cook_time,
             "preview_image": self.preview_image,
-            "created_at": self.created_at
+            "created_at": self.created_at,
+            "owner": self.owner.to_dict()
         }
 
         if rating:
             avg_rating = sum([review.to_dict()['rating'] for review in self.reviews]) / len(self.reviews)
             dictionary['avg_rating'] = avg_rating
+            dictionary['all_ratings'] = len(self.reviews)
 
         if reviews:
             dictionary['reviews'] = sorted([review.to_dict() for review in self.reviews], key=lambda msg: datetime(msg['created_at'].year, msg['created_at'].month, msg['created_at'].day, msg['created_at'].hour, msg['created_at'].minute, msg['created_at'].second), reverse=True)
+
         return dictionary
