@@ -1,3 +1,44 @@
+.nav_bar {
+  height: 114px;
+  border-bottom: 1px solid lightgrey;
+  padding-bottom: 0;
+  margin-bottom: 50px;
+}
+
+.nav_bar > * {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.header_top_right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 30px;
+  align-items: center;
+}
+
+.header_bottom_container {
+  display: flex;
+  gap: 25px;
+}
+
+.nav_links{
+  cursor: pointer;
+  border-bottom: 7px solid transparent;
+}
+.nav_links:hover {
+  border-bottom: 4px solid #CF1A00;
+  padding: 0;
+}
+
+.user_profile:hover {
+  color: #777777;
+}
+
+.user_profile:active {
+  color: #CF1A00;
+}
+
 .profile-dropdown {
   position: absolute;
 }
