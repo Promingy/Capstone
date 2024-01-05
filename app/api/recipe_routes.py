@@ -25,16 +25,6 @@ def get_all_recipes():
 
     return categorized_recipes
 
-@recipe.route('/<int:recipeId>')
-def get_single_recipe(recipeId):
-    """
-    Route that returns all of the infor for a specific recipe
-    """
-
-    recipe = Recipe.query.get(recipeId)
-
-    return recipe.to_dict(rating=True, reviews=True)
-
 @recipe.route('', methods=['POST'])
 @login_required
 def create_new_recipe():
@@ -62,6 +52,48 @@ def create_new_recipe():
         return newRecipe.to_dict()
 
     return form.errors, 400
+
+@recipe.route('/<int:recipeId>')
+def get_single_recipe(recipeId):
+    """
+    Route that returns all of the infor for a specific recipe
+    """
+
+    recipe = Recipe.query.get(recipeId)
+
+    return recipe.to_dict(rating=True, reviews=True)
+
+@recipe.route('/<int:recipeId>', methods=['PUT'])
+@login_required
+def update_recipe(recipeId):
+
+    form = RecipeForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    recipe = Recipe.query.get(recipeId)
+    if not recipe:
+        return {"error": "Resource not found"}, 404
+
+    if form.validate_on_submit():
+        data = form.data
+
+        recipe.category_id = data['category_id']
+        recipe.title = data['title']
+        recipe.description = data['description']
+        recipe.servings = data['servings']
+        recipe.prep_time = data['prep_time']
+        recipe.cook_time = data['cook_time']
+        recipe.preview_image = data['preview_image']
+
+        db.session.commit()
+        return recipe.to_dict()
+
+    else:
+        return form.errors
+
+
+
+
 
 @recipe.route('/<int:recipeId>', methods=['DELETE'])
 @login_required

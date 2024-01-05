@@ -52,6 +52,24 @@ export const thunkCreateRecipe = (recipe) => async (dispatch) => {
     return res
 }
 
+export const thunkUpdateRecipe = (recipeId) => async (dispatch) => {
+    const res = await fetch(`/api/recipes/${recipeId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            "category_id": 2,
+            "title": "the SECOND best meal ever",
+            "description": "THIS MEAL IS ONLY PARITLALLY THE BEST",
+            "servings": 4,
+            "prep_time": 15,
+            "cook_time": 30,
+            "preview_image": "http://.png"
+        })
+    })
+
+    return res
+}
+
 export const thunkDeleteRecipe = (recipeId) => async (dispatch) => {
     const res = await fetch(`/api/recipes/${recipeId}`, {
         method: "DELETE"
