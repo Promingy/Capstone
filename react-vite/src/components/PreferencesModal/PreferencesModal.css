@@ -22,7 +22,7 @@
 }
 
 .background_color_pref {
-    position: absolute;
+    position: fixed;
     right: 0px;
     bottom: 0px;
     height: 100vh;
@@ -30,12 +30,10 @@
     opacity: .5;
     animation: backgroundColor .2s;
     -webkit-animation-fill-mode: forwards;
-
-
 }
 
 .preferences_modal_container {
-    position: absolute;
+    position: fixed;
     right: 0px;
     height: 100vh;
     bottom: 0px;

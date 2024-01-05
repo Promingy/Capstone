@@ -3,9 +3,7 @@ import './PreferencesModal.css'
 import { useEffect } from 'react'
 
 function PreferencesModal() {
-    const dispatch = useDispatch()
     const user = useSelector(state => state.session.user)
-    console.log(user)
 
     return (
         <>
