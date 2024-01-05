@@ -66,4 +66,13 @@ def create_new_recipe():
 @recipe.route('/<int:recipeId>', methods=['DELETE'])
 @login_required
 def delete_recipe(recipeId):
-    return{"test": "test"}
+    recipe = Recipe.query.get(recipeId)
+
+    if recipe and recipe.owner_id == int(session['_user_id']):
+        db.session.delete(recipe)
+        db.session.commit()
+        return {"message": "successful"}
+    elif not recipe:
+        return {"error": "resource not found"}, 404
+    else:
+        return {"error": "Unauthorized"}, 403

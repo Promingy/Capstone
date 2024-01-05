@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './MainPage.css'
-import { thunkCreateRecipe, thunkGetAllRecipes } from '../../redux/recipe'
+import { thunkDeleteRecipe, thunkGetAllRecipes } from '../../redux/recipe'
 import RecipeTile from './RecipeTile'
 
 export default function MainPage() {
@@ -14,7 +14,7 @@ export default function MainPage() {
 
     function test (e) {
         e.preventDefault()
-        dispatch(thunkCreateRecipe({}))
+        dispatch(thunkDeleteRecipe(6))
     }
 
     return (

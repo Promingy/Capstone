@@ -48,6 +48,15 @@ export const thunkCreateRecipe = (recipe) => async (dispatch) => {
             "preview_image": "http://.png"
         })
     })
+
+    return res
+}
+
+export const thunkDeleteRecipe = (recipeId) => async (dispatch) => {
+    const res = await fetch(`/api/recipes/${recipeId}`, {
+        method: "DELETE"
+    })
+
     console.log('TEST', await res.json())
     return res
 }
