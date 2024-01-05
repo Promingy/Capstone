@@ -39,11 +39,22 @@ class Recipe(db.Model, UserMixin):
         }
 
         if rating:
+            # calculates the average rating for the current recipe and adds it to the dictionary
             avg_rating = sum([review.to_dict()['rating'] for review in self.reviews]) / len(self.reviews)
             dictionary['avg_rating'] = avg_rating
+
+            # adds total amount of reviews for the current refcipe to the dictionary
             dictionary['all_ratings'] = len(self.reviews)
 
         if reviews:
-            dictionary['reviews'] = sorted([review.to_dict() for review in self.reviews], key=lambda msg: datetime(msg['created_at'].year, msg['created_at'].month, msg['created_at'].day, msg['created_at'].hour, msg['created_at'].minute, msg['created_at'].second), reverse=True)
+            # Adds list of reviews, sorted by date, to the dictionary
+            dictionary['reviews'] = sorted([review.to_dict() for review in self.reviews],
+                                           key=lambda msg: datetime(msg['created_at'].year,
+                                                                    msg['created_at'].month,
+                                                                    msg['created_at'].day,
+                                                                    msg['created_at'].hour,
+                                                                    msg['created_at'].minute,
+                                                                    msg['created_at'].second),
+                                                                    reverse=True)
 
         return dictionary
