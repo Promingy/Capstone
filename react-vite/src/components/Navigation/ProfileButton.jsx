@@ -4,16 +4,19 @@ import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import PreferencesModal from "../PreferencesModal/PreferencesModal.jsx";
 
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
+  const [togglePref, setTogglePref] = useState(false)
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-    setShowMenu(!showMenu);
+    // setShowMenu(!showMenu);
+    setTogglePref(!togglePref)
   };
 
   useEffect(() => {
@@ -40,9 +43,12 @@ function ProfileButton() {
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
+      <i onClick={toggleMenu} className="fas fa-user user_profile" />
+
+      {
+        togglePref && <PreferencesModal />
+      }
+
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
