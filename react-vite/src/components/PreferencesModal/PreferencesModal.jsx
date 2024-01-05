@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import './PreferencesModal.css'
 import { useNavigate } from 'react-router-dom'
+// import { handleMouseClick } from '../Navigation/ProfileButton'
 
 function PreferencesModal({ close }) {
     const user = useSelector(state => state.session.user)
@@ -17,7 +18,7 @@ function PreferencesModal({ close }) {
                 </div>
             </div>
 
-            <div className='create_recipe' id='create_recipe' onClick={() => navigate('/new-recipe')}>
+            <div className='create_recipe' id='create_recipe'>
                 Create a Recipe
             </div>
 

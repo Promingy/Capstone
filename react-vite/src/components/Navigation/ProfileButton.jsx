@@ -5,8 +5,10 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import PreferencesModal from "../PreferencesModal/PreferencesModal.jsx";
+import { useNavigate } from "react-router-dom";
 
 function ProfileButton() {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
@@ -40,7 +42,7 @@ function ProfileButton() {
 
   const closeMenu = () => setShowMenu(false);
 
-  const logout = () => {
+  function logout () {
     dispatch(thunkLogout());
     closeMenu();
   };
@@ -64,8 +66,9 @@ function ProfileButton() {
     e.preventDefault()
     // get items that can and can't be clicked on
     const xBtn = document.getElementById('xmark')
-    const prefModal = document.getElementById('pref_modal')
+    const prefModal = document.getElementById('preference_modal_container')
     const background = document.getElementById('background_color_pref')
+    const createRecipe = document.getElementById('create_recipe')
     const logout_button = document.getElementById('logout_button')
     const conditions = [xBtn, background]
     let node = e.target
@@ -81,12 +84,19 @@ function ProfileButton() {
         logout()
       }
 
+      else if (node === createRecipe) {
+        closePref()
+        navigate('/new-recipe')
+      }
+
       // check if e.target is our preference modal, if so, do nothing
       else if (node === prefModal) return
 
       // if none of the previous are true, set the node to the parent node of current e.target
       else node = node.parentNode
     }
+
+    window.removeEventListener('mousedown', handleMouseClick)
   }
 
   return (
@@ -116,7 +126,7 @@ function ProfileButton() {
     }
 
       { togglePref && <PreferencesModal />}
-      { togglePref2 && <PreferencesModal close={true}/>}
+      { togglePref2 &&  <PreferencesModal close={true} />}
     </>
   );
 }

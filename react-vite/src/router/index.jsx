@@ -5,6 +5,7 @@ import Layout from './Layout';
 import Redirect from '../components/Redirect'
 import MainPage from '../components/MainPage';
 import SelectedRecipe from '../components/SelectedRecipe'
+import CreateRecipe from '../components/CreateRecipe'
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -13,6 +14,7 @@ export const router = createBrowserRouter(
       <Route path='/login' element={<LoginFormPage />} />
       <Route path='/signup' element={<SignupFormPage />} />
       <Route path='/recipes/:recipeId' element={<SelectedRecipe />} />
+      <Route path='new-recipe' element={<CreateRecipe />} />
       <Route path='*' element={<Redirect />} />
     </Route>
   )
