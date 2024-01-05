@@ -21,6 +21,11 @@
     to { background-color: black;}
 }
 
+@keyframes backgroundColorClose {
+    from { background-color: black;}
+    to { background-color: none;}
+}
+
 .background_color_pref {
     position: fixed;
     right: 0px;
@@ -29,6 +34,16 @@
     width: 100vw;
     opacity: .5;
     animation: backgroundColor .2s;
+    -webkit-animation-fill-mode: forwards;
+}
+.background_color_pref2 {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    height: 100vh;
+    width: 100vw;
+    opacity: .5;
+    animation: backgroundColorClose .2s;
     -webkit-animation-fill-mode: forwards;
 }
 
@@ -45,7 +60,7 @@
     animation: slideIn .4s;
 }
 .preferences_modal_container2 {
-    position: absolute;
+    position: fixed;
     right: 0px;
     height: 100vh;
     bottom: 0px;
@@ -55,6 +70,7 @@
     padding: 0 15px;
     overflow: scroll;
     animation: slideOut .4s;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .user_pref_header {
@@ -62,4 +78,30 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid lightgrey;
+}
+
+.exit_pref {
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.exit_pref:hover {
+    background-color: #EEEEEE;
+}
+
+.logout_button {
+    text-decoration: underline;
+    font-weight: 600;
+    cursor: pointer;
+    width: fit-content
+}
+
+.logout_button:hover {
+    text-decoration: none;
+    color: #9F9F9F;
+}
+
+.logout_button:active {
+    color: #CF1A00
 }

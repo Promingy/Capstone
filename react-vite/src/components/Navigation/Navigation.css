@@ -17,6 +17,32 @@
   align-items: center;
 }
 
+.log_in_sign_up_buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.login_button,
+.sign_up_button {
+  padding: 11px 19px;
+  border-radius: 20px;
+  font-weight: 550;
+  cursor: pointer;
+  font-family: nyt-franklin,Arial,Helvetica,sans-serif;
+  letter-spacing: .02em;
+  border: none;
+}
+
+.login_button {
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+.sign_up_button {
+  background-color: #CF1A00;
+  color: white;
+}
+
 .header_bottom_container {
   display: flex;
   gap: 25px;

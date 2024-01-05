@@ -12,18 +12,25 @@ def get_all_recipes():
     Route that returns all of the recipes needed for the homepage
     """
     categorized_recipes = {}
+
+    # Iterates over all categories
     for index, category in enumerate(Category.query.all()):
         recipes = Recipe.query.filter(Recipe.category_id == index + 1).all()
 
+        # if there are no recipies in cureent category
+        # continue to next iterations
         if not len(recipes):
             continue
 
         category = category.to_dict()['category']
 
+        # If category has recipes,
+        # set category as key and all recipes as a list for the value
         categorized_recipes[category] = \
         [recipe.to_dict() for recipe in recipes]
 
     return categorized_recipes
+
 
 @recipe.route('', methods=['POST'])
 @login_required
@@ -36,6 +43,7 @@ def create_new_recipe():
 
     if form.validate_on_submit():
         data = form.data
+
         newRecipe = Recipe(
             owner_id = int(session['_user_id']),
             category_id = int(data["category_id"]),
@@ -49,9 +57,11 @@ def create_new_recipe():
 
         db.session.add(newRecipe)
         db.session.commit()
+
         return newRecipe.to_dict()
 
     return form.errors, 400
+
 
 @recipe.route('/<int:recipeId>')
 def get_single_recipe(recipeId):
@@ -62,6 +72,7 @@ def get_single_recipe(recipeId):
     recipe = Recipe.query.get(recipeId)
 
     return recipe.to_dict(rating=True, reviews=True)
+
 
 @recipe.route('/<int:recipeId>', methods=['PUT'])
 @login_required
@@ -93,8 +104,6 @@ def update_recipe(recipeId):
 
 
 
-
-
 @recipe.route('/<int:recipeId>', methods=['DELETE'])
 @login_required
 def delete_recipe(recipeId):
@@ -104,7 +113,9 @@ def delete_recipe(recipeId):
         db.session.delete(recipe)
         db.session.commit()
         return {"message": "successful"}
+
     elif not recipe:
         return {"error": "resource not found"}, 404
+
     else:
         return {"error": "Unauthorized"}, 403
