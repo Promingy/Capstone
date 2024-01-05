@@ -6,7 +6,6 @@ from flask_login import login_required
 recipe = Blueprint('recipes', __name__)
 
 @recipe.route('')
-@login_required
 def get_all_recipes():
     """
     Route that returns all of the recipes needed for the homepage

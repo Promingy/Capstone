@@ -12,24 +12,24 @@ export default function MainPage() {
         dispatch(thunkGetAllRecipes())
     }, [dispatch])
 
-    function createTestRecipe (e) {
-        e.preventDefault()
-        dispatch(thunkCreateRecipe({}))
-    }
-    function deleteRecipe (e) {
-        e.preventDefault()
-        dispatch(thunkDeleteRecipe(7))
-    }
-    function updateRecipe (e) {
-        e.preventDefault()
-        dispatch(thunkUpdateRecipe(8))
-    }
+    // function createTestRecipe (e) {
+    //     e.preventDefault()
+    //     dispatch(thunkCreateRecipe({}))
+    // }
+    // function deleteRecipe (e) {
+    //     e.preventDefault()
+    //     dispatch(thunkDeleteRecipe(7))
+    // }
+    // function updateRecipe (e) {
+    //     e.preventDefault()
+    //     dispatch(thunkUpdateRecipe(8))
+    // }
 
     return (
         <>
-        <button onClick={createTestRecipe} >Create Recipe</button>
+        {/* <button onClick={createTestRecipe} >Create Recipe</button>
         <button onClick={updateRecipe} >Update Recipe</button>
-        <button onClick={deleteRecipe} >Delete Recipe</button>
+        <button onClick={deleteRecipe} >Delete Recipe</button> */}
             {recipes && Object.keys(recipes).map(category => {
                 const categoryRecipes = Object.values(recipes[category])
 
