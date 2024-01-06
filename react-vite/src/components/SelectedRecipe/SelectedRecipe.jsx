@@ -117,7 +117,7 @@ export default function SelectedRecipe() {
                     </div>
                     <span className='time_format'>
                         <h3>Rating</h3>
-                        {recipe.avg_rating &&
+                        {recipe.avg_rating > 0 &&
                             <p>
                                 {recipe.avg_rating} &nbsp;
                                 {starCreator(recipe)} &nbsp;

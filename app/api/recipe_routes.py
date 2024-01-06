@@ -1,6 +1,6 @@
 from flask import Blueprint, request, session
-from ..models import Recipe, Category, db, Quantity
-from ..forms import RecipeForm, QuantityForm
+from ..models import Recipe, Category, db, Quantity, Step
+from ..forms import RecipeForm, QuantityForm, StepForm
 from flask_login import login_required
 
 recipe = Blueprint('recipes', __name__)
@@ -39,11 +39,15 @@ def create_new_recipe():
     Route to handle the creation of new recipes
     """
     ingredients = request.get_json()['ingredients']
+    steps = request.get_json()['steps']
 
     form = RecipeForm()
     form2 = QuantityForm()
+    form3 = StepForm()
+
     form['csrf_token'].data = request.cookies['csrf_token']
     form2['csrf_token'].data = request.cookies['csrf_token']
+    form3['csrf_token'].data = request.cookies['csrf_token']
 
     # Validate each ingredient in the recipe - all should pass
     for key in ingredients:
@@ -56,8 +60,19 @@ def create_new_recipe():
         if not form2.validate_on_submit():
             break
 
+    # validate each step in the recipe - all should pass
+    for key in steps:
+        step = steps[key]
+
+        form3.step_number.data = step['stepNumber']
+        form3.step_description.data = step['step']
+
+        if not form3.validate_on_submit():
+            break
+
+
     # if form passes validations, add to database
-    if form.validate_on_submit() and form2.validate_on_submit():
+    if form.validate_on_submit() and form2.validate_on_submit() and form3.validate_on_submit():
         data = form.data
 
         # create and add new recipe to the db
@@ -87,6 +102,18 @@ def create_new_recipe():
             )
 
             db.session.add(newQuantity)
+
+        # Create new step in the db for each step
+        for key in steps:
+            step = steps[key]
+
+            newStep = Step(
+                recipe_id = newRecipe.to_dict()['id'],
+                step_number = step['stepNumber'],
+                description = step['step']
+            )
+
+            db.session.add(newStep)
 
         db.session.commit()
 
@@ -142,10 +169,12 @@ def update_recipe(recipeId):
 def delete_recipe(recipeId):
     recipe = Recipe.query.get(recipeId)
     quantities = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
+    steps = Step.query.filter(Step.recipe_id == recipeId).all()
 
     if recipe and recipe.owner_id == int(session['_user_id']):
         db.session.delete(recipe)
         [db.session.delete(quantity) for quantity in quantities]
+        [db.session.delete(step) for step in steps]
 
         db.session.commit()
         return {"message": "successful"}

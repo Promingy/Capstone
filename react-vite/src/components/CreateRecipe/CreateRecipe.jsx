@@ -35,6 +35,16 @@ export default function CreateRecipe () {
         dispatch(thunkGetDropdowns())
     }, [dispatch])
 
+    function updateStepNums() {
+        const newSteps = Object.values(steps)
+
+        for (let i = 0; i < newSteps.length; i++) {
+            newSteps[i].stepNumber = i + 1
+        }
+
+        setSteps({...newSteps})
+    }
+
     function handleSubmit(e) {
         e.preventDefault()
 
@@ -48,11 +58,12 @@ export default function CreateRecipe () {
             prep_time: +prepTimeHours * 60 + +prepTimeMinutes,
             cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
             preview_image: previewImage,
-            // ingredient,
-            // ingredient_quantity: quantity,
             ingredients,
-            measurement_id: measurements?.[measurement]?.id
+            measurement_id: measurements?.[measurement]?.id,
+            steps
         }
+
+        updateStepNums()
 
         dispatch(thunkCreateRecipe(newRecipe))
         .then(res => {
@@ -236,9 +247,9 @@ export default function CreateRecipe () {
                             // add step to steps obj
                             if (!step) return
 
-                            let newStepNum = stepNumber
+                            let newStepNum = +stepNumber
 
-                            while (steps[newStepNum - 1] == undefined && newStepNum !== 1){
+                            while (steps[+newStepNum - 1] == undefined && +newStepNum !== 1){
                                 newStepNum -= 1
                             }
 
@@ -248,7 +259,7 @@ export default function CreateRecipe () {
 
                             // reset step values
                             setStep('')
-                            setStepNumber(newStepNum + 1)
+                            setStepNumber(+newStepNum + 1)
                         }}>
 
                         <div className="add_ingredient">
