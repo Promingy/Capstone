@@ -4,4 +4,4 @@ from wtforms.validators import DataRequired
 
 class StepForm(FlaskForm):
     step_number = IntegerField('step_number', validators=[DataRequired()])
-    description = StringField('description', validators=[DataRequired()])
+    step_description = StringField('step_description', validators=[DataRequired()])

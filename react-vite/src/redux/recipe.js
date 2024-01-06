@@ -1,6 +1,7 @@
 const GET_ALL_RECIPES = 'recipe/getAllRecipes'
 const GET_SELECTED_RECIPE = 'recipe/getSelectedRecipe'
 const CREATE_RECIPE = 'recipe/createRecipe'
+const UPDATE_RECIPE = 'recipe/updateRecipe'
 const DELETE_RECIPE = 'recipe/deleteRecipe'
 
 const actionGetAllRecipes = (recipes) => {
@@ -20,6 +21,13 @@ const actionGetSelectedRecipe = (recipe) => {
 const actionCreateRecipe = (recipe) => {
     return {
         type: CREATE_RECIPE,
+        recipe
+    }
+}
+
+const actionUpdateRecipe = (recipe) => {
+    return {
+        type: UPDATE_RECIPE,
         recipe
     }
 }
@@ -67,20 +75,19 @@ export const thunkCreateRecipe = (recipe) => async (dispatch) => {
     return res.json()
 }
 
-export const thunkUpdateRecipe = (recipeId) => async (dispatch) => {
+export const thunkUpdateRecipe = (recipeId, recipe) => async (dispatch) => {
+    // console.log(recipe)
     const res = await fetch(`/api/recipes/${recipeId}`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            "category_id": 2,
-            "title": "the SECOND best meal ever",
-            "description": "THIS MEAL IS ONLY PARITLALLY THE BEST",
-            "servings": 4,
-            "prep_time": 15,
-            "cook_time": 30,
-            "preview_image": "http://.png"
-        })
+        body: JSON.stringify(recipe)
     })
+
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(actionUpdateRecipe(data))
+        return data
+    }
 
     return res
 }
@@ -103,7 +110,6 @@ function recipeReducer(state=initialState, action){
             const newState = { ...state, categories: {} }
 
             for (let category in action.recipes) {
-                console.log('category', category, action)
                 newState.categories[category] = {}
 
                 for (let recipe of action.recipes[category]){
@@ -120,6 +126,12 @@ function recipeReducer(state=initialState, action){
             return newState
         }
         case CREATE_RECIPE: {
+            const newState = { ...state }
+            newState[action.recipe.id] = action.recipe
+            newState.categories[action.recipe.category_id][action.recipe.id] = action.recipe
+            return newState
+        }
+        case UPDATE_RECIPE: {
             const newState = { ...state }
             newState[action.recipe.id] = action.recipe
             return newState

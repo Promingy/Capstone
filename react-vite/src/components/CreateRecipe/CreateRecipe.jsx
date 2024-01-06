@@ -4,30 +4,30 @@ import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetDropdowns } from "../../redux/dropdown"
 import { useNavigate } from "react-router-dom"
 import TextareaAutoSize from 'react-textarea-autosize'
-import { thunkCreateRecipe } from "../../redux/recipe"
+import { thunkCreateRecipe, thunkUpdateRecipe } from "../../redux/recipe"
 
-export default function CreateRecipe () {
+export default function CreateRecipe ({ prevForm, update }) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const measurements = useSelector(state => state.dropdowns.measurements)
     const categories = useSelector(state => state.dropdowns.categories)
     const sessionUser = useSelector(state => state.session.user)
-    const [category, setCategory] = useState('Category')
+    const [category, setCategory] = useState( prevForm?.category || 0)
     const [measurement, setMeasurement] = useState('Measurement')
     const [ingredient, setIngredient] = useState('')
     const [quantity, setQuantity] = useState(0)
-    const [ingredients, setIngredients] = useState({})
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const [servings, setServings] = useState(0)
+    const [ingredients, setIngredients] = useState(prevForm?.ingredients || {})
+    const [title, setTitle] = useState(prevForm?.title || '')
+    const [description, setDescription] = useState( prevForm?.description || '')
+    const [servings, setServings] = useState(prevForm?.servings || 0)
     const [step, setStep] = useState('')
-    const [steps, setSteps] = useState({})
+    const [steps, setSteps] = useState(prevForm?.steps || {})
     const [stepNumber, setStepNumber] = useState(1)
-    const [prepTimeHours, setPrepTimeHours] = useState(0)
-    const [prepTimeMinutes, setPrepTimeMinutes] = useState(0)
-    const [cookTimeHours, setCookTimeHours] = useState(0)
-    const [cookTimeMinutes, setCookTimeMinutes] = useState(0)
-    const [previewImage, setPreviewImage] = useState('')
+    const [prepTimeHours, setPrepTimeHours] = useState(Math.floor(prevForm?.prepTime / 60)|| 0)
+    const [prepTimeMinutes, setPrepTimeMinutes] = useState(prevForm?.prepTime % 60|| 0)
+    const [cookTimeHours, setCookTimeHours] = useState(Math.floor(prevForm?.cookTime / 60) || 0)
+    const [cookTimeMinutes, setCookTimeMinutes] = useState(prevForm?.cookTime % 60|| 0)
+    const [previewImage, setPreviewImage] = useState(prevForm?.previewImage || '')
 
     const [errors, setErrors] = useState({})
 
@@ -35,6 +35,15 @@ export default function CreateRecipe () {
         dispatch(thunkGetDropdowns())
     }, [dispatch])
 
+    function updateStepNums() {
+        const newSteps = Object.values(steps)
+
+        for (let i = 0; i < newSteps.length; i++) {
+            newSteps[i].stepNumber = i + 1
+        }
+
+        setSteps({...newSteps})
+    }
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -42,16 +51,20 @@ export default function CreateRecipe () {
         const newErrors = {}
 
         const newRecipe = {
-            category_id: 1,
+            category_id: category,
             title,
             description,
             servings: +servings,
             prep_time: +prepTimeHours * 60 + +prepTimeMinutes,
             cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
-            preview_image: previewImage
+            preview_image: previewImage,
+            ingredients,
+            steps
         }
 
-        dispatch(thunkCreateRecipe(newRecipe))
+        updateStepNums()
+
+        dispatch(update ? thunkUpdateRecipe(prevForm?.id, newRecipe) : thunkCreateRecipe(newRecipe))
         .then(res => {
             const data = res
 
@@ -108,13 +121,13 @@ export default function CreateRecipe () {
 
                 <label>
                     <select
-                        value={category}
-                        onChange={e => setCategory(e.target.value)}
+                        value={categories[category]?.category || 'Category'}
+                        onChange={e => setCategory(e.target.selectedIndex)}
                     >
                         <option disabled>Category</option>
-                        {Object.values(categories).map(category => (
-                            <option key={`dropdown_category${category.category}`}>
-                                    {category.category}
+                        {Object.keys(categories).map(key => (
+                            <option key={`dropdown_category${categories?.[key]?.id}`} id={`category_${categories?.[key]?.id}`}>
+                                    {categories[key].category}
                             </option>
                         ))}
                     </select>
@@ -123,11 +136,11 @@ export default function CreateRecipe () {
                     <div className="added_ingredients">
                         {Object.values(ingredients).map(ingredient => {
                             return (
-                                <div key={`ingredient${ingredients.ingredient}${ingredients.quantity}`}>
+                                <div key={`ingredient${ingredient.ingredient}${ingredient.quantity}`}>
                                     {ingredient.ingredient}
                                     <div className="remove_ingredient" onClick={() => {
                                             const newIngredient = {...ingredients}
-                                            delete newIngredient[ingredient.ingredient]
+                                            delete newIngredient[ingredient[update ? 'id' : 'ingredient']]
                                             setIngredients(newIngredient)
                                         }}>
                                         <i className="fa-solid fa-x fa-xs" />
@@ -171,7 +184,7 @@ export default function CreateRecipe () {
                             if (ingredient && quantity && measurement){
                                 const newIngredient = { ingredient,
                                                         quantity,
-                                                        measurement}
+                                                        measurement: measurements[measurement].id}
                                 setIngredients({...ingredients, [ingredient]: newIngredient})
 
                                 // reset ingredient values
@@ -194,11 +207,11 @@ export default function CreateRecipe () {
                             {Object.keys(steps).map(key => {
                                 const step = steps[key]
                                 return (
-                                <div key={`steps${step.stepNumber}`} className="steps_and_remove">
-                                    {step.stepNumber} {step.step}
+                                <div key={`steps${step.step_number}`} className="steps_and_remove">
+                                    Step {step.step_number}. {step.description}
                                     <div className="remove_ingredient" onClick={() => {
                                             const newSteps = {...steps}
-                                            delete newSteps[step.stepNumber]
+                                            delete newSteps[step.step_number]
                                             setSteps(newSteps)
                                         }}>
                                         <i className="fa-solid fa-x fa-xs" />
@@ -217,6 +230,7 @@ export default function CreateRecipe () {
                                 value={stepNumber}
                                 onChange={e => setStepNumber(e.target.value)}
                                 min={1}
+                                max={Object.values(steps).length + 1}
                                 />
                         </label>
                         <div className="add_step_text_container">
@@ -232,19 +246,18 @@ export default function CreateRecipe () {
                             // add step to steps obj
                             if (!step) return
 
-                            let newStepNum = stepNumber
+                            let newStepNum = +stepNumber
 
-                            while (steps[newStepNum - 1] == undefined && newStepNum !== 1){
+                            while (steps[+newStepNum - 1] == undefined && +newStepNum !== 1){
                                 newStepNum -= 1
                             }
 
-                            const newStep = {stepNumber: newStepNum, step}
+                            const newStep = {step_number: newStepNum, description: step}
 
                             setSteps({...steps, [newStepNum]: newStep})
-
                             // reset step values
                             setStep('')
-                            setStepNumber(newStepNum + 1)
+                            setStepNumber(+newStepNum + 1)
                         }}>
 
                         <div className="add_ingredient">

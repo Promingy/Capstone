@@ -44,7 +44,6 @@ export default function SelectedRecipe() {
         dispatch(thunkGetSelectedRecipe(recipeId))
     }, [dispatch, recipeId])
 
-
     if (!recipe) return
     return (
         <div>
@@ -107,7 +106,7 @@ export default function SelectedRecipe() {
                                     </span>
                                 }
                                 &nbsp;
-                                {!!prepTimeMinutes &&
+                                {!!cookTimeMinutes &&
                                     <span>
                                         {cookTimeMinutes} {cookTimeMinutes > 1 ? "minutes": "minute"}
                                     </span>
@@ -117,7 +116,7 @@ export default function SelectedRecipe() {
                     </div>
                     <span className='time_format'>
                         <h3>Rating</h3>
-                        {recipe.avg_rating &&
+                        {recipe.avg_rating > 0 &&
                             <p>
                                 {recipe.avg_rating} &nbsp;
                                 {starCreator(recipe)} &nbsp;

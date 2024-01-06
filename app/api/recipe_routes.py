@@ -1,6 +1,6 @@
 from flask import Blueprint, request, session
-from ..models import Recipe, Category, db
-from ..forms import RecipeForm
+from ..models import Recipe, Category, db, Quantity, Step
+from ..forms import RecipeForm, QuantityForm, StepForm
 from flask_login import login_required
 
 recipe = Blueprint('recipes', __name__)
@@ -38,13 +38,44 @@ def create_new_recipe():
     """
     Route to handle the creation of new recipes
     """
-    form = RecipeForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    print(dir(form), form.errors)
+    ingredients = request.get_json()['ingredients']
+    steps = request.get_json()['steps']
 
-    if form.validate_on_submit():
+    form = RecipeForm()
+    form2 = QuantityForm()
+    form3 = StepForm()
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+    form2['csrf_token'].data = request.cookies['csrf_token']
+    form3['csrf_token'].data = request.cookies['csrf_token']
+
+    # Validate each ingredient in the recipe - all should pass
+    for key in ingredients:
+        ingredient = ingredients[key]
+
+        form2.ingredient.data = ingredient['ingredient']
+        form2.ingredient_quantity.data = ingredient['quantity']
+        form2.measurement_id.data = ingredient['measurement']
+
+        if not form2.validate_on_submit():
+            break
+
+    # validate each step in the recipe - all should pass
+    for key in steps:
+        step = steps[key]
+
+        form3.step_number.data = step['step_number']
+        form3.step_description.data = step['description']
+
+        if not form3.validate_on_submit():
+            break
+
+
+    # if form passes validations, add to database
+    if form.validate_on_submit() and form2.validate_on_submit() and form3.validate_on_submit():
         data = form.data
 
+        # create and add new recipe to the db
         newRecipe = Recipe(
             owner_id = int(session['_user_id']),
             category_id = int(data["category_id"]),
@@ -59,7 +90,35 @@ def create_new_recipe():
         db.session.add(newRecipe)
         db.session.commit()
 
+        # Create and add new quantity for every ingredient to the db now that the recipe exists
+        for key in ingredients:
+            ingredient = ingredients[key]
+
+            newQuantity = Quantity(
+                recipe_id = newRecipe.to_dict()['id'],
+                ingredient_measurement_id = ingredient['measurement'],
+                ingredient = ingredient['ingredient'],
+                ingredient_quantity = ingredient['quantity']
+            )
+
+            db.session.add(newQuantity)
+
+        # Create new step in the db for each step
+        for key in steps:
+            step = steps[key]
+
+            newStep = Step(
+                recipe_id = newRecipe.to_dict()['id'],
+                step_number = step['step_number'],
+                description = step['description']
+            )
+
+            db.session.add(newStep)
+
+        db.session.commit()
+
         return newRecipe.to_dict()
+
 
     return {"errors": form.errors}, 400
 
@@ -71,24 +130,64 @@ def get_single_recipe(recipeId):
     """
 
     recipe = Recipe.query.get(recipeId)
+    recipe = recipe.to_dict(rating=True, reviews=True)
 
-    return recipe.to_dict(rating=True, reviews=True)
+    recipe['ingredients'] = {}
+    recipe['steps'] = {}
+
+    quantities = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
+    steps = Step.query.filter(Step.recipe_id == recipeId).all()
+
+    for quantity in quantities:
+        recipe['ingredients'][quantity.to_dict()['id']] = quantity.to_dict()
+
+    for step in steps:
+        recipe['steps'][step.to_dict()['id']] = step.to_dict()
+
+    return recipe
 
 
 @recipe.route('/<int:recipeId>', methods=['PUT'])
 @login_required
 def update_recipe(recipeId):
 
+    ingredients = request.get_json()['ingredients']
+    steps = request.get_json()['steps']
+
     form = RecipeForm()
+    form2 = QuantityForm()
+    form3 = StepForm()
+
     form['csrf_token'].data = request.cookies['csrf_token']
+    form2['csrf_token'].data = request.cookies['csrf_token']
+    form3['csrf_token'].data = request.cookies['csrf_token']
 
     recipe = Recipe.query.get(recipeId)
     if not recipe:
         return {"error": "Resource not found"}, 404
 
-    if form.validate_on_submit():
-        data = form.data
+    for key in ingredients:
+        # print('~~~~~~~~~~~~~~~', ingredients)
+        ingredient = ingredients[key]
 
+        form2.ingredient.data = ingredient['ingredient']
+        form2.ingredient_quantity.data = ingredient['ingredient_quantity']
+        form2.measurement_id.data = ingredient['ingredient_measurement_id']
+
+        if not form2.validate_on_submit():
+            break
+
+    for key in steps:
+        step = steps[key]
+
+        form3.step_number.data = step['step_number']
+        form3.step_description.data = step['description']
+
+        if not form3.validate_on_submit():
+            break
+
+    if form.validate_on_submit() and form2.validate_on_submit() and form3.validate_on_submit():
+        data = form.data
         recipe.category_id = data['category_id']
         recipe.title = data['title']
         recipe.description = data['description']
@@ -96,6 +195,23 @@ def update_recipe(recipeId):
         recipe.prep_time = data['prep_time']
         recipe.cook_time = data['cook_time']
         recipe.preview_image = data['preview_image']
+
+        for key in ingredients:
+            new_ingredient = ingredients[key]
+            db_ingredient = Quantity.query.get(new_ingredient['id'])
+
+            db_ingredient.ingredient = new_ingredient['ingredient']
+            db_ingredient.ingredient_quantity = new_ingredient['ingredient_quantity']
+            db_ingredient.measurement_id = new_ingredient['ingredient_measurement_id']
+
+
+        for key in steps:
+            new_step = steps[key]
+            db_step = Step.query.get(new_step['id'])
+
+            db_step.step_number = new_step['step_number']
+            db_step.description = new_step['description']
+
 
         db.session.commit()
         return recipe.to_dict()
@@ -109,9 +225,14 @@ def update_recipe(recipeId):
 @login_required
 def delete_recipe(recipeId):
     recipe = Recipe.query.get(recipeId)
+    quantities = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
+    steps = Step.query.filter(Step.recipe_id == recipeId).all()
 
     if recipe and recipe.owner_id == int(session['_user_id']):
         db.session.delete(recipe)
+        [db.session.delete(quantity) for quantity in quantities]
+        [db.session.delete(step) for step in steps]
+
         db.session.commit()
         return {"message": "successful"}
 
