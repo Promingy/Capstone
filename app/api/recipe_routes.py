@@ -21,7 +21,8 @@ def get_all_recipes():
         if not len(recipes):
             continue
 
-        category = category.to_dict()['category']
+        # category = category.to_dict()['category']
+        category = category.to_dict()['id']
 
         # If category has recipes,
         # set category as key and all recipes as a list for the value

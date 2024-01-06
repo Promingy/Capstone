@@ -27,7 +27,7 @@ function dropDownReducer(state = initialState, action) {
             const newState = { ...state, categories: {}, measurements: {} }
 
             for (let category of Object.values(action.categories)) {
-                newState.categories[category.category] = category
+                newState.categories[category.id] = category
             }
 
             for (let measurement of Object.values(action.measurements)){

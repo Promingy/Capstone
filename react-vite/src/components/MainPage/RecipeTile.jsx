@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import './RecipeTile.css'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-
+import OpenModalButton from '../OpenModalButton/OpenModalButton'
+import ConfirmDelete from '../ConfirmDelete'
 export function starCreator(recipe) {
     const stars = []
 
@@ -26,11 +27,12 @@ export default function RecipeTile({ recipe }) {
     const ownerLastName = recipe.owner.last_name[0].toUpperCase() + recipe.owner.last_name.slice(1)
     const [bookmark, setBookmark] = useState('fa-regular fa-bookmark fa-lg')
     const [saved, setSaved] = useState(false)
+    const [confirmDelete, setConfirmDelete] = useState(false)
 
     function onClickHandle (e) {
         const node = e.target.attributes.id?.value
 
-        if (node != "tileBookmark" && node != "delete_recipe") {
+        if (node != 'delete_recipe' && node != 'bookmark_icon_tile') {
             navigate(`/recipes/${recipe.id}-${recipe.title.toLowerCase().split(' ').join('-')}`, {state: recipe})
         }
     }
@@ -72,7 +74,7 @@ export default function RecipeTile({ recipe }) {
                         </p>
                         <div className='tile_icons_container'>
                             <span
-                                id='tileBookmark'
+                                id='bookmark_icon_tile'
                                 className={bookmark}
                                 onMouseOver={() => {
                                     if (!saved){
@@ -93,8 +95,18 @@ export default function RecipeTile({ recipe }) {
                                 }}
                                 />
 
-                                {sessionUser.id == recipe.owner_id &&
-                                <span id='delete_recipe' className='fa-regular fa-trash-can fa-lg delete_recipe'/>}
+                                {sessionUser?.id == recipe.owner_id &&
+                                <span className='test'>
+                                    <OpenModalButton
+                                        buttonText={<span
+                                            id='delete_recipe'
+                                            className='fa-regular fa-trash-can fa-xl delete_recipe'
+                                            onClick={() => setConfirmDelete(!confirmDelete)}
+                                        />}
+                                        modalComponent={<ConfirmDelete recipe={recipe} />}
+                                    />
+                                </span>
+                                }
 
                         </div>
 

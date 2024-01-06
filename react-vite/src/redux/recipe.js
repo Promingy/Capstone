@@ -1,6 +1,7 @@
 const GET_ALL_RECIPES = 'recipe/getAllRecipes'
 const GET_SELECTED_RECIPE = 'recipe/getSelectedRecipe'
 const CREATE_RECIPE = 'recipe/createRecipe'
+const DELETE_RECIPE = 'recipe/deleteRecipe'
 
 const actionGetAllRecipes = (recipes) => {
     return {
@@ -19,6 +20,13 @@ const actionGetSelectedRecipe = (recipe) => {
 const actionCreateRecipe = (recipe) => {
     return {
         type: CREATE_RECIPE,
+        recipe
+    }
+}
+
+const actionDeleteRecipe = (recipe) => {
+    return {
+        type: DELETE_RECIPE,
         recipe
     }
 }
@@ -77,12 +85,14 @@ export const thunkUpdateRecipe = (recipeId) => async (dispatch) => {
     return res
 }
 
-export const thunkDeleteRecipe = (recipeId) => async (dispatch) => {
-    const res = await fetch(`/api/recipes/${recipeId}`, {
+export const thunkDeleteRecipe = (recipe) => async (dispatch) => {
+    const res = await fetch(`/api/recipes/${recipe.id}`, {
         method: "DELETE"
     })
 
-    console.log('TEST', await res.json())
+    if (res.ok){
+        dispatch(actionDeleteRecipe(recipe))
+    }
     return res
 }
 
@@ -93,6 +103,7 @@ function recipeReducer(state=initialState, action){
             const newState = { ...state, categories: {} }
 
             for (let category in action.recipes) {
+                console.log('category', category, action)
                 newState.categories[category] = {}
 
                 for (let recipe of action.recipes[category]){
@@ -111,6 +122,12 @@ function recipeReducer(state=initialState, action){
         case CREATE_RECIPE: {
             const newState = { ...state }
             newState[action.recipe.id] = action.recipe
+            return newState
+        }
+        case DELETE_RECIPE: {
+            const newState = { ...state }
+            delete newState[action.recipe.id]
+            delete newState.categories[action.recipe.category_id][action.recipe.id]
             return newState
         }
         default:

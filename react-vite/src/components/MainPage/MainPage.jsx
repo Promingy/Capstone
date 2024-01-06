@@ -3,19 +3,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import './MainPage.css'
 import { thunkGetAllRecipes } from '../../redux/recipe'
 import RecipeTile from './RecipeTile'
+import { thunkGetDropdowns } from '../../redux/dropdown'
 
 export default function MainPage() {
     const dispatch = useDispatch()
-    const recipes = useSelector(state => state.recipes.categories)
+    let recipes = useSelector(state => state.recipes)
+    recipes = recipes.categories
+    const dropdowns = useSelector(state => state.dropdowns.categories)
 
     useEffect(() => {
         dispatch(thunkGetAllRecipes())
+        dispatch(thunkGetDropdowns())
     }, [dispatch])
 
     return (
         <>
             {recipes && Object.keys(recipes).map(category => {
                 const categoryRecipes = Object.values(recipes[category])
+                category = dropdowns?.[category].category
 
                 return (
                     <div key={`${category}`} className='recipe_tile_category_container'>

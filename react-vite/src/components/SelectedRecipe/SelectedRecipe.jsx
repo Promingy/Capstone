@@ -11,19 +11,19 @@ export default function SelectedRecipe() {
 
     recipeId = recipeId.split('-')[0]
     const recipe = useSelector(state => state.recipes[recipeId])
-    const postDate = new Date(recipe.created_at)
+    const postDate = new Date(recipe?.created_at)
 
-    const ownerFirstName = recipe.owner.first_name[0].toUpperCase() + recipe.owner.first_name.slice(1)
-    const ownerLastName = recipe.owner.last_name[0].toUpperCase() + recipe.owner.last_name.slice(1)
+    const ownerFirstName = recipe?.owner.first_name[0].toUpperCase() + recipe?.owner.first_name.slice(1)
+    const ownerLastName = recipe?.owner.last_name[0].toUpperCase() + recipe?.owner.last_name.slice(1)
 
-    const prepTimeHours = Math.floor(recipe.prep_time / 60)
-    const prepTimeMinutes = recipe.prep_time % 60
+    const prepTimeHours = Math.floor(recipe?.prep_time / 60)
+    const prepTimeMinutes = recipe?.prep_time % 60
 
-    const cookTimeHours = Math.floor(recipe.cook_time / 60)
-    const cookTimeMinutes = recipe.cook_time % 60
+    const cookTimeHours = Math.floor(recipe?.cook_time / 60)
+    const cookTimeMinutes = recipe?.cook_time % 60
 
-    const totalCookTimeHours = Math.floor((recipe.cook_time + recipe.prep_time) / 60)
-    const totalCookTimeMinutes = (recipe.cook_time + recipe.prep_time) % 60
+    const totalCookTimeHours = Math.floor((recipe?.cook_time + recipe?.prep_time) / 60)
+    const totalCookTimeMinutes = (recipe?.cook_time + recipe?.prep_time) % 60
 
     const months = {
         1: "Jan.",
@@ -148,17 +148,3 @@ export default function SelectedRecipe() {
         </div>
     )
 }
-
-// fetch("/api/recipes", {
-//     method: "POST",
-//     headers: {"Content-Type": "application/json"},
-//     body: {
-//         "category_id": 1,
-//         "title": "the best meal ever",
-//         "description": "I just said it was the best thing in the entire universe",
-//         "servings": 3,
-//         "prep_time": 5,
-//         "cook_time": 20,
-//         "preview_image": "http://.png"
-//     }
-// })
