@@ -64,8 +64,8 @@ def create_new_recipe():
     for key in steps:
         step = steps[key]
 
-        form3.step_number.data = step['stepNumber']
-        form3.step_description.data = step['step']
+        form3.step_number.data = step['step_number']
+        form3.step_description.data = step['description']
 
         if not form3.validate_on_submit():
             break
@@ -109,8 +109,8 @@ def create_new_recipe():
 
             newStep = Step(
                 recipe_id = newRecipe.to_dict()['id'],
-                step_number = step['stepNumber'],
-                description = step['step']
+                step_number = step['step_number'],
+                description = step['description']
             )
 
             db.session.add(newStep)
@@ -130,8 +130,21 @@ def get_single_recipe(recipeId):
     """
 
     recipe = Recipe.query.get(recipeId)
+    recipe = recipe.to_dict(rating=True, reviews=True)
 
-    return recipe.to_dict(rating=True, reviews=True)
+    recipe['ingredients'] = {}
+    recipe['steps'] = {}
+
+    quantities = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
+    steps = Step.query.filter(Step.recipe_id == recipeId).all()
+
+    for quantity in quantities:
+        recipe['ingredients'][quantity.to_dict()['id']] = quantity.to_dict()
+
+    for step in steps:
+        recipe['steps'][step.to_dict()['id']] = step.to_dict()
+
+    return recipe
 
 
 @recipe.route('/<int:recipeId>', methods=['PUT'])

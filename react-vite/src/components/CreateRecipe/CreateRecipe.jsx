@@ -4,30 +4,30 @@ import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetDropdowns } from "../../redux/dropdown"
 import { useNavigate } from "react-router-dom"
 import TextareaAutoSize from 'react-textarea-autosize'
-import { thunkCreateRecipe } from "../../redux/recipe"
+import { thunkCreateRecipe, thunkUpdateRecipe } from "../../redux/recipe"
 
-export default function CreateRecipe () {
+export default function CreateRecipe ({ prevForm, update }) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const measurements = useSelector(state => state.dropdowns.measurements)
     const categories = useSelector(state => state.dropdowns.categories)
     const sessionUser = useSelector(state => state.session.user)
-    const [category, setCategory] = useState(0)
+    const [category, setCategory] = useState( prevForm?.category || 0)
     const [measurement, setMeasurement] = useState('Measurement')
     const [ingredient, setIngredient] = useState('')
     const [quantity, setQuantity] = useState(0)
-    const [ingredients, setIngredients] = useState({})
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const [servings, setServings] = useState(0)
+    const [ingredients, setIngredients] = useState(prevForm?.ingredients || {})
+    const [title, setTitle] = useState(prevForm?.title || '')
+    const [description, setDescription] = useState( prevForm?.description || '')
+    const [servings, setServings] = useState(prevForm?.servings || 0)
     const [step, setStep] = useState('')
-    const [steps, setSteps] = useState({})
+    const [steps, setSteps] = useState(prevForm?.steps || {})
     const [stepNumber, setStepNumber] = useState(1)
-    const [prepTimeHours, setPrepTimeHours] = useState(0)
-    const [prepTimeMinutes, setPrepTimeMinutes] = useState(0)
-    const [cookTimeHours, setCookTimeHours] = useState(0)
-    const [cookTimeMinutes, setCookTimeMinutes] = useState(0)
-    const [previewImage, setPreviewImage] = useState('')
+    const [prepTimeHours, setPrepTimeHours] = useState(Math.floor(prevForm?.prepTime / 60)|| 0)
+    const [prepTimeMinutes, setPrepTimeMinutes] = useState(prevForm?.prepTime % 60|| 0)
+    const [cookTimeHours, setCookTimeHours] = useState(Math.floor(prevForm?.cookTime / 60) || 0)
+    const [cookTimeMinutes, setCookTimeMinutes] = useState(prevForm?.cookTime % 60|| 0)
+    const [previewImage, setPreviewImage] = useState(prevForm?.previewImage || '')
 
     const [errors, setErrors] = useState({})
 
@@ -65,7 +65,7 @@ export default function CreateRecipe () {
 
         updateStepNums()
 
-        dispatch(thunkCreateRecipe(newRecipe))
+        dispatch(update ? thunkUpdateRecipe(prevForm?.id, newRecipe) : thunkCreateRecipe(newRecipe))
         .then(res => {
             const data = res
 
@@ -122,8 +122,7 @@ export default function CreateRecipe () {
 
                 <label>
                     <select
-                        defaultValue={'Category'}
-                        value={categories[category]?.category}
+                        value={categories[category]?.category || 'Category'}
                         onChange={e => setCategory(e.target.selectedIndex)}
                     >
                         <option disabled>Category</option>
@@ -209,11 +208,11 @@ export default function CreateRecipe () {
                             {Object.keys(steps).map(key => {
                                 const step = steps[key]
                                 return (
-                                <div key={`steps${step.stepNumber}`} className="steps_and_remove">
-                                    {step.stepNumber} {step.step}
+                                <div key={`steps${step.step_number}`} className="steps_and_remove">
+                                    Step {step.step_number}. {step.description}
                                     <div className="remove_ingredient" onClick={() => {
                                             const newSteps = {...steps}
-                                            delete newSteps[step.stepNumber]
+                                            delete newSteps[step.step_number]
                                             setSteps(newSteps)
                                         }}>
                                         <i className="fa-solid fa-x fa-xs" />
@@ -232,6 +231,7 @@ export default function CreateRecipe () {
                                 value={stepNumber}
                                 onChange={e => setStepNumber(e.target.value)}
                                 min={1}
+                                max={Object.values(steps).length + 1}
                                 />
                         </label>
                         <div className="add_step_text_container">
@@ -253,10 +253,10 @@ export default function CreateRecipe () {
                                 newStepNum -= 1
                             }
 
-                            const newStep = {stepNumber: newStepNum, step}
+                            const newStep = {step_number: newStepNum, description: step}
 
                             setSteps({...steps, [newStepNum]: newStep})
-
+                            console.log('steps', {...steps, [newStepNum]: newStep})
                             // reset step values
                             setStep('')
                             setStepNumber(+newStepNum + 1)

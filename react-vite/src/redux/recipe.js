@@ -1,6 +1,7 @@
 const GET_ALL_RECIPES = 'recipe/getAllRecipes'
 const GET_SELECTED_RECIPE = 'recipe/getSelectedRecipe'
 const CREATE_RECIPE = 'recipe/createRecipe'
+const UPDATE_RECIPE = 'recipe/updateRecipe'
 const DELETE_RECIPE = 'recipe/deleteRecipe'
 
 const actionGetAllRecipes = (recipes) => {
@@ -20,6 +21,13 @@ const actionGetSelectedRecipe = (recipe) => {
 const actionCreateRecipe = (recipe) => {
     return {
         type: CREATE_RECIPE,
+        recipe
+    }
+}
+
+const actionUpdateRecipe = (recipe) => {
+    return {
+        type: UPDATE_RECIPE,
         recipe
     }
 }
@@ -51,7 +59,6 @@ export const thunkGetSelectedRecipe = (recipeId) => async (dispatch) => {
 }
 
 export const thunkCreateRecipe = (recipe) => async (dispatch) => {
-    // console.log(recipe)
     const res = await fetch("/api/recipes", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -68,20 +75,18 @@ export const thunkCreateRecipe = (recipe) => async (dispatch) => {
     return res.json()
 }
 
-export const thunkUpdateRecipe = (recipeId) => async (dispatch) => {
+export const thunkUpdateRecipe = (recipeId, recipe) => async (dispatch) => {
     const res = await fetch(`/api/recipes/${recipeId}`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            "category_id": 2,
-            "title": "the SECOND best meal ever",
-            "description": "THIS MEAL IS ONLY PARITLALLY THE BEST",
-            "servings": 4,
-            "prep_time": 15,
-            "cook_time": 30,
-            "preview_image": "http://.png"
-        })
+        body: JSON.stringify(recipe)
     })
+
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(thunkUpdateRecipe(data))
+        return data
+    }
 
     return res
 }
