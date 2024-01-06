@@ -1,6 +1,6 @@
 from flask import Blueprint, request, session
-from ..models import Recipe, Category, db
-from ..forms import RecipeForm
+from ..models import Recipe, Category, db, Quantity
+from ..forms import RecipeForm, QuantityForm
 from flask_login import login_required
 
 recipe = Blueprint('recipes', __name__)
@@ -39,12 +39,15 @@ def create_new_recipe():
     Route to handle the creation of new recipes
     """
     form = RecipeForm()
+    form2 = QuantityForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print(dir(form), form.errors)
+    form2['csrf_token'].data = request.cookies['csrf_token']
 
-    if form.validate_on_submit():
+    if form.validate_on_submit() and form2.validate_on_submit():
         data = form.data
+        data2 = form2.data
 
+        # create and add new recipe to the db
         newRecipe = Recipe(
             owner_id = int(session['_user_id']),
             category_id = int(data["category_id"]),
@@ -59,7 +62,19 @@ def create_new_recipe():
         db.session.add(newRecipe)
         db.session.commit()
 
+        # Create and add new quantity to the db now that the recipe exists
+        newQuantity = Quantity(
+            recipe_id = newRecipe.to_dict()['id'],
+            ingredient_measurement_id = data2['measurement_id'],
+            ingredient = data2['ingredient'],
+            ingredient_quantity = data2['ingredient_quantity']
+        )
+
+        db.session.add(newQuantity)
+        db.session.commit()
+
         return newRecipe.to_dict()
+
 
     return {"errors": form.errors}, 400
 
@@ -109,9 +124,12 @@ def update_recipe(recipeId):
 @login_required
 def delete_recipe(recipeId):
     recipe = Recipe.query.get(recipeId)
+    quantities = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
 
     if recipe and recipe.owner_id == int(session['_user_id']):
         db.session.delete(recipe)
+        [db.session.delete(quantity) for quantity in quantities]
+
         db.session.commit()
         return {"message": "successful"}
 

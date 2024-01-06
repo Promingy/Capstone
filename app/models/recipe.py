@@ -40,7 +40,11 @@ class Recipe(db.Model, UserMixin):
 
         if rating:
             # calculates the average rating for the current recipe and adds it to the dictionary
-            avg_rating = sum([review.to_dict()['rating'] for review in self.reviews]) / len(self.reviews)
+            avg_rating = 0
+            
+            if len(self.reviews):
+                avg_rating = sum([review.to_dict()['rating'] for review in self.reviews]) / len(self.reviews)
+
             dictionary['avg_rating'] = avg_rating
 
             # adds total amount of reviews for the current refcipe to the dictionary

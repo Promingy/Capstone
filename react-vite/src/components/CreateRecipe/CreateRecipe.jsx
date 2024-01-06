@@ -12,7 +12,7 @@ export default function CreateRecipe () {
     const measurements = useSelector(state => state.dropdowns.measurements)
     const categories = useSelector(state => state.dropdowns.categories)
     const sessionUser = useSelector(state => state.session.user)
-    const [category, setCategory] = useState('Category')
+    const [category, setCategory] = useState(0)
     const [measurement, setMeasurement] = useState('Measurement')
     const [ingredient, setIngredient] = useState('')
     const [quantity, setQuantity] = useState(0)
@@ -35,20 +35,22 @@ export default function CreateRecipe () {
         dispatch(thunkGetDropdowns())
     }, [dispatch])
 
-
     function handleSubmit(e) {
         e.preventDefault()
 
         const newErrors = {}
 
         const newRecipe = {
-            category_id: 1,
+            category_id: category,
             title,
             description,
             servings: +servings,
             prep_time: +prepTimeHours * 60 + +prepTimeMinutes,
             cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
-            preview_image: previewImage
+            preview_image: previewImage,
+            ingredient,
+            ingredient_quantity: quantity,
+            measurement_id: measurements?.[measurement]?.id
         }
 
         dispatch(thunkCreateRecipe(newRecipe))
@@ -108,13 +110,14 @@ export default function CreateRecipe () {
 
                 <label>
                     <select
-                        value={category}
-                        onChange={e => setCategory(e.target.value)}
+                        defaultValue={'Category'}
+                        value={categories[category]?.category}
+                        onChange={e => setCategory(e.target.selectedIndex)}
                     >
                         <option disabled>Category</option>
-                        {Object.values(categories).map(category => (
-                            <option key={`dropdown_category${category.category}`}>
-                                    {category.category}
+                        {Object.keys(categories).map(key => (
+                            <option key={`dropdown_category${categories?.[key]?.id}`} id={`category_${categories?.[key]?.id}`}>
+                                    {categories[key].category}
                             </option>
                         ))}
                     </select>
