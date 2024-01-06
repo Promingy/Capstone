@@ -33,6 +33,7 @@ export default function CreateRecipe () {
 
     if (!sessionUser) navigate('/')
     if (!measurements || !categories) return
+
     return(
         <div>
             <form className="new_recipe_form">
@@ -202,7 +203,7 @@ export default function CreateRecipe () {
                                 newStepNum -= 1
                             }
 
-                            const newStep = {newStepNum, step}
+                            const newStep = {stepNumber: newStepNum, step}
 
                             setSteps({...steps, [newStepNum]: newStep})
 
