@@ -7,10 +7,12 @@ import {
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import recipeReducer from "./recipe";
+import dropDownReducer from "./dropdown";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
-  recipes: recipeReducer
+  recipes: recipeReducer,
+  dropdowns: dropDownReducer
 });
 
 let enhancer;

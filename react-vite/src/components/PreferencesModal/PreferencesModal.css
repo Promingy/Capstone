@@ -90,6 +90,14 @@
     background-color: #EEEEEE;
 }
 
+.create_recipe {
+    margin: 20px 0;
+    padding: 20px 0;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    cursor: pointer;
+}
+
 .logout_button {
     text-decoration: underline;
     font-weight: 600;

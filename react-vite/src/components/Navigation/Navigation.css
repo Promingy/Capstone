@@ -24,8 +24,9 @@
 
 .login_button,
 .sign_up_button {
-  padding: 11px 19px;
   border-radius: 20px;
+  display: flex;
+  align-items: center;
   font-weight: 550;
   cursor: pointer;
   font-family: nyt-franklin,Arial,Helvetica,sans-serif;
@@ -36,6 +37,14 @@
 .login_button {
   background-color: white;
   border: 1px solid lightgray;
+}
+
+.openModalMenuItem {
+  padding: 11px 19px;
+  border-radius: 20px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .sign_up_button {

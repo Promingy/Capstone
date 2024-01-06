@@ -1,0 +1,84 @@
+.new_recipe_form {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.added_ingredients > *,
+.added_steps > * {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 5px;
+    background-color: #F8F8F5;
+    border-radius: 5px;
+    gap: 10px;
+}
+
+.add_ingredients_container {
+    display: flex;
+    gap: 10px;
+}
+
+.remove_ingredient {
+    padding: 2px 5px;
+    margin: 0;
+    border-radius: 4px;
+}
+
+.remove_ingredient:hover {
+    background-color: lightgrey;
+}
+
+.added_ingredients {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.add_ingredient {
+    width: fit-content;
+    padding: 3px;
+}
+
+.add_ingredient:hover {
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+.add_ingredient:active {
+    background-color: #CF1A00;
+    border-radius: 5px;
+}
+
+.create_description,
+.add_step_text_area {
+    resize: none;
+    outline: none;
+    border: none;
+    margin: 0;
+    padding: 0
+}
+
+.description_container,
+.add_step_text_container {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    width: 200px;
+    outline: none;
+    border:  1px solid black;
+    padding: 5px;
+}
+
+
+.steps_and_remove {
+    width: fit-content;
+}
+
+.step_and_add {
+    display: flex;
+    align-items: center;
+}

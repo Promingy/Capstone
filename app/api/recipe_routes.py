@@ -6,7 +6,6 @@ from flask_login import login_required
 recipe = Blueprint('recipes', __name__)
 
 @recipe.route('')
-@login_required
 def get_all_recipes():
     """
     Route that returns all of the recipes needed for the homepage
@@ -22,7 +21,8 @@ def get_all_recipes():
         if not len(recipes):
             continue
 
-        category = category.to_dict()['category']
+        # category = category.to_dict()['category']
+        category = category.to_dict()['id']
 
         # If category has recipes,
         # set category as key and all recipes as a list for the value
@@ -40,6 +40,7 @@ def create_new_recipe():
     """
     form = RecipeForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print(dir(form), form.errors)
 
     if form.validate_on_submit():
         data = form.data
@@ -60,7 +61,7 @@ def create_new_recipe():
 
         return newRecipe.to_dict()
 
-    return form.errors, 400
+    return {"errors": form.errors}, 400
 
 
 @recipe.route('/<int:recipeId>')
