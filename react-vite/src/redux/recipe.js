@@ -1,5 +1,6 @@
 const GET_ALL_RECIPES = 'recipe/getAllRecipes'
 const GET_SELECTED_RECIPE = 'recipe/getSelectedRecipe'
+const CREATE_RECIPE = 'recipe/createRecipe'
 
 const actionGetAllRecipes = (recipes) => {
     return {
@@ -11,6 +12,13 @@ const actionGetAllRecipes = (recipes) => {
 const actionGetSelectedRecipe = (recipe) => {
     return {
         type: GET_SELECTED_RECIPE,
+        recipe
+    }
+}
+
+const actionCreateRecipe = (recipe) => {
+    return {
+        type: CREATE_RECIPE,
         recipe
     }
 }
@@ -38,18 +46,17 @@ export const thunkCreateRecipe = (recipe) => async (dispatch) => {
     const res = await fetch("/api/recipes", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            "category_id": 1,
-            "title": "the best meal ever",
-            "description": "I just said it was the best thing in the entire universe",
-            "servings": 3,
-            "prep_time": 5,
-            "cook_time": 20,
-            "preview_image": "http://.png"
-        })
+        body: JSON.stringify(recipe)
     })
 
-    return res
+
+    if (res.ok){
+        const data = await res.json()
+        dispatch(actionCreateRecipe(data))
+        return data
+    }
+
+    return res.json()
 }
 
 export const thunkUpdateRecipe = (recipeId) => async (dispatch) => {
@@ -97,6 +104,11 @@ function recipeReducer(state=initialState, action){
             return newState
         }
         case GET_SELECTED_RECIPE: {
+            const newState = { ...state }
+            newState[action.recipe.id] = action.recipe
+            return newState
+        }
+        case CREATE_RECIPE: {
             const newState = { ...state }
             newState[action.recipe.id] = action.recipe
             return newState

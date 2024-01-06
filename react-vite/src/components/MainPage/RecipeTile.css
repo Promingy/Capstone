@@ -49,3 +49,12 @@
     justify-content: space-between;
     width: 100%;
 }
+
+.tile_icons_container {
+    display: flex;
+    gap: 10px;
+}
+
+.delete_recipe:hover {
+    color: red;
+}

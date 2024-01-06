@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import './RecipeTile.css'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export function starCreator(recipe) {
     const stars = []
@@ -18,6 +19,7 @@ export function starCreator(recipe) {
 
 export default function RecipeTile({ recipe }) {
     const navigate = useNavigate()
+    const sessionUser = useSelector(state => state.session.user)
     const cookTimeHours = Math.floor((recipe.cook_time + recipe.prep_time) / 60)
     const cookTimeMinutes = (recipe.cook_time + recipe.prep_time) % 60
     const ownerFirstName = recipe.owner.first_name[0].toUpperCase() + recipe.owner.first_name.slice(1)
@@ -25,8 +27,12 @@ export default function RecipeTile({ recipe }) {
     const [bookmark, setBookmark] = useState('fa-regular fa-bookmark fa-lg')
     const [saved, setSaved] = useState(false)
 
-    function onClickHandle () {
-        navigate(`/recipes/${recipe.id}-${recipe.title.toLowerCase().split(' ').join('-')}`, {state: recipe})
+    function onClickHandle (e) {
+        const node = e.target.attributes.id?.value
+
+        if (node != "tileBookmark" && node != "delete_recipe") {
+            navigate(`/recipes/${recipe.id}-${recipe.title.toLowerCase().split(' ').join('-')}`, {state: recipe})
+        }
     }
 
     return (
@@ -64,27 +70,34 @@ export default function RecipeTile({ recipe }) {
                             </span>
                             }
                         </p>
+                        <div className='tile_icons_container'>
+                            <span
+                                id='tileBookmark'
+                                className={bookmark}
+                                onMouseOver={() => {
+                                    if (!saved){
+                                        setBookmark('fa-solid fa-bookmark fa-lg')}}
+                                    }
+                                onMouseLeave={() =>{
+                                    if (!saved){
+                                        setBookmark('fa-regular fa-bookmark fa-lg')
+                                    }
+                                }}
+                                onClick={() => {
+                                    if (!saved){
+                                        setBookmark('fa-solid fa-bookmark fa-lg')
+                                    } else {
+                                        setBookmark("fa-regular fa-bookmark fa-lg")
+                                    }
+                                    setSaved(!saved)
+                                }}
+                                />
 
-                        <span
-                            className={bookmark}
-                            onMouseOver={() => {
-                                if (!saved){
-                                    setBookmark('fa-solid fa-bookmark fa-lg')}}
-                                }
-                            onMouseLeave={() =>{
-                                if (!saved){
-                                    setBookmark('fa-regular fa-bookmark fa-lg')
-                                }
-                            }}
-                            onClick={() => {
-                                if (!saved){
-                                    setBookmark('fa-solid fa-bookmark fa-lg')
-                                } else {
-                                    setBookmark("fa-regular fa-bookmark fa-lg")
-                                }
-                                setSaved(!saved)
-                            }}
-                            />
+                                {sessionUser.id == recipe.owner_id &&
+                                <span id='delete_recipe' className='fa-regular fa-trash-can fa-lg delete_recipe'/>}
+
+                        </div>
+
                     </div>
                 </div>
             </div>

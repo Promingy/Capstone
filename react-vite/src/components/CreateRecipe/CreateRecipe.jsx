@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetDropdowns } from "../../redux/dropdown"
 import { useNavigate } from "react-router-dom"
 import TextareaAutoSize from 'react-textarea-autosize'
+import { thunkCreateRecipe } from "../../redux/recipe"
 
 export default function CreateRecipe () {
     const dispatch = useDispatch()
@@ -22,13 +23,48 @@ export default function CreateRecipe () {
     const [step, setStep] = useState('')
     const [steps, setSteps] = useState({})
     const [stepNumber, setStepNumber] = useState(1)
+    const [prepTimeHours, setPrepTimeHours] = useState(0)
+    const [prepTimeMinutes, setPrepTimeMinutes] = useState(0)
+    const [cookTimeHours, setCookTimeHours] = useState(0)
+    const [cookTimeMinutes, setCookTimeMinutes] = useState(0)
+    const [previewImage, setPreviewImage] = useState('')
+
+    const [errors, setErrors] = useState({})
 
     useEffect(() => {
         dispatch(thunkGetDropdowns())
     }, [dispatch])
 
+
     function handleSubmit(e) {
         e.preventDefault()
+
+        const newErrors = {}
+
+        const newRecipe = {
+            category_id: 1,
+            title,
+            description,
+            servings: +servings,
+            prep_time: +prepTimeHours * 60 + +prepTimeMinutes,
+            cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
+            preview_image: previewImage
+        }
+
+        dispatch(thunkCreateRecipe(newRecipe))
+        .then(res => {
+            const data = res
+
+            if (data.errors){
+                for (let error in data.errors){
+                    newErrors[error] = data.errors[error]
+                }
+            }else {
+                navigate(`/recipes/${res.id}-${res.title}`)
+            }
+        })
+
+        setErrors(newErrors)
     }
 
     if (!sessionUser) navigate('/')
@@ -36,7 +72,7 @@ export default function CreateRecipe () {
 
     return(
         <div>
-            <form className="new_recipe_form">
+            <form className="new_recipe_form" onSubmit={handleSubmit}>
                 <legend>Create new Recipe</legend>
 
                 <label>
@@ -227,12 +263,16 @@ export default function CreateRecipe () {
                             type='number'
                             placeholder="Hours"
                             min={0}
+                            value={prepTimeHours}
+                            onChange={e => setPrepTimeHours(e.target.value)}
                             />
                         <input
                             type='number'
                             placeholder="Minutes"
                             min={0}
                             max={60}
+                            value={prepTimeMinutes}
+                            onChange={e => setPrepTimeMinutes(e.target.value)}
                             />
                 </label>
 
@@ -241,12 +281,27 @@ export default function CreateRecipe () {
                         <input
                             type='number'
                             placeholder="Hours"
-                            min={0}/>
+                            min={0}
+                            value={cookTimeHours}
+                            onChange={e => setCookTimeHours(e.target.value)}
+                            />
                         <input
                             type='number'
                             placeholder="Minutes"
                             max={60}
-                            min={0}/>
+                            min={0}
+                            value={cookTimeMinutes}
+                            onChange={e => setCookTimeMinutes(e.target.value)}
+                            />
+                </label>
+
+                <label>
+                    <input
+                        type='url'
+                        placeholder="preview_image"
+                        value={previewImage}
+                        onChange={e => setPreviewImage(e.target.value)}
+                    />
                 </label>
 
                 <button>Submit</button>

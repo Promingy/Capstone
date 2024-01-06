@@ -39,6 +39,7 @@ def create_new_recipe():
     """
     form = RecipeForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print(dir(form), form.errors)
 
     if form.validate_on_submit():
         data = form.data
@@ -59,7 +60,7 @@ def create_new_recipe():
 
         return newRecipe.to_dict()
 
-    return form.errors, 400
+    return {"errors": form.errors}, 400
 
 
 @recipe.route('/<int:recipeId>')
