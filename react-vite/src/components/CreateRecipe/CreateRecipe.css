@@ -6,7 +6,8 @@
     gap: 30px;
 }
 
-.added_ingredients > * {
+.added_ingredients > *,
+.added_steps > * {
     display: flex;
     align-items: center;
     margin: 0;
@@ -16,7 +17,7 @@
     gap: 10px;
 }
 
-.add_ingredients {
+.add_ingredients_container {
     display: flex;
     gap: 10px;
 }
@@ -39,4 +40,45 @@
 
 .add_ingredient {
     width: fit-content;
+    padding: 3px;
+}
+
+.add_ingredient:hover {
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+.add_ingredient:active {
+    background-color: #CF1A00;
+    border-radius: 5px;
+}
+
+.create_description,
+.add_step_text_area {
+    resize: none;
+    outline: none;
+    border: none;
+    margin: 0;
+    padding: 0
+}
+
+.description_container,
+.add_step_text_container {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    width: 200px;
+    outline: none;
+    border:  1px solid black;
+    padding: 5px;
+}
+
+
+.steps_and_remove {
+    width: fit-content;
+}
+
+.step_and_add {
+    display: flex;
+    align-items: center;
 }
