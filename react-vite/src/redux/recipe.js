@@ -65,6 +65,8 @@ export const thunkCreateRecipe = (recipe) => async (dispatch) => {
         body: JSON.stringify(recipe)
     })
 
+    console.log(res)
+
 
     if (res.ok){
         const data = await res.json()
@@ -72,7 +74,7 @@ export const thunkCreateRecipe = (recipe) => async (dispatch) => {
         return data
     }
 
-    return res.json()
+    return await res.json()
 }
 
 export const thunkUpdateRecipe = (recipeId, recipe) => async (dispatch) => {
