@@ -38,14 +38,27 @@ def create_new_recipe():
     """
     Route to handle the creation of new recipes
     """
+    ingredients = request.get_json()['ingredients']
+
     form = RecipeForm()
     form2 = QuantityForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     form2['csrf_token'].data = request.cookies['csrf_token']
 
+    # Validate each ingredient in the recipe - all should pass
+    for key in ingredients:
+        ingredient = ingredients[key]
+
+        form2.ingredient.data = ingredient['ingredient']
+        form2.ingredient_quantity.data = ingredient['quantity']
+        form2.measurement_id.data = ingredient['measurement']
+
+        if not form2.validate_on_submit():
+            break
+
+    # if form passes validations, add to database
     if form.validate_on_submit() and form2.validate_on_submit():
         data = form.data
-        data2 = form2.data
 
         # create and add new recipe to the db
         newRecipe = Recipe(
@@ -62,15 +75,19 @@ def create_new_recipe():
         db.session.add(newRecipe)
         db.session.commit()
 
-        # Create and add new quantity to the db now that the recipe exists
-        newQuantity = Quantity(
-            recipe_id = newRecipe.to_dict()['id'],
-            ingredient_measurement_id = data2['measurement_id'],
-            ingredient = data2['ingredient'],
-            ingredient_quantity = data2['ingredient_quantity']
-        )
+        # Create and add new quantity for every ingredient to the db now that the recipe exists
+        for key in ingredients:
+            ingredient = ingredients[key]
 
-        db.session.add(newQuantity)
+            newQuantity = Quantity(
+                recipe_id = newRecipe.to_dict()['id'],
+                ingredient_measurement_id = ingredient['measurement'],
+                ingredient = ingredient['ingredient'],
+                ingredient_quantity = ingredient['quantity']
+            )
+
+            db.session.add(newQuantity)
+
         db.session.commit()
 
         return newRecipe.to_dict()

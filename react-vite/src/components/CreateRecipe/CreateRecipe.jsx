@@ -48,8 +48,9 @@ export default function CreateRecipe () {
             prep_time: +prepTimeHours * 60 + +prepTimeMinutes,
             cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
             preview_image: previewImage,
-            ingredient,
-            ingredient_quantity: quantity,
+            // ingredient,
+            // ingredient_quantity: quantity,
+            ingredients,
             measurement_id: measurements?.[measurement]?.id
         }
 
@@ -126,7 +127,7 @@ export default function CreateRecipe () {
                     <div className="added_ingredients">
                         {Object.values(ingredients).map(ingredient => {
                             return (
-                                <div key={`ingredient${ingredients.ingredient}${ingredients.quantity}`}>
+                                <div key={`ingredient${ingredient.ingredient}${ingredient.quantity}`}>
                                     {ingredient.ingredient}
                                     <div className="remove_ingredient" onClick={() => {
                                             const newIngredient = {...ingredients}
