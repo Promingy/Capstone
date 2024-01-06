@@ -85,7 +85,7 @@ export const thunkUpdateRecipe = (recipeId, recipe) => async (dispatch) => {
 
     if (res.ok) {
         const data = await res.json()
-        dispatch(thunkUpdateRecipe(data))
+        dispatch(actionUpdateRecipe(data))
         return data
     }
 
@@ -126,6 +126,12 @@ function recipeReducer(state=initialState, action){
             return newState
         }
         case CREATE_RECIPE: {
+            const newState = { ...state }
+            newState[action.recipe.id] = action.recipe
+            newState.categories[action.recipe.category_id][action.recipe.id] = action.recipe
+            return newState
+        }
+        case UPDATE_RECIPE: {
             const newState = { ...state }
             newState[action.recipe.id] = action.recipe
             return newState
