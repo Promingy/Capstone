@@ -45,7 +45,7 @@ function ProfileButton() {
   function logout () {
     dispatch(thunkLogout());
     closeMenu();
-  };
+  }
 
   useEffect(() => {
     // if the url has changed, and the prefModal is open, close the modal

@@ -233,7 +233,6 @@ export default function CreateRecipe () {
                             if (!step) return
 
                             let newStepNum = stepNumber
-                            let test = 1
 
                             while (steps[newStepNum - 1] == undefined && newStepNum !== 1){
                                 newStepNum -= 1
