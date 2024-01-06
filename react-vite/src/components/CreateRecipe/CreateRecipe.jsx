@@ -59,7 +59,6 @@ export default function CreateRecipe ({ prevForm, update }) {
             cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
             preview_image: previewImage,
             ingredients,
-            measurement_id: measurements?.[measurement]?.id,
             steps
         }
 
@@ -141,7 +140,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                                     {ingredient.ingredient}
                                     <div className="remove_ingredient" onClick={() => {
                                             const newIngredient = {...ingredients}
-                                            delete newIngredient[ingredient.ingredient]
+                                            delete newIngredient[ingredient[update ? 'id' : 'ingredient']]
                                             setIngredients(newIngredient)
                                         }}>
                                         <i className="fa-solid fa-x fa-xs" />
@@ -185,7 +184,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                             if (ingredient && quantity && measurement){
                                 const newIngredient = { ingredient,
                                                         quantity,
-                                                        measurement}
+                                                        measurement: measurements[measurement].id}
                                 setIngredients({...ingredients, [ingredient]: newIngredient})
 
                                 // reset ingredient values
@@ -256,7 +255,6 @@ export default function CreateRecipe ({ prevForm, update }) {
                             const newStep = {step_number: newStepNum, description: step}
 
                             setSteps({...steps, [newStepNum]: newStep})
-                            console.log('steps', {...steps, [newStepNum]: newStep})
                             // reset step values
                             setStep('')
                             setStepNumber(+newStepNum + 1)

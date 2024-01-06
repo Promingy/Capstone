@@ -44,7 +44,6 @@ export default function SelectedRecipe() {
         dispatch(thunkGetSelectedRecipe(recipeId))
     }, [dispatch, recipeId])
 
-
     if (!recipe) return
     return (
         <div>
@@ -107,7 +106,7 @@ export default function SelectedRecipe() {
                                     </span>
                                 }
                                 &nbsp;
-                                {!!prepTimeMinutes &&
+                                {!!cookTimeMinutes &&
                                     <span>
                                         {cookTimeMinutes} {cookTimeMinutes > 1 ? "minutes": "minute"}
                                     </span>

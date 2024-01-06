@@ -151,16 +151,43 @@ def get_single_recipe(recipeId):
 @login_required
 def update_recipe(recipeId):
 
+    ingredients = request.get_json()['ingredients']
+    steps = request.get_json()['steps']
+
     form = RecipeForm()
+    form2 = QuantityForm()
+    form3 = StepForm()
+
     form['csrf_token'].data = request.cookies['csrf_token']
+    form2['csrf_token'].data = request.cookies['csrf_token']
+    form3['csrf_token'].data = request.cookies['csrf_token']
 
     recipe = Recipe.query.get(recipeId)
     if not recipe:
         return {"error": "Resource not found"}, 404
 
-    if form.validate_on_submit():
-        data = form.data
+    for key in ingredients:
+        # print('~~~~~~~~~~~~~~~', ingredients)
+        ingredient = ingredients[key]
 
+        form2.ingredient.data = ingredient['ingredient']
+        form2.ingredient_quantity.data = ingredient['ingredient_quantity']
+        form2.measurement_id.data = ingredient['ingredient_measurement_id']
+
+        if not form2.validate_on_submit():
+            break
+
+    for key in steps:
+        step = steps[key]
+
+        form3.step_number.data = step['step_number']
+        form3.step_description.data = step['description']
+
+        if not form3.validate_on_submit():
+            break
+
+    if form.validate_on_submit() and form2.validate_on_submit() and form3.validate_on_submit():
+        data = form.data
         recipe.category_id = data['category_id']
         recipe.title = data['title']
         recipe.description = data['description']
@@ -168,6 +195,23 @@ def update_recipe(recipeId):
         recipe.prep_time = data['prep_time']
         recipe.cook_time = data['cook_time']
         recipe.preview_image = data['preview_image']
+
+        for key in ingredients:
+            new_ingredient = ingredients[key]
+            db_ingredient = Quantity.query.get(new_ingredient['id'])
+
+            db_ingredient.ingredient = new_ingredient['ingredient']
+            db_ingredient.ingredient_quantity = new_ingredient['ingredient_quantity']
+            db_ingredient.measurement_id = new_ingredient['ingredient_measurement_id']
+
+
+        for key in steps:
+            new_step = steps[key]
+            db_step = Step.query.get(new_step['id'])
+
+            db_step.step_number = new_step['step_number']
+            db_step.description = new_step['description']
+
 
         db.session.commit()
         return recipe.to_dict()
