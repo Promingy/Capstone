@@ -6,13 +6,15 @@ def seed_quantities():
     Func that adds pre-seeded quantities for recipes to the database
     """
     quantity1 = Quantity(
-    recipe_id=1,
-    ingredient_measurement_id=8,
-    ingredient="Spaghetti",
-    ingredient_quantity=300
+        # id=1,
+        recipe_id=1,
+        ingredient_measurement_id=8,
+        ingredient="Spaghetti",
+        ingredient_quantity=300
     )
 
     quantity2 = Quantity(
+        # id=2,
         recipe_id=1,
         ingredient_measurement_id=7,
         ingredient="Ground Beef",
@@ -20,6 +22,7 @@ def seed_quantities():
     )
 
     quantity3 = Quantity(
+        # id=3,
         recipe_id=1,
         ingredient_measurement_id=1,
         ingredient="Tomato Sauce",
@@ -27,6 +30,7 @@ def seed_quantities():
     )
 
     quantity4 = Quantity(
+        # id=4,
         recipe_id=2,
         ingredient_measurement_id=6,
         ingredient="Chicken Breast",
@@ -34,6 +38,7 @@ def seed_quantities():
     )
 
     quantity5 = Quantity(
+        # id=5,
         recipe_id=2,
         ingredient_measurement_id=7,
         ingredient="Lettuce",
@@ -41,6 +46,7 @@ def seed_quantities():
     )
 
     quantity6 = Quantity(
+        # id=6,
         recipe_id=2,
         ingredient_measurement_id=1,
         ingredient="Cherry Tomatoes",
@@ -48,6 +54,7 @@ def seed_quantities():
     )
 
     quantity7 = Quantity(
+        # id=7,
         recipe_id=3,
         ingredient_measurement_id=8,
         ingredient="Broccoli",
@@ -55,6 +62,7 @@ def seed_quantities():
     )
 
     quantity8 = Quantity(
+        # id=8,
         recipe_id=3,
         ingredient_measurement_id=8,
         ingredient="Carrots",
@@ -62,6 +70,7 @@ def seed_quantities():
     )
 
     quantity9 = Quantity(
+        # id=9,
         recipe_id=3,
         ingredient_measurement_id=1,
         ingredient="Soy Sauce",
@@ -69,6 +78,7 @@ def seed_quantities():
     )
 
     quantity10 = Quantity(
+        # id=10,
         recipe_id=4,
         ingredient_measurement_id=8,
         ingredient="All-Purpose Flour",
@@ -76,6 +86,7 @@ def seed_quantities():
     )
 
     quantity11 = Quantity(
+        # id=11,
         recipe_id=4,
         ingredient_measurement_id=7,
         ingredient="Butter",
@@ -83,6 +94,7 @@ def seed_quantities():
     )
 
     quantity12 = Quantity(
+        # id=12,
         recipe_id=4,
         ingredient_measurement_id=6,
         ingredient="Chocolate Chips",
@@ -90,6 +102,7 @@ def seed_quantities():
     )
 
     quantity13 = Quantity(
+        # id=13,
         recipe_id=5,
         ingredient_measurement_id=8,
         ingredient="Penne Pasta",
@@ -97,6 +110,7 @@ def seed_quantities():
     )
 
     quantity14 = Quantity(
+        # id=14,
         recipe_id=5,
         ingredient_measurement_id=8,
         ingredient="Tomatoes",
@@ -104,6 +118,7 @@ def seed_quantities():
     )
 
     quantity15 = Quantity(
+        # id=15,
         recipe_id=5,
         ingredient_measurement_id=8,
         ingredient="Fresh Basil",
