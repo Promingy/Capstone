@@ -101,12 +101,7 @@
     box-shadow: 2px 2px 5px lightgray;
     box-sizing: border-box;
     max-width: 100%;
-    padding: 0 1px;
-}
-
-.ingredient {
-    overflow-wrap: break-word;
-    width: 90%;
+    padding: 10px;
 }
 
 .add_ingredient {
@@ -149,6 +144,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
     box-shadow: 2px 2px 5px lightgray;
 }
 
@@ -183,4 +179,27 @@
     margin: 20px auto;
     font-size: 20px;
     font-weight: bolder;
+}
+
+.ingredient_measurement {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    gap: 10px;
+    width: 95%;
+}
+
+.ingredient_measurement > * {
+    width: fit-content;
+    margin: 0
+}
+
+.ingredient_amount {
+    display: flex;
+    width: 100%;
+}
+
+.ingredient {
+    overflow-wrap: break-word;
+    width: 100%;
 }

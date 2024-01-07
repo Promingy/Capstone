@@ -126,16 +126,25 @@ export default function CreateRecipe ({ prevForm, update }) {
 
                     <div className="added_ingredients">
                         {Object.values(ingredients).map(ingredient => {
+                            let measurement_name = measurements[ingredient.ingredient_measurement_id].measurement_name
+                            measurement_name = +ingredient.ingredient_quantity > 1 ?  measurement_name + 's' : measurement_name
+
                             return (
                                 <div key={`ingredient${ingredient.ingredient}${ingredient.quantity}`} className="ingredient_container">
-                                    <p className="ingredient">{ingredient.ingredient}</p>
-                                    <div className="remove_ingredient" onClick={() => {
-                                            const newIngredient = {...ingredients}
-                                            delete newIngredient[ingredient[update ? 'id' : 'ingredient']]
-                                            setIngredients(newIngredient)
-                                        }}>
-                                        <i className="fa-solid fa-x fa-xs" />
+
+                                    <div className="ingredient_measurement">
+                                        <p className="ingredient_amount">
+                                            {ingredient.ingredient_quantity} {measurement_name}:
+                                        </p>
+                                        <p className="ingredient">{ingredient.ingredient}</p>
                                     </div>
+                                     <div className="remove_ingredient" onClick={() => {
+                                             const newIngredient = {...ingredients}
+                                             delete newIngredient[ingredient[update ? 'id' : 'ingredient']]
+                                             setIngredients(newIngredient)
+                                         }}>
+                                         <i className="fa-solid fa-x fa-xs" />
+                                     </div>
                                 </div>
                             )
                         })}
@@ -159,8 +168,8 @@ export default function CreateRecipe ({ prevForm, update }) {
                 {/* <label className="add_ingredients_container"> */}
                     <select
                         className="measurement_select"
-                        value={measurement}
-                        onChange={e => setMeasurement(e.target.value)}
+                        value={measurements[measurement]?.measurement_name || 'Measurement'}
+                        onChange={e => setMeasurement(e.target.selectedIndex)}
                     >
                         <option disabled>Measurement</option>
 
@@ -188,15 +197,17 @@ export default function CreateRecipe ({ prevForm, update }) {
                     <div className='add_ingredient' onClick={() => {
                             // add ingredient to ingredients obj
                             if (ingredient && quantity && measurement != 'Measurement'){
+                                console.log(ingredient, quantity, measurements[measurement].id)
                                 const newIngredient = { ingredient,
                                                         ingredient_quantity: +quantity,
                                                         ingredient_measurement_id: measurements[measurement].id}
+
                                 setIngredients({...ingredients, [ingredient]: newIngredient})
 
-                                // reset ingredient values
-                                setIngredient('')
-                                setQuantity(0)
-                                setMeasurement('Measurement')
+                            //     // reset ingredient values
+                            //     setIngredient('')
+                            //     setQuantity(0)
+                            //     setMeasurement('Measurement')
                             }
                         }}>
 
@@ -259,7 +270,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                             // add step to steps obj
                             if (!step) return
 
-                            let newStepNum = +stepNumber
+                            let newStepNum = +stepNumber >= 1 ? +stepNumber : 1
 
                             while (steps[+newStepNum - 1] == undefined && +newStepNum !== 1){
                                 newStepNum -= 1
