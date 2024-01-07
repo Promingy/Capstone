@@ -127,8 +127,8 @@ export default function CreateRecipe ({ prevForm, update }) {
                     <div className="added_ingredients">
                         {Object.values(ingredients).map(ingredient => {
                             return (
-                                <div key={`ingredient${ingredient.ingredient}${ingredient.quantity}`}>
-                                    {ingredient.ingredient}
+                                <div key={`ingredient${ingredient.ingredient}${ingredient.quantity}`} className="ingredient_container">
+                                    <p className="ingredient">{ingredient.ingredient}</p>
                                     <div className="remove_ingredient" onClick={() => {
                                             const newIngredient = {...ingredients}
                                             delete newIngredient[ingredient[update ? 'id' : 'ingredient']]
@@ -214,7 +214,14 @@ export default function CreateRecipe ({ prevForm, update }) {
                                 const step = steps[key]
                                 return (
                                 <div key={`steps${step.step_number}`} className="steps_and_remove">
-                                    Step {step.step_number}. {step.description}
+                                    <div className="step_test">
+                                        <p>
+                                            Step {step.step_number}.
+                                        </p>
+                                        <p className="step_description">
+                                            {step.description}
+                                        </p>
+                                    </div>
                                     <div className="remove_ingredient" onClick={() => {
                                             const newSteps = {...steps}
                                             delete newSteps[step.step_number]

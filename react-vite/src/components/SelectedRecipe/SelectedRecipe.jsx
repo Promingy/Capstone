@@ -46,7 +46,7 @@ export default function SelectedRecipe() {
 
     if (!recipe) return
     return (
-        <div>
+        <div className='spacer'>
             <div className='header_image_title'>
                 <div className='single_title_owner'>
                     <h1>{recipe.title}</h1>

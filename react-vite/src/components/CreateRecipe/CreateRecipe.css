@@ -1,9 +1,14 @@
+:root {
+    --nav-bar-height: 114px
+}
+
 .new_recipe_form {
     max-width: 1000px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 30px;
+    margin-top: 134px;
 }
 
 .new_recipe_form > * {
@@ -89,6 +94,19 @@
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    /* border: 1px solid red; */
+}
+
+.ingredient_container {
+    box-shadow: 2px 2px 5px lightgray;
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 0 1px;
+}
+
+.ingredient {
+    overflow-wrap: break-word;
+    width: 90%;
 }
 
 .add_ingredient {
@@ -128,7 +146,20 @@
 
 
 .steps_and_remove {
-    width: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 2px 2px 5px lightgray;
+}
+
+.step_test {
+    box-sizing: border-box;
+    width: 93%;
+}
+
+.step_description{
+    overflow-wrap: break-word;
+
 }
 
 .step_and_add {
@@ -149,7 +180,7 @@
     padding: 15px;
     border-radius: 5px;
     width: 50%;
-    margin-top: 20px;
+    margin: 20px auto;
     font-size: 20px;
     font-weight: bolder;
 }
