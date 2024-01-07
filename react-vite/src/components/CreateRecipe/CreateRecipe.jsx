@@ -72,7 +72,6 @@ export default function CreateRecipe ({ prevForm, update }) {
                 for (let error in data.errors){
                     newErrors[error] = data.errors[error]
                 }
-                console.log('newErrors', newErrors)
             }else {
                 navigate(`/recipes/${res.id}-${res.title}`)
             }

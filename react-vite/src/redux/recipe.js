@@ -59,14 +59,12 @@ export const thunkGetSelectedRecipe = (recipeId) => async (dispatch) => {
 }
 
 export const thunkCreateRecipe = (recipe) => async (dispatch) => {
-    console.log('recipe', recipe)
     const res = await fetch("/api/recipes", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(recipe)
     })
 
-    console.log('res', res, res.json())
     if (res.ok){
         const data = await res.json()
         dispatch(actionCreateRecipe(data))
