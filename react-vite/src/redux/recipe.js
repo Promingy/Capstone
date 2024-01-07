@@ -75,7 +75,7 @@ export const thunkCreateRecipe = (recipe) => async (dispatch) => {
 }
 
 export const thunkUpdateRecipe = (recipeId, recipe) => async (dispatch) => {
-    // console.log(recipe)
+    console.log(recipe)
     const res = await fetch(`/api/recipes/${recipeId}`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
