@@ -183,7 +183,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                             // add ingredient to ingredients obj
                             if (ingredient && quantity && measurement){
                                 const newIngredient = { ingredient,
-                                                        quantity,
+                                                        quantity: +quantity,
                                                         measurement: measurements[measurement].id}
                                 setIngredients({...ingredients, [ingredient]: newIngredient})
 
