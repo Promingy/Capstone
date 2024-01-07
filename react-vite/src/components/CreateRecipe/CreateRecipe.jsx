@@ -22,7 +22,7 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [servings, setServings] = useState(prevForm?.servings || 0)
     const [step, setStep] = useState('')
     const [steps, setSteps] = useState(prevForm?.steps || {})
-    const [stepNumber, setStepNumber] = useState(Object.values(prevForm?.steps).length + 1 || 1)
+    const [stepNumber, setStepNumber] = useState( prevForm?.steps && Object.values(prevForm?.steps).length + 1 || 1)
     const [prepTimeHours, setPrepTimeHours] = useState(Math.floor(prevForm?.prepTime / 60)|| 0)
     const [prepTimeMinutes, setPrepTimeMinutes] = useState(prevForm?.prepTime % 60|| 0)
     const [cookTimeHours, setCookTimeHours] = useState(Math.floor(prevForm?.cookTime / 60) || 0)

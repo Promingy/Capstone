@@ -166,8 +166,8 @@ def update_recipe(recipeId):
     if not recipe:
         return {"error": "Resource not found"}, 404
 
+    # verify all ingredients before updating recipe
     for key in ingredients:
-        print('~~~~~~~~~~~~~~~', ingredients)
         ingredient = ingredients[key]
 
         form2.ingredient.data = ingredient['ingredient']
@@ -177,6 +177,7 @@ def update_recipe(recipeId):
         if not form2.validate_on_submit():
             break
 
+    # verify all steps before updating recipe
     for key in steps:
         step = steps[key]
 
@@ -189,6 +190,7 @@ def update_recipe(recipeId):
     if form.validate_on_submit() and form2.validate_on_submit() and form3.validate_on_submit():
         data = form.data
         db_ingredients = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
+        db_steps = Step.query.filter(Step.recipe_id == recipeId).all()
 
         recipe.category_id = data['category_id']
         recipe.title = data['title']
@@ -203,19 +205,26 @@ def update_recipe(recipeId):
         # it already passed the validation check if we're right here
         if len(db_ingredients) < len(ingredients):
            for ingredient in ingredients:
-                prevIngredient = ingredients[ingredient]
+                reqIngredient = ingredients[ingredient]
                 try:
-                   prevIngredient['id']
+                   reqIngredient['id']
                 except:
                    newIngredient = Quantity(
                        recipe_id = recipeId,
-                       ingredient_measurement_id = prevIngredient['ingredient_measurement_id'],
-                       ingredient = prevIngredient['ingredient'],
-                       ingredient_quantity = prevIngredient['ingredient_quantity']
+                       ingredient_measurement_id = reqIngredient['ingredient_measurement_id'],
+                       ingredient = reqIngredient['ingredient'],
+                       ingredient_quantity = reqIngredient['ingredient_quantity']
                    )
                    db.session.add(newIngredient)
                    db.session.commit()
                    ingredients[ingredient]['id'] = newIngredient.to_dict()['id']
+        # if a new ingredients list is less than what the db has, remove the ingredients
+        elif len(db_ingredients) > len(ingredients):
+            for ingredient in db_ingredients:
+                try:
+                    ingredients[str(ingredient.to_dict()['id'])]
+                except:
+                    db.session.delete(ingredient)
 
         for key in ingredients:
             new_ingredient = ingredients[key]
@@ -225,13 +234,28 @@ def update_recipe(recipeId):
             db_ingredient.ingredient_quantity = new_ingredient['ingredient_quantity']
             db_ingredient.measurement_id = new_ingredient['ingredient_measurement_id']
 
-        # if a new ingredients list is less than what the db has, remove the ingredients
-        if len(db_ingredients) > len(ingredients):
-            for ingredient in db_ingredients:
+        # if the user give steps is greater than the db steps, add new steps to the database
+        if len(db_steps) < len(steps):
+            for step in steps:
+                reqStep = steps[step]
                 try:
-                    ingredients[str(ingredient.to_dict()['id'])]
+                    reqStep['id']
                 except:
-                    db.session.delete(ingredient)
+                    newStep = Step(
+                        recipe_id = recipeId,
+                        step_number = reqStep['step_number'],
+                        description = reqStep['description']
+                    )
+                    db.session.add(newStep)
+                    db.session.commit()
+                    steps[step]['id'] = newStep.to_dict()['id']
+        # else if, user give steps is less than the database, remove steps from the db
+        elif len(db_steps) > len(steps):
+            for step in db_steps:
+                try:
+                    steps[str(step.to_dict()['step_number'])]
+                except:
+                    db.session.delete(step)
 
         for key in steps:
             new_step = steps[key]
