@@ -4,6 +4,8 @@ from .recipes import seed_recipes, undo_recipes
 from .categories import seed_categories, unseed_categories
 from .reviews import seed_reviews, undo_reviews
 from .measurements import seed_measurements, undo_measurements
+from .quantities import seed_quantities, undo_quantities
+from .steps import seed_steps, undo_steps
 
 from app.models.db import db, environment, SCHEMA
 
@@ -22,6 +24,8 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_reviews()
         undo_recipes()
+        undo_steps()
+        undo_quantities()
         undo_measurements()
         unseed_categories()
         undo_users()
@@ -29,6 +33,8 @@ def seed():
     seed_categories()
     seed_measurements()
     seed_recipes()
+    seed_quantities()
+    seed_steps()
     seed_reviews()
     # Add other seed functions here
 
@@ -38,6 +44,8 @@ def seed():
 def undo():
     undo_reviews()
     undo_recipes()
+    undo_steps()
+    undo_quantities()
     undo_measurements()
     unseed_categories()
     undo_users()
