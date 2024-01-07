@@ -9,7 +9,7 @@ def seed_recipes():
     """
 
     Recipe1 = Recipe(
-        id = 1,
+        # id = 1,
         owner_id = 3,
         category_id = 2,
         title = "Spaghetti Bolognese",
@@ -22,7 +22,7 @@ def seed_recipes():
     )
 
     Recipe2 = Recipe(
-        id = 2,
+        # id = 2,
         owner_id = 2,
         category_id = 5,
         title = "Grilled Chicken Salad",
@@ -35,7 +35,7 @@ def seed_recipes():
     )
 
     Recipe3 = Recipe(
-        id = 3,
+        # id = 3,
         owner_id = 1,
         category_id = 7,
         title = "Vegetarian Stir-Fry",
@@ -48,7 +48,7 @@ def seed_recipes():
     )
 
     Recipe4 = Recipe(
-        id = 4,
+        # id = 4,
         owner_id = 2,
         category_id = 1,
         title = "Chocolate Chip Cookies",
@@ -61,7 +61,7 @@ def seed_recipes():
     )
 
     Recipe5 = Recipe(
-        id = 5,
+        # id = 5,
         owner_id = 3,
         category_id = 3,
         title = "Tomato Basil Pasta",

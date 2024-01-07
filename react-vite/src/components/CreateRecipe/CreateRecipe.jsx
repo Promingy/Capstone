@@ -22,7 +22,7 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [servings, setServings] = useState(prevForm?.servings || 0)
     const [step, setStep] = useState('')
     const [steps, setSteps] = useState(prevForm?.steps || {})
-    const [stepNumber, setStepNumber] = useState(1)
+    const [stepNumber, setStepNumber] = useState( prevForm?.steps && Object.values(prevForm?.steps).length + 1 || 1)
     const [prepTimeHours, setPrepTimeHours] = useState(Math.floor(prevForm?.prepTime / 60)|| 0)
     const [prepTimeMinutes, setPrepTimeMinutes] = useState(prevForm?.prepTime % 60|| 0)
     const [cookTimeHours, setCookTimeHours] = useState(Math.floor(prevForm?.cookTime / 60) || 0)
@@ -181,10 +181,10 @@ export default function CreateRecipe ({ prevForm, update }) {
                     />
                     <div className='add_ingredient' onClick={() => {
                             // add ingredient to ingredients obj
-                            if (ingredient && quantity && measurement){
+                            if (ingredient && quantity && measurement != 'Measurement'){
                                 const newIngredient = { ingredient,
-                                                        quantity: +quantity,
-                                                        measurement: measurements[measurement].id}
+                                                        ingredient_quantity: +quantity,
+                                                        ingredient_measurement_id: measurements[measurement].id}
                                 setIngredients({...ingredients, [ingredient]: newIngredient})
 
                                 // reset ingredient values
@@ -253,7 +253,6 @@ export default function CreateRecipe ({ prevForm, update }) {
                             }
 
                             const newStep = {step_number: newStepNum, description: step}
-
                             setSteps({...steps, [newStepNum]: newStep})
                             // reset step values
                             setStep('')
