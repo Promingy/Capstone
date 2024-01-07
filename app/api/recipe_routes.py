@@ -54,8 +54,8 @@ def create_new_recipe():
         ingredient = ingredients[key]
 
         form2.ingredient.data = ingredient['ingredient']
-        form2.ingredient_quantity.data = ingredient['quantity']
-        form2.measurement_id.data = ingredient['measurement']
+        form2.ingredient_quantity.data = ingredient['ingredient_quantity']
+        form2.measurement_id.data = ingredient['ingredient_measurement_id']
 
         if not form2.validate_on_submit():
             break
@@ -96,9 +96,9 @@ def create_new_recipe():
 
             newQuantity = Quantity(
                 recipe_id = newRecipe.to_dict()['id'],
-                ingredient_measurement_id = ingredient['measurement'],
+                ingredient_measurement_id = ingredient['ingredient_measurement_id'],
                 ingredient = ingredient['ingredient'],
-                ingredient_quantity = ingredient['quantity']
+                ingredient_quantity = ingredient['ingredient_quantity']
             )
 
             db.session.add(newQuantity)
