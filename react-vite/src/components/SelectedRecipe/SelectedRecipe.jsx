@@ -13,8 +13,8 @@ export default function SelectedRecipe() {
     const recipe = useSelector(state => state.recipes[recipeId])
     const postDate = new Date(recipe?.created_at)
 
-    const ownerFirstName = recipe?.owner.first_name[0].toUpperCase() + recipe?.owner.first_name.slice(1)
-    const ownerLastName = recipe?.owner.last_name[0].toUpperCase() + recipe?.owner.last_name.slice(1)
+    const ownerFirstName = recipe?.owner?.first_name[0].toUpperCase() + recipe?.owner?.first_name.slice(1)
+    const ownerLastName = recipe?.owner?.last_name[0].toUpperCase() + recipe?.owner?.last_name.slice(1)
 
     const prepTimeHours = Math.floor(recipe?.prep_time / 60)
     const prepTimeMinutes = recipe?.prep_time % 60
@@ -116,11 +116,11 @@ export default function SelectedRecipe() {
                     </div>
                     <span className='time_format'>
                         <h3>Rating</h3>
-                        {recipe.avg_rating > 0 &&
+                        {recipe?.avg_rating > 0 &&
                             <p>
-                                {recipe.avg_rating} &nbsp;
+                                {recipe?.avg_rating} &nbsp;
                                 {starCreator(recipe)} &nbsp;
-                                ({recipe.all_ratings})
+                                ({recipe?.all_ratings})
                             </p>
                         }
 
@@ -134,14 +134,14 @@ export default function SelectedRecipe() {
                     <span className='time_format'>
                         <h3>Notes</h3>
                         <p style={{display: "flex", gap: "10px", alignItems: "center"}}>
-                            {recipe.all_ratings ? `Read ${recipe.all_ratings} community notes` : 'Be the first to leave a note!'}
+                            {recipe?.all_ratings ? `Read ${recipe?.all_ratings} community notes` : 'Be the first to leave a note!'}
                             <i className='fa-solid fa-turn-down fa-xs' />
                         </p>
                     </span>
 
                 </div>
                 <div className='prep_time_bio_right'>
-                    <p>{recipe.description}</p>
+                    <p>{recipe?.description}</p>
                 </div>
             </div>
         </div>
