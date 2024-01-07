@@ -181,7 +181,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                     />
                     <div className='add_ingredient' onClick={() => {
                             // add ingredient to ingredients obj
-                            if (ingredient && quantity && measurement){
+                            if (ingredient && quantity && measurement != 'Measurement'){
                                 const newIngredient = { ingredient,
                                                         quantity: +quantity,
                                                         measurement: measurements[measurement].id}
