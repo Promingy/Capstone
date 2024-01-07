@@ -196,8 +196,8 @@ export default function CreateRecipe ({ prevForm, update }) {
                     />
                     <div className='add_ingredient' onClick={() => {
                             // add ingredient to ingredients obj
+                            if (+quantity < 0) setQuantity(1)
                             if (ingredient && quantity && measurement != 'Measurement'){
-                                console.log(ingredient, quantity, measurements[measurement].id)
                                 const newIngredient = { ingredient,
                                                         ingredient_quantity: +quantity,
                                                         ingredient_measurement_id: measurements[measurement].id}
@@ -205,9 +205,9 @@ export default function CreateRecipe ({ prevForm, update }) {
                                 setIngredients({...ingredients, [ingredient]: newIngredient})
 
                             //     // reset ingredient values
-                            //     setIngredient('')
-                            //     setQuantity(0)
-                            //     setMeasurement('Measurement')
+                                setIngredient('')
+                                setQuantity(0)
+                                // setMeasurement('Measurement')
                             }
                         }}>
 
@@ -274,6 +274,8 @@ export default function CreateRecipe ({ prevForm, update }) {
 
                             while (steps[+newStepNum - 1] == undefined && +newStepNum !== 1){
                                 newStepNum -= 1
+
+                                if (newStepNum < 1) break
                             }
 
                             const newStep = {step_number: newStepNum, description: step}
