@@ -88,16 +88,19 @@ export default function CreateRecipe ({ prevForm, update }) {
             <form className="new_recipe_form" onSubmit={handleSubmit}>
                 <legend>Create new Recipe</legend>
 
-                <label>
+                <label className="recipe_title_container">
+                    <span>Title:</span>
                     <input
                         type='text'
                         placeholder="Title"
+                        className = 'recipe_title'
                         value={title}
                         onChange={ e => setTitle(e.target.value)}
                     />
                 </label>
 
-                <label>
+                <label className="recipe_description_container">
+                    <span>Description:</span>
                     <div className="description_container">
                         <TextareaAutoSize
                         className='create_description'
@@ -109,28 +112,16 @@ export default function CreateRecipe ({ prevForm, update }) {
                     </div>
                 </label>
 
-                <label>
+                <label className="recipe_servings_container">
+                    <span>Servings:</span>
                     <input
                         type='number'
                         placeholder="Servings"
+                        className='recipe_servings'
                         min={1}
                         value={servings || ''}
                         onChange={e => setServings(e.target.value)}
                     />
-                </label>
-
-                <label>
-                    <select
-                        value={categories[category]?.category || 'Category'}
-                        onChange={e => setCategory(e.target.selectedIndex)}
-                    >
-                        <option disabled>Category</option>
-                        {Object.keys(categories).map(key => (
-                            <option key={`dropdown_category${categories?.[key]?.id}`} id={`category_${categories?.[key]?.id}`}>
-                                    {categories[key].category}
-                            </option>
-                        ))}
-                    </select>
                 </label>
 
                     <div className="added_ingredients">
@@ -150,9 +141,24 @@ export default function CreateRecipe ({ prevForm, update }) {
                         })}
 
                     </div>
+                <label className="recipe_category_ingredient_container">
 
-                <label className="add_ingredients_container">
                     <select
+                        value={categories[category]?.category || 'Category'}
+                        onChange={e => setCategory(e.target.selectedIndex)}
+                    >
+                        <option disabled>Category</option>
+                        {Object.keys(categories).map(key => (
+                            <option key={`dropdown_category${categories?.[key]?.id}`} id={`category_${categories?.[key]?.id}`}>
+                                    {categories[key].category}
+                            </option>
+                        ))}
+                    </select>
+                {/* </label> */}
+
+                {/* <label className="add_ingredients_container"> */}
+                    <select
+                        className="measurement_select"
                         value={measurement}
                         onChange={e => setMeasurement(e.target.value)}
                     >
@@ -201,7 +207,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                     </div>
                 </label>
 
-                <label>
+                <label className="add_step_container">
                     <div className="steps_container">
                         <div className="added_steps">
                             {Object.keys(steps).map(key => {
@@ -268,54 +274,68 @@ export default function CreateRecipe ({ prevForm, update }) {
                     </div>
                 </label>
 
-                <label>
+                <label className="recipe_prep_container">
                         <span>Prep time:</span>
-                        <input
-                            type='number'
-                            placeholder="Hours"
-                            min={0}
-                            value={prepTimeHours}
-                            onChange={e => setPrepTimeHours(e.target.value)}
-                            />
-                        <input
-                            type='number'
-                            placeholder="Minutes"
-                            min={0}
-                            max={60}
-                            value={prepTimeMinutes}
-                            onChange={e => setPrepTimeMinutes(e.target.value)}
-                            />
+                        <div className="time_format">
+                            <span>Hours:</span>
+                            <input
+                                type='number'
+                                placeholder="Hours"
+                                min={0}
+                                value={prepTimeHours}
+                                onChange={e => setPrepTimeHours(e.target.value)}
+                                />
+                        </div>
+                        <div className="time_format">
+                            <span>Minutes:</span>
+                            <input
+                                type='number'
+                                placeholder="Minutes"
+                                min={0}
+                                max={60}
+                                value={prepTimeMinutes}
+                                onChange={e => setPrepTimeMinutes(e.target.value)}
+                                />
+                        </div>
                 </label>
 
-                <label>
+                <label className="recipe_cook_container">
                         <span>Cook time:</span>
-                        <input
-                            type='number'
-                            placeholder="Hours"
-                            min={0}
-                            value={cookTimeHours}
-                            onChange={e => setCookTimeHours(e.target.value)}
-                            />
-                        <input
-                            type='number'
-                            placeholder="Minutes"
-                            max={60}
-                            min={0}
-                            value={cookTimeMinutes}
-                            onChange={e => setCookTimeMinutes(e.target.value)}
-                            />
+                        <div className="time_format">
+                            <span>Hours:</span>
+                            <input
+                                type='number'
+                                placeholder="Hours"
+                                min={0}
+                                value={cookTimeHours}
+                                onChange={e => setCookTimeHours(e.target.value)}
+                                />
+                        </div>
+                        <div className="time_format">
+                            <span>Minutes:</span>
+                            <input
+                                type='number'
+                                placeholder="Minutes"
+                                max={60}
+                                min={0}
+                                value={cookTimeMinutes}
+                                onChange={e => setCookTimeMinutes(e.target.value)}
+                                />
+                        </div>
                 </label>
 
-                <label>
+                <label className="preview_image_container">
+                    <span>Image:</span>
                     <input
                         type='url'
-                        placeholder="preview_image"
+                        placeholder="Image"
+                        className="preview_image"
                         value={previewImage}
                         onChange={e => setPreviewImage(e.target.value)}
                     />
                 </label>
 
-                <button>Submit</button>
+                <button className="submit_recipe">Submit</button>
             </form>
         </div>
     )

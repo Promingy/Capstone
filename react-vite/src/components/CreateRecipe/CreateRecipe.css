@@ -6,6 +6,59 @@
     gap: 30px;
 }
 
+.new_recipe_form > * {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.recipe_title_container,
+.recipe_servings_container,
+.recipe_category_ingredient_container,
+.recipe_description_container,
+.add_step_container,
+.recipe_prep_container,
+.recipe_cook_container,
+.preview_image_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+}
+
+.recipe_category_ingredient_container > * {
+    width: 20%
+}
+
+.add_step_container{
+    display: flex;
+    flex-direction: column;
+    width: 50%
+}
+
+.added_steps{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add_step_container > * {
+    width: 100%;
+}
+
+.recipe_title,
+.recipe_servings,
+.preview_image {
+    width: 80%
+}
+
+.measurement_select {
+    font-size: 12px;
+    padding: 1px 0;
+}
+
 .added_ingredients > *,
 .added_steps > * {
     display: flex;
@@ -67,7 +120,7 @@
     display: flex;
     gap: 5px;
     flex-direction: column;
-    width: 200px;
+    width: 80%;
     outline: none;
     border:  1px solid black;
     padding: 5px;
@@ -81,4 +134,22 @@
 .step_and_add {
     display: flex;
     align-items: center;
+    gap: 15px;
+}
+
+.time_format {
+    display: flex;
+    gap: 10px
+}
+
+.submit_recipe {
+    background-color: #CF1A00;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    width: 50%;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bolder;
 }
