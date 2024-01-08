@@ -126,6 +126,7 @@ def create_new_recipe():
     else:
         errors = {}
 
+        # add every error from all forms into a single error dictionary to return
         for field, error in form.errors.items():
             errors[field] = error
 
@@ -153,6 +154,7 @@ def get_single_recipe(recipeId):
     quantities = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
     steps = Step.query.filter(Step.recipe_id == recipeId).all()
 
+    #/ add the two loops below to the to_dict function instead
     for quantity in quantities:
         recipe['ingredients'][quantity.to_dict()['id']] = quantity.to_dict()
 
