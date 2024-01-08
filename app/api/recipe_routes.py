@@ -262,22 +262,23 @@ def update_recipe(recipeId):
             db_ingredient.measurement_id = new_ingredient['ingredient_measurement_id']
 
         # if the user give steps is greater than the db steps, add new steps to the database
-        if len(db_steps) < len(steps):
-            for step in steps:
-                reqStep = steps[step]
-                try:
-                    reqStep['id']
-                except:
-                    newStep = Step(
-                        recipe_id = recipeId,
-                        step_number = reqStep['step_number'],
-                        description = reqStep['description']
-                    )
-                    db.session.add(newStep)
-                    db.session.commit()
-                    steps[step]['id'] = newStep.to_dict()['id']
+        #/ if statement removed for the same reason as above
+        # if len(db_steps) < len(steps):
+        for step in steps:
+            reqStep = steps[step]
+            try:
+                reqStep['id']
+            except:
+                newStep = Step(
+                    recipe_id = recipeId,
+                    step_number = reqStep['step_number'],
+                    description = reqStep['description']
+                )
+                db.session.add(newStep)
+                db.session.commit()
+                steps[step]['id'] = newStep.to_dict()['id']
         # else if, user give steps is less than the database, remove steps from the db
-        elif len(db_steps) > len(steps):
+        if len(db_steps) > len(steps):
             for step in db_steps:
                 try:
                     steps[str(step.to_dict()['step_number'])]
