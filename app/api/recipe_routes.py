@@ -227,23 +227,26 @@ def update_recipe(recipeId):
         # check if the user given ingredients list is longer than what's in our database
         # if so, add the ingredient to the database
         # it already passed the validation check if we're right here
-        if len(db_ingredients) < len(ingredients):
-           for ingredient in ingredients:
-                reqIngredient = ingredients[ingredient]
-                try:
-                   reqIngredient['id']
-                except:
-                   newIngredient = Quantity(
-                       recipe_id = recipeId,
-                       ingredient_measurement_id = reqIngredient['ingredient_measurement_id'],
-                       ingredient = reqIngredient['ingredient'],
-                       ingredient_quantity = reqIngredient['ingredient_quantity']
-                   )
-                   db.session.add(newIngredient)
-                   db.session.commit()
-                   ingredients[ingredient]['id'] = newIngredient.to_dict()['id']
+        #/ if statement removed - was preventing new ingredients being added if some were removed
+        #/ ex. 1 ingredient removed, 1 ingredient added - length would be the same.
+        # if len(db_ingredients) < len(ingredients):
+        for ingredient in ingredients:
+            reqIngredient = ingredients[ingredient]
+            try:
+                reqIngredient['id']
+            except:
+                newIngredient = Quantity(
+                    recipe_id = recipeId,
+                    ingredient_measurement_id = reqIngredient['ingredient_measurement_id'],
+                    ingredient = reqIngredient['ingredient'],
+                    ingredient_quantity = reqIngredient['ingredient_quantity']
+                )
+                db.session.add(newIngredient)
+                db.session.commit()
+                print(ingredients[ingredient], ingredients)
+                ingredients[ingredient]['id'] = newIngredient.to_dict()['id']
         # if a new ingredients list is less than what the db has, remove the ingredients
-        elif len(db_ingredients) > len(ingredients):
+        if len(db_ingredients) > len(ingredients):
             for ingredient in db_ingredients:
                 try:
                     ingredients[str(ingredient.to_dict()['id'])]

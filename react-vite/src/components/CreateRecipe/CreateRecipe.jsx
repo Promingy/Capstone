@@ -87,10 +87,9 @@ export default function CreateRecipe ({ prevForm, update }) {
 
     }
 
-    console.log(prevForm)
     if (!sessionUser) navigate('/')
     if (!measurements || !categories) return
-
+    console.log(ingredients)
     return(
         <div>
             <form className="new_recipe_form" onSubmit={handleSubmit}>
