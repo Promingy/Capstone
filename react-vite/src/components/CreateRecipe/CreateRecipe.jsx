@@ -28,6 +28,7 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [cookTimeHours, setCookTimeHours] = useState(Math.floor(prevForm?.cookTime / 60) || 0)
     const [cookTimeMinutes, setCookTimeMinutes] = useState(prevForm?.cookTime % 60|| 0)
     const [previewImage, setPreviewImage] = useState(prevForm?.previewImage || '')
+    const [submitted, setSubmitted] = useState(false)
 
     const [errors, setErrors] = useState({})
 
@@ -37,16 +38,20 @@ export default function CreateRecipe ({ prevForm, update }) {
 
     function updateStepNums() {
         const newSteps = Object.values(steps)
+        const returnSteps = {}
 
         for (let i = 0; i < newSteps.length; i++) {
-            newSteps[i].stepNumber = i + 1
+            let currStep = newSteps[i]
+            currStep.stepNumber = i + 1
+            returnSteps[currStep.stepNumber] = currStep
         }
 
-        setSteps({...newSteps})
+        setSteps(returnSteps)
     }
 
     function handleSubmit(e) {
         e.preventDefault()
+        setSubmitted(true)
 
         const newErrors = {}
 
@@ -69,31 +74,45 @@ export default function CreateRecipe ({ prevForm, update }) {
             const data = res
 
             if (data.errors){
+                console.log(data.errors)
                 for (let error in data.errors){
                     newErrors[error] = data.errors[error]
+                    setSubmitted(false)
                 }
+                setErrors({...newErrors})
             }else {
                 navigate(`/recipes/${res.id}-${res.title}`)
             }
         })
 
-        setErrors(newErrors)
     }
 
+    console.log(errors)
     if (!sessionUser) navigate('/')
     if (!measurements || !categories) return
 
     return(
         <div>
             <form className="new_recipe_form" onSubmit={handleSubmit}>
-                <legend>Create new Recipe</legend>
+
+                <div className="error_spacer top_error">
+                    {errors.title && <p className="errors">* Please include a Title</p>}
+                    {errors.description && <p className="errors">* Please include a Description</p>}
+                    {errors.servings && <p className="errors">* Please include serving size</p>}
+                    {errors.category_id && <p className="errors">* Please select a category</p>}
+                    {errors.ingredient && <p className="errors">* Please include at least 1 ingredient</p>}
+                    {errors.step_description && <p className='errors'>* Please include at least 1 step.</p>}
+                    {errors.prep_time && <p className="errors">* Please include the prep time</p>}
+                    {errors.cook_time && <p className="errors">* Please include the cook time</p>}
+                    {errors.preview_image && <p className="errors">* Please include a preview image</p>}
+                </div>
 
                 <label className="recipe_title_container">
                     <span>Title:</span>
                     <input
                         type='text'
                         placeholder="Title"
-                        className = 'recipe_title'
+                        className = {`recipe_title ${errors.title ? 'error_container' : ''}`}
                         value={title}
                         onChange={ e => setTitle(e.target.value)}
                     />
@@ -101,7 +120,7 @@ export default function CreateRecipe ({ prevForm, update }) {
 
                 <label className="recipe_description_container">
                     <span>Description:</span>
-                    <div className="description_container">
+                    <div className={`description_container ${errors.description ? "error_container" : ""}`}>
                         <TextareaAutoSize
                         className='create_description'
                         placeholder="Description"
@@ -117,35 +136,44 @@ export default function CreateRecipe ({ prevForm, update }) {
                     <input
                         type='number'
                         placeholder="Servings"
-                        className='recipe_servings'
+                        className={`recipe_servings ${errors.servings ? "error_container" : ""}`}
                         min={1}
                         value={servings || ''}
-                        onChange={e => setServings(e.target.value)}
+                        onChange={e => setServings(+e.target.value > 1 ? +e.target.value : 1)}
                     />
                 </label>
-
                     <div className="added_ingredients">
                         {Object.values(ingredients).map(ingredient => {
+                            let measurement_name = measurements[ingredient.ingredient_measurement_id].measurement_name
+                            measurement_name = +ingredient.ingredient_quantity > 1 ?  measurement_name + 's' : measurement_name
+
                             return (
-                                <div key={`ingredient${ingredient.ingredient}${ingredient.quantity}`}>
-                                    {ingredient.ingredient}
-                                    <div className="remove_ingredient" onClick={() => {
-                                            const newIngredient = {...ingredients}
-                                            delete newIngredient[ingredient[update ? 'id' : 'ingredient']]
-                                            setIngredients(newIngredient)
-                                        }}>
-                                        <i className="fa-solid fa-x fa-xs" />
+                                <div key={`ingredient${ingredient.ingredient}${ingredient.quantity}`} className="ingredient_container">
+
+                                    <div className="ingredient_measurement">
+                                        <p className="ingredient_amount">
+                                            {ingredient.ingredient_quantity} {measurement_name}:
+                                        </p>
+                                        <p className="ingredient">{ingredient.ingredient}</p>
                                     </div>
+                                     <div className="remove_ingredient" onClick={() => {
+                                             const newIngredient = {...ingredients}
+                                             delete newIngredient[ingredient[update ? 'id' : 'ingredient']]
+                                             delete newIngredient?.[ingredient?.ingredient]
+                                             setIngredients(newIngredient)
+                                         }}>
+                                         <i className="fa-solid fa-x fa-xs" />
+                                     </div>
                                 </div>
                             )
                         })}
-
                     </div>
                 <label className="recipe_category_ingredient_container">
 
                     <select
                         value={categories[category]?.category || 'Category'}
                         onChange={e => setCategory(e.target.selectedIndex)}
+                        className={errors.category_id ? "error_container" : ""}
                     >
                         <option disabled>Category</option>
                         {Object.keys(categories).map(key => (
@@ -158,9 +186,9 @@ export default function CreateRecipe ({ prevForm, update }) {
 
                 {/* <label className="add_ingredients_container"> */}
                     <select
-                        className="measurement_select"
-                        value={measurement}
-                        onChange={e => setMeasurement(e.target.value)}
+                        className={`measurement_select ${errors.ingredient ? "error_container" : ""}`}
+                        value={measurements[measurement]?.measurement_name || 'Measurement'}
+                        onChange={e => setMeasurement(e.target.selectedIndex)}
                     >
                         <option disabled>Measurement</option>
 
@@ -176,6 +204,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                         placeholder="Ingredients"
                         value={ingredient}
                         onChange={e => setIngredient(e.target.value)}
+                        className={`${errors.ingredient ? "error_container" : ''}`}
                     />
 
                     <input
@@ -184,19 +213,22 @@ export default function CreateRecipe ({ prevForm, update }) {
                         value={quantity || ''}
                         min={1}
                         onChange={e => setQuantity(e.target.value)}
+                        className={`${errors.ingredient ? "error_container" : ''}`}
                     />
                     <div className='add_ingredient' onClick={() => {
                             // add ingredient to ingredients obj
+                            if (+quantity < 0) setQuantity(1)
                             if (ingredient && quantity && measurement != 'Measurement'){
                                 const newIngredient = { ingredient,
                                                         ingredient_quantity: +quantity,
                                                         ingredient_measurement_id: measurements[measurement].id}
+
                                 setIngredients({...ingredients, [ingredient]: newIngredient})
 
                                 // reset ingredient values
                                 setIngredient('')
                                 setQuantity(0)
-                                setMeasurement('Measurement')
+                                // setMeasurement('Measurement')
                             }
                         }}>
 
@@ -214,7 +246,14 @@ export default function CreateRecipe ({ prevForm, update }) {
                                 const step = steps[key]
                                 return (
                                 <div key={`steps${step.step_number}`} className="steps_and_remove">
-                                    Step {step.step_number}. {step.description}
+                                    <div className="step_test">
+                                        <p>
+                                            Step {step.step_number}.
+                                        </p>
+                                        <p className="step_description">
+                                            {step.description}
+                                        </p>
+                                    </div>
                                     <div className="remove_ingredient" onClick={() => {
                                             const newSteps = {...steps}
                                             delete newSteps[step.step_number]
@@ -239,7 +278,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                                 max={Object.values(steps).length + 1}
                                 />
                         </label>
-                        <div className="add_step_text_container">
+                        <div className={`add_step_text_container ${errors.step_description ? "error_container" : ""}`}>
                             <TextareaAutoSize
                                 className="add_step_text_area"
                                 placeholder="Add Step"
@@ -252,10 +291,12 @@ export default function CreateRecipe ({ prevForm, update }) {
                             // add step to steps obj
                             if (!step) return
 
-                            let newStepNum = +stepNumber
+                            let newStepNum = +stepNumber >= 1 ? +stepNumber : 1
 
                             while (steps[+newStepNum - 1] == undefined && +newStepNum !== 1){
                                 newStepNum -= 1
+
+                                if (newStepNum < 1) break
                             }
 
                             const newStep = {step_number: newStepNum, description: step}
@@ -279,6 +320,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                         <div className="time_format">
                             <span>Hours:</span>
                             <input
+                                className={`${errors.prep_time ? "error_container": ""}`}
                                 type='number'
                                 placeholder="Hours"
                                 min={0}
@@ -289,6 +331,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                         <div className="time_format">
                             <span>Minutes:</span>
                             <input
+                                className={`${errors.prep_time ? "error_container": ""}`}
                                 type='number'
                                 placeholder="Minutes"
                                 min={0}
@@ -304,6 +347,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                         <div className="time_format">
                             <span>Hours:</span>
                             <input
+                                className={`${errors.cook_time ? "error_container": ""}`}
                                 type='number'
                                 placeholder="Hours"
                                 min={0}
@@ -314,6 +358,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                         <div className="time_format">
                             <span>Minutes:</span>
                             <input
+                                className={`${errors.cook_time ? "error_container": ""}`}
                                 type='number'
                                 placeholder="Minutes"
                                 max={60}
@@ -329,13 +374,13 @@ export default function CreateRecipe ({ prevForm, update }) {
                     <input
                         type='url'
                         placeholder="Image"
-                        className="preview_image"
+                        className={`preview_image ${errors.preview_image ? "error_container" : ""}`}
                         value={previewImage}
                         onChange={e => setPreviewImage(e.target.value)}
                     />
                 </label>
 
-                <button className="submit_recipe">Submit</button>
+                <button disabled={submitted} className="submit_recipe">Submit</button>
             </form>
         </div>
     )

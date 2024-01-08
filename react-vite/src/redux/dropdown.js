@@ -31,7 +31,8 @@ function dropDownReducer(state = initialState, action) {
             }
 
             for (let measurement of Object.values(action.measurements)){
-                newState.measurements[measurement.measurement_name] = measurement
+                // newState.measurements[measurement.measurement_name] = measurement
+                newState.measurements[measurement.id] = measurement
             }
 
             return newState

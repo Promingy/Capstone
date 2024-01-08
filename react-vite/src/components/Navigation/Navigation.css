@@ -3,6 +3,10 @@
   border-bottom: 1px solid lightgrey;
   padding-bottom: 0;
   margin-bottom: 50px;
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  background-color: white;
 }
 
 .nav_bar > * {

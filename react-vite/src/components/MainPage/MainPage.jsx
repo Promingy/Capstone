@@ -17,7 +17,7 @@ export default function MainPage() {
     }, [dispatch])
 
     return (
-        <>
+        <div className='spacer'>
             {recipes && Object.keys(recipes).map(category => {
                 const categoryRecipes = Object.values(recipes[category])
                 category = dropdowns?.[category].category
@@ -31,7 +31,7 @@ export default function MainPage() {
                     </div>
                 )
             })}
-        </>
+        </div>
 
     )
 }
