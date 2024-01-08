@@ -70,6 +70,10 @@ def create_new_recipe():
         if not form3.validate_on_submit():
             break
 
+    # run validate_on_submit on all forms to catch errors for all forms
+    form.validate_on_submit()
+    form2.validate_on_submit()
+    form3.validate_on_submit()
 
     # if form passes validations, add to database
     if form.validate_on_submit() and form2.validate_on_submit() and form3.validate_on_submit():
