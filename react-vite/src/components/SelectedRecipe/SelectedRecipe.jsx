@@ -162,7 +162,7 @@ export default function SelectedRecipe() {
                         let measurement = dropdowns.measurements[+measurementId].measurement_name
                         measurement = +ingredient.ingredient_quantity > 1 ? measurement + 's' : measurement
 
-                        return (<p>{ingredient.ingredient_quantity} {measurement} {ingredient.ingredient}</p>)
+                        return (<p key={`ingredient${recipe.id}${ingredient.id}`}>{ingredient.ingredient_quantity} {measurement} {ingredient.ingredient}</p>)
                         })}
                 </div>
                 <div className='ingredients_and_steps_right'>
@@ -172,7 +172,7 @@ export default function SelectedRecipe() {
                         {Object.values(recipe.steps).map(step => {
 
                             return (
-                                <div className='selected_recipe_step'>
+                                <div className='selected_recipe_step' key={`step${recipe.id}${step.step_number}`}>
                                     <h3>Step {step.step_number}.</h3>
                                     <p>{step.description}</p>
                                 </div>

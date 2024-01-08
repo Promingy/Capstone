@@ -2,6 +2,7 @@ from flask import Blueprint, request, session
 from ..models import Recipe, Category, db, Quantity, Step
 from ..forms import RecipeForm, QuantityForm, StepForm
 from flask_login import login_required
+from app.aws import (upload_file_to_s3, get_unique_filename)
 
 recipe = Blueprint('recipes', __name__)
 
@@ -137,7 +138,6 @@ def create_new_recipe():
             errors[field] = error
 
         return {"errors": errors}, 400
-
 
 @recipe.route('/<int:recipeId>')
 def get_single_recipe(recipeId):

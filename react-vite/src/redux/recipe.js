@@ -45,6 +45,7 @@ export const thunkGetAllRecipes = () => async(dispatch) => {
     if (res.ok){
         const data = await res.json()
         dispatch(actionGetAllRecipes(data))
+        return data
     }
     return await res.json()
 }
@@ -98,6 +99,27 @@ export const thunkDeleteRecipe = (recipe) => async (dispatch) => {
     if (res.ok){
         dispatch(actionDeleteRecipe(recipe))
     }
+    return await res.json()
+}
+
+export const thunkUploadImage = (image) => async (dispatch) => {
+    const res = await fetch('/api/image_routes',{
+        method: "POST",
+        body: image
+    })
+
+    if (res.ok) {
+        const data = await res.json();
+        return data
+    }
+}
+
+export const thunkDeleteImage = (imageUrl) => async (dispatch) => {
+    const img = imageUrl.split('/')[imageUrl.split('/').length - 1]
+    const res = await fetch (`/api/image_routes/${img}`, {
+        method: "DELETE"
+    })
+
     return await res.json()
 }
 
