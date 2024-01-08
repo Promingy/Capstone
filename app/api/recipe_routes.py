@@ -139,8 +139,6 @@ def create_new_recipe():
 
         return {"errors": errors}, 400
 
-@recipe.route
-
 @recipe.route('/<int:recipeId>')
 def get_single_recipe(recipeId):
     """
