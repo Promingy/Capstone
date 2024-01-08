@@ -38,7 +38,5 @@ def upload_image():
 @image_routes.route("/<img>", methods=['DELETE'])
 @login_required
 def delete_image(img):
-    print('~~~~~~~~~~~~~~~~', img)
     removed = remove_file_from_s3(img)
     return {"removed": removed}
-    # return {"test": "test"}
