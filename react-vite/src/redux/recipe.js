@@ -116,8 +116,7 @@ export const thunkUploadImage = (image) => async (dispatch) => {
 
 export const thunkDeleteImage = (imageUrl) => async (dispatch) => {
     const img = imageUrl.split('/')[imageUrl.split('/').length - 1]
-    console.log(imageUrl.slice(7), img)
-    const res = await fetch (`/api/image_routes/${imageUrl.split('/')[imageUrl.split('/').length - 1]}`, {
+    const res = await fetch (`/api/image_routes/${img}`, {
         method: "DELETE"
     })
 
