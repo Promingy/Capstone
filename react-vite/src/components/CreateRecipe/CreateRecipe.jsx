@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetDropdowns } from "../../redux/dropdown"
 import { useNavigate } from "react-router-dom"
 import TextareaAutoSize from 'react-textarea-autosize'
-import { thunkCreateRecipe, thunkUpdateRecipe } from "../../redux/recipe"
+import { thunkCreateRecipe, thunkDeleteImage, thunkUpdateRecipe, thunkUploadImage } from "../../redux/recipe"
 
 export default function CreateRecipe ({ prevForm, update }) {
     const dispatch = useDispatch()
@@ -27,7 +27,8 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [prepTimeMinutes, setPrepTimeMinutes] = useState(prevForm?.prepTime % 60|| 0)
     const [cookTimeHours, setCookTimeHours] = useState(Math.floor(prevForm?.cookTime / 60) || 0)
     const [cookTimeMinutes, setCookTimeMinutes] = useState(prevForm?.cookTime % 60|| 0)
-    const [previewImage, setPreviewImage] = useState(prevForm?.previewImage || '')
+    const [previewImage, setPreviewImage] = useState(prevForm?.previewImage || null)
+    const [imageLoading, setImageLoading] = useState(false)
     const [submitted, setSubmitted] = useState(false)
 
     const [errors, setErrors] = useState({})
@@ -49,11 +50,30 @@ export default function CreateRecipe ({ prevForm, update }) {
         setSteps(returnSteps)
     }
 
-    function handleSubmit(e) {
-        e.preventDefault()
-        setSubmitted(true)
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setSubmitted(true);
+        let returnImage;
+        const formData = new FormData();
+        formData.append("image", previewImage);
 
-        const newErrors = {}
+        if (!update){
+            // aws uploads can be a bit slow-displaying
+            // some sort of loading message is a good idea
+            returnImage = await dispatch(thunkUploadImage(formData))
+        }else {
+            if (prevForm?.preview_image != previewImage){
+
+            formData.append("image", previewImage)
+
+            await dispatch(thunkDeleteImage(prevForm?.previewImage))
+
+            returnImage = await dispatch(thunkUploadImage(formData))
+
+        }
+    }
+
+        const newErrors = {};
 
         const newRecipe = {
             category_id: category,
@@ -62,12 +82,12 @@ export default function CreateRecipe ({ prevForm, update }) {
             servings: +servings,
             prep_time: +prepTimeHours * 60 + +prepTimeMinutes,
             cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
-            preview_image: previewImage,
+            preview_image: returnImage.url,
             ingredients,
             steps
-        }
+        };
 
-        updateStepNums()
+        updateStepNums();
 
         dispatch(update ? thunkUpdateRecipe(prevForm?.id, newRecipe) : thunkCreateRecipe(newRecipe))
         .then(res => {
@@ -89,10 +109,10 @@ export default function CreateRecipe ({ prevForm, update }) {
 
     if (!sessionUser) navigate('/')
     if (!measurements || !categories) return
-    console.log(ingredients)
+
     return(
         <div>
-            <form className="new_recipe_form" onSubmit={handleSubmit}>
+            <form className="new_recipe_form" onSubmit={handleSubmit} encType="multipart/form-data">
 
                 <div className="error_spacer top_error">
                     {errors.title && <p className="errors">* Please include a Title</p>}
@@ -371,12 +391,12 @@ export default function CreateRecipe ({ prevForm, update }) {
                 <label className="preview_image_container">
                     <span>Image:</span>
                     <input
-                        type='url'
-                        placeholder="Image"
+                        type='file'
                         className={`preview_image ${errors.preview_image ? "error_container" : ""}`}
-                        value={previewImage}
-                        onChange={e => setPreviewImage(e.target.value)}
+                        accept='image/*'
+                        onChange={e => setPreviewImage(e.target.files[0])}
                     />
+                    {imageLoading && <p>Loading...</p>}
                 </label>
 
                 <button disabled={submitted} className="submit_recipe">Submit</button>

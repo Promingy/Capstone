@@ -1,15 +1,19 @@
 import "./ConfirmDelete.css"
 import { useModal } from "../../context/Modal"
 import { useDispatch } from "react-redux";
-import { thunkDeleteRecipe } from "../../redux/recipe";
+import { thunkDeleteImage, thunkDeleteRecipe } from "../../redux/recipe";
 export default function ConfirmDelete({ recipe }) {
     const { closeModal } = useModal();
     const dispatch = useDispatch()
 
-    function handleDelete(e){
+    async function handleDelete(e){
         e.preventDefault()
-        dispatch(thunkDeleteRecipe(recipe))
+        await dispatch(thunkDeleteImage(recipe.preview_image))
+
+        await dispatch(thunkDeleteRecipe(recipe))
         .then(closeModal)
+
+
     }
 
     return (

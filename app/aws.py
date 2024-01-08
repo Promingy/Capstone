@@ -27,7 +27,7 @@ def upload_file_to_s3(file, acl='public-read'):
             file.filename,
             ExtraArgs={
                 "ACL": acl,
-                "Content-Type": file.content_type
+                "ContentType": file.content_type
             }
         )
     except Exception as e:
@@ -40,11 +40,12 @@ def remove_file_from_s3(image_url):
     #AWS nees the image file name, not the url,
     # so we split that out of the url
 
-    key = image_url.rsplit("/", 1)[1]
+    # key = image_url.rsplit("/", 1)[1]
     try:
         s3.delete_object(
             Bucket=BUCKET_NAME,
-            Key=key
+            # Key=key
+            Key=image_url
         )
     except Exception as e:
         return {"errors": str(e)}
