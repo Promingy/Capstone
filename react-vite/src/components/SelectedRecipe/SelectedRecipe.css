@@ -7,7 +7,10 @@
     gap: 50px;
 }
 
-
+.selected_recipe {
+    max-width: 1000px;
+    margin: 0 auto;
+}
 
 .single_preview_image {
     width: 60%;
@@ -35,6 +38,7 @@
 }
 
 .prep_time_bio_left {
+    display: flex;
     width: 40%
 }
 
@@ -49,13 +53,61 @@
 }
 
 .cook_times > * > *,
-span > h3 {
+span > h3,
+.cook_times > * {
     margin: 0;
 }
 
-
-.time_format {
+.title_and_info {
+    display: grid;
+    grid-template-columns: 114px 200px;
+}
+.title_and_info > * {
     display: flex;
     align-items: center;
-    gap: 25px;
+    justify-content: flex-start;
+    margin: 0;
+}
+
+.time_margin {
+    margin: 5px 0 ;
+}
+
+.notes {
+    display: flex;
+    align-items: center;
+}
+
+.ingredients_and_steps_container {
+    margin-top: 50px;
+    display: flex;
+    gap: 50px;
+}
+
+.ingredients_and_steps_left {
+    display: flex;
+    flex-direction: column;
+    border-top: 5px solid black;
+    width: 40%
+}
+
+.yield_container {
+    display: flex;
+    align-items: center;
+}
+
+.ingredients_and_steps_left > h2,
+.ingredients_and_steps_right > h2 {
+    margin-top: 5px;
+}
+
+.ingredients_and_steps_right {
+    width: 60%;
+    border-top: 5px solid black;
+}
+
+.selected_recipe_steps_container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

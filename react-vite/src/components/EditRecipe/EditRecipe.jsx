@@ -28,7 +28,7 @@ export default function EditRecipe() {
         dispatch(thunkGetSelectedRecipe(recipeId))
     }, [dispatch])
 
-    if (!recipe) return
+    if (!recipe || !prevForm.steps || !prevForm.ingredients) return
     return (
         <CreateRecipe prevForm={prevForm} update={true}/>
     )

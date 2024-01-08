@@ -87,10 +87,9 @@ export default function CreateRecipe ({ prevForm, update }) {
 
     }
 
-    console.log(errors)
     if (!sessionUser) navigate('/')
     if (!measurements || !categories) return
-
+    console.log(ingredients)
     return(
         <div>
             <form className="new_recipe_form" onSubmit={handleSubmit}>
@@ -246,7 +245,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                                 const step = steps[key]
                                 return (
                                 <div key={`steps${step.step_number}`} className="steps_and_remove">
-                                    <div className="step_test">
+                                    <div className="full_step">
                                         <p>
                                             Step {step.step_number}.
                                         </p>
