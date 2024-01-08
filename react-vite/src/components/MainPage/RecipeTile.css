@@ -60,11 +60,16 @@
     align-items: center;
 }
 
-.test > * {
+.delete_recipe_icon > * {
     border: 0;
     background-color: transparent;
+    cursor: pointer;
 }
 
 .delete_recipe:hover {
     color: red;
+}
+
+.edit_recipe_icon_container:hover {
+    color: #767676
 }

@@ -105,7 +105,7 @@ export default function SelectedRecipe() {
                         <p>
                             <span>
                                 {!!cookTimeHours &&
-                                    <span className='test'>
+                                    <span>
                                         {cookTimeHours} {cookTimeHours > 1 ? "hours" : "hour"}
                                     </span>
                                 }
