@@ -119,8 +119,19 @@ def create_new_recipe():
 
         return newRecipe.to_dict()
 
+    else:
+        errors = {}
 
-    return {"errors": form.errors}, 400
+        for field, error in form.errors.items():
+            errors[field] = error
+
+        for field, error in form2.errors.items():
+            errors[field] = error
+
+        for field, error in form3.errors.items():
+            errors[field] = error
+
+        return {"errors": errors}, 400
 
 
 @recipe.route('/<int:recipeId>')
@@ -163,6 +174,7 @@ def update_recipe(recipeId):
     form3['csrf_token'].data = request.cookies['csrf_token']
 
     recipe = Recipe.query.get(recipeId)
+
     if not recipe:
         return {"error": "Resource not found"}, 404
 
@@ -187,6 +199,12 @@ def update_recipe(recipeId):
         if not form3.validate_on_submit():
             break
 
+    # run validate on submit for all forms so that we cat errors for all the forms at once
+    form.validate_on_submit()
+    form2.validate_on_submit()
+    form3.validate_on_submit()
+
+    # if all forms pass the validation, run the update logic
     if form.validate_on_submit() and form2.validate_on_submit() and form3.validate_on_submit():
         data = form.data
         db_ingredients = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
@@ -269,7 +287,19 @@ def update_recipe(recipeId):
         return recipe.to_dict()
 
     else:
-        return form.errors
+        errors = {}
+
+        # add errors from all forms to a dictionary and return the dictionary
+        for field, error in form.errors.items():
+            errors[field] = error
+
+        for field, error in form2.errors.items():
+            errors[field] = error
+
+        for field, error in form3.errors.items():
+            errors[field] = error
+
+        return {"errors": errors}, 400
 
 
 

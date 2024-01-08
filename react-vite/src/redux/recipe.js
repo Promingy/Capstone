@@ -42,11 +42,11 @@ const actionDeleteRecipe = (recipe) => {
 export const thunkGetAllRecipes = () => async(dispatch) => {
     const res = await fetch(`/api/recipes`)
 
-    if (res){
+    if (res.ok){
         const data = await res.json()
         dispatch(actionGetAllRecipes(data))
     }
-    return res
+    return await res.json()
 }
 
 export const thunkGetSelectedRecipe = (recipeId) => async (dispatch) => {
@@ -87,7 +87,7 @@ export const thunkUpdateRecipe = (recipeId, recipe) => async (dispatch) => {
         return data
     }
 
-    return res
+    return await res.json()
 }
 
 export const thunkDeleteRecipe = (recipe) => async (dispatch) => {
@@ -98,7 +98,7 @@ export const thunkDeleteRecipe = (recipe) => async (dispatch) => {
     if (res.ok){
         dispatch(actionDeleteRecipe(recipe))
     }
-    return res
+    return await res.json()
 }
 
 const initialState = {}

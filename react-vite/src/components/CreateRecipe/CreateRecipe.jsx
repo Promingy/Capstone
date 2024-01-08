@@ -37,12 +37,15 @@ export default function CreateRecipe ({ prevForm, update }) {
 
     function updateStepNums() {
         const newSteps = Object.values(steps)
+        const returnSteps = {}
 
         for (let i = 0; i < newSteps.length; i++) {
-            newSteps[i].stepNumber = i + 1
+            let currStep = newSteps[i]
+            currStep.stepNumber = i + 1
+            returnSteps[currStep.stepNumber] = currStep
         }
 
-        setSteps({...newSteps})
+        setSteps(returnSteps)
     }
 
     function handleSubmit(e) {
@@ -69,17 +72,19 @@ export default function CreateRecipe ({ prevForm, update }) {
             const data = res
 
             if (data.errors){
+                console.log(data.errors)
                 for (let error in data.errors){
                     newErrors[error] = data.errors[error]
                 }
+                return setErrors({...newErrors})
             }else {
                 navigate(`/recipes/${res.id}-${res.title}`)
             }
         })
 
-        setErrors(newErrors)
     }
 
+    console.log(errors)
     if (!sessionUser) navigate('/')
     if (!measurements || !categories) return
 
@@ -141,6 +146,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                                      <div className="remove_ingredient" onClick={() => {
                                              const newIngredient = {...ingredients}
                                              delete newIngredient[ingredient[update ? 'id' : 'ingredient']]
+                                             delete newIngredient?.[ingredient?.ingredient]
                                              setIngredients(newIngredient)
                                          }}>
                                          <i className="fa-solid fa-x fa-xs" />
@@ -204,7 +210,7 @@ export default function CreateRecipe ({ prevForm, update }) {
 
                                 setIngredients({...ingredients, [ingredient]: newIngredient})
 
-                            //     // reset ingredient values
+                                // reset ingredient values
                                 setIngredient('')
                                 setQuantity(0)
                                 // setMeasurement('Measurement')
@@ -244,6 +250,10 @@ export default function CreateRecipe ({ prevForm, update }) {
                                 )
                             })}
                         </div>
+                    </div>
+
+                    <div className="error_spacer">
+                        {errors.step_description && <p className='errors'>*{errors.step_description} </p>}
                     </div>
 
                     <div className="step_and_add">
