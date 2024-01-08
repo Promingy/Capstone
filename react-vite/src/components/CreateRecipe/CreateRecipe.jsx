@@ -60,15 +60,16 @@ export default function CreateRecipe ({ prevForm, update }) {
         if (!update){
             // aws uploads can be a bit slow-displaying
             // some sort of loading message is a good idea
+            setImageLoading(true)
             returnImage = await dispatch(thunkUploadImage(formData))
         }else {
             if (prevForm?.preview_image != previewImage){
+                setImageLoading(true)
+                formData.append("image", previewImage)
 
-            formData.append("image", previewImage)
+                await dispatch(thunkDeleteImage(prevForm?.previewImage))
 
-            await dispatch(thunkDeleteImage(prevForm?.previewImage))
-
-            returnImage = await dispatch(thunkUploadImage(formData))
+                returnImage = await dispatch(thunkUploadImage(formData))
 
         }
     }
@@ -98,6 +99,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                 for (let error in data.errors){
                     newErrors[error] = data.errors[error]
                     setSubmitted(false)
+                    setImageLoading(false)
                 }
                 setErrors({...newErrors})
             }else {
