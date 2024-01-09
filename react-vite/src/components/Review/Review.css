@@ -37,3 +37,25 @@
 .ratings_star {
     font-size: 35px;
 }
+
+.your_rating {
+    color: #DF321B;
+}
+
+.your_rating2 {
+    color: #CCCCCC;
+}
+
+.your_rating_clear {
+    display: flex;
+    justify-content: space-between;
+}
+
+.your_rating_clear > span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.your_rating_stars {
+    font-size: 35px;
+}
