@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import './Review.css'
+import TextareaAutoSize from 'react-textarea-autosize'
+import ReviewTile from './ReviewTile'
 
 export default function Review ({ recipe }) {
     const [rating, setRating] = useState(0)
     const [hoverRating, setHoverRating] = useState(0)
     const [ratingConfirmed, setRatingConfirmed] = useState(false)
+    const [review, setReview] = useState('')
     function starCreatorHover() {
         const stars = []
 
@@ -32,7 +35,7 @@ export default function Review ({ recipe }) {
     }
 
     return (
-        <div className='review_container'>
+        <div className='reviews_container'>
             <div className='review_left'>
                 <h2 className='review_headers'>RATINGS</h2>
                 <div className='ratings_container'>
@@ -56,6 +59,24 @@ export default function Review ({ recipe }) {
             </div>
             <div className='review_right'>
                 <h2 className='review_headers'>COOKING NOTES</h2>
+                <div>
+                    <h4 className='post_review_title'>Add Note</h4>
+                    <TextareaAutoSize
+                        value={review}
+                        onChange={e => setReview(e.target.value)}
+                        className='post_review'
+                        placeholder='Share your notes with other cooks...'
+                    />
+                    <div className='submit_review_container'>
+                        {!!review.length && <span onClick={() => setReview('')}>Cancel</span>}
+                        <button className='submit_review'>Submit</button>
+                    </div>
+                    <div className='review_container'>
+                        {Object.values(recipe.reviews).map(review => (
+                            <ReviewTile review={review} />
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     )

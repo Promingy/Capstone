@@ -66,7 +66,7 @@ class Recipe(db.Model, UserMixin):
 
         if reviews:
             # Adds list of reviews, sorted by date, to the dictionary
-            dictionary['reviews'] = sorted([review.to_dict() for review in self.reviews],
+            dictionary['reviews'] = sorted([review.to_dict(name=True) for review in self.reviews],
                                            key=lambda msg: datetime(msg['created_at'].year,
                                                                     msg['created_at'].month,
                                                                     msg['created_at'].day,

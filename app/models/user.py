@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     profile_pic = db.Column(db.String, nullable=False)
 
     recipes = db.relationship('Recipe', back_populates='owner')
+    reviews = db.relationship('Review', back_populates='user')
 
     @property
     def password(self):

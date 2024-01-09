@@ -18,8 +18,9 @@ class Review(db.Model, UserMixin):
     updated_at = db.Column(db.DateTime(timezone=True), default=func.now())
 
     recipe = db.relationship('Recipe', back_populates='reviews')
+    user = db.relationship('User', back_populates='reviews')
 
-    def to_dict(self):
+    def to_dict(self, name=False):
         dictionary = {
             "id": self.id,
             'user_id': self.user_id,
@@ -30,5 +31,10 @@ class Review(db.Model, UserMixin):
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }
+
+        if name:
+            review_owner = self.user.to_dict()
+            dictionary['name'] = f"{review_owner['first_name'].title()} {review_owner['last_name'].title()}"
+
 
         return dictionary

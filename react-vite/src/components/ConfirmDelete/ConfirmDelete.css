@@ -30,8 +30,20 @@
 .confirm_delete {
     background-color: #CF1A00;
     color: white;
+    cursor: pointer;
+}
+
+.confirm_delete:active {
+    color: black;
+    background-color: lightgray;
 }
 
 .cancel_delete {
     background-color: lightgrey;
+    cursor: pointer;
+}
+
+.cancel_delete:active {
+    background-color: #CF1A00;
+    color: white
 }
