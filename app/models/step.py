@@ -12,6 +12,8 @@ class Step(db.Model, UserMixin):
     step_number = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String, nullable=False)
 
+    recipe = db.relationship('Recipe', back_populates='steps')
+
     def to_dict(self):
         dictionary = {
             "id": self.id,

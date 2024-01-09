@@ -13,6 +13,8 @@ class Quantity(db.Model, UserMixin):
     ingredient = db.Column(db.String, nullable=False)
     ingredient_quantity = db.Column(db.Integer, nullable=False)
 
+    recipe = db.relationship('Recipe', back_populates='quantities')
+
     def to_dict(self):
         dictionary = {
             "id": self.id,

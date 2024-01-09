@@ -32,7 +32,6 @@ def get_all_recipes():
 
     return categorized_recipes
 
-
 @recipe.route('', methods=['POST'])
 @login_required
 def create_new_recipe():
@@ -142,24 +141,11 @@ def create_new_recipe():
 @recipe.route('/<int:recipeId>')
 def get_single_recipe(recipeId):
     """
-    Route that returns all of the infor for a specific recipe
+    Route that returns all of the info for a specific recipe
     """
 
     recipe = Recipe.query.get(recipeId)
-    recipe = recipe.to_dict(rating=True, reviews=True)
-
-    recipe['ingredients'] = {}
-    recipe['steps'] = {}
-
-    quantities = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
-    steps = Step.query.filter(Step.recipe_id == recipeId).all()
-
-    #/ add the two loops below to the to_dict function instead
-    for quantity in quantities:
-        recipe['ingredients'][quantity.to_dict()['id']] = quantity.to_dict()
-
-    for step in steps:
-        recipe['steps'][step.to_dict()['step_number']] = step.to_dict()
+    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True)
 
     return recipe
 

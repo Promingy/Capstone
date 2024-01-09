@@ -22,8 +22,10 @@ class Recipe(db.Model, UserMixin):
 
     reviews = db.relationship('Review', back_populates='recipe')
     owner = db.relationship('User', back_populates=('recipes'))
+    quantities = db.relationship('Quantity', back_populates='recipe')
+    steps = db.relationship('Step', back_populates='recipe')
 
-    def to_dict(self, rating=False, reviews=False):
+    def to_dict(self, rating=False, reviews=False, steps=False, quantities=False):
         dictionary = {
             "id": self.id,
             "owner_id": self.owner_id,
@@ -38,10 +40,22 @@ class Recipe(db.Model, UserMixin):
             "owner": self.owner.to_dict()
         }
 
+        if steps:
+            dictionary['steps'] = {}
+
+            for step in self.steps:
+                dictionary['steps'][step.to_dict()['step_number']] = step.to_dict()
+
+        if quantities:
+            dictionary['ingredients'] = {}
+
+            for quantity in self.quantities:
+                dictionary['ingredients'][quantity.to_dict()['id']] = quantity.to_dict()
+
         if rating:
             # calculates the average rating for the current recipe and adds it to the dictionary
             avg_rating = 0
-            
+
             if len(self.reviews):
                 avg_rating = sum([review.to_dict()['rating'] for review in self.reviews]) / len(self.reviews)
 
