@@ -2,8 +2,11 @@ import { useState } from 'react'
 import './Review.css'
 import TextareaAutoSize from 'react-textarea-autosize'
 import ReviewTile from './ReviewTile'
+import { useDispatch } from 'react-redux'
+import { thunkPostReview } from '../../redux/review'
 
 export default function Review ({ recipe }) {
+    const dispatch = useDispatch()
     const [rating, setRating] = useState(0)
     const [hoverRating, setHoverRating] = useState(0)
     const [ratingConfirmed, setRatingConfirmed] = useState(false)
@@ -36,7 +39,14 @@ export default function Review ({ recipe }) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log('hi')
+
+        const newReview = {
+            rating: +rating,
+            body: review,
+            submit: true
+        }
+
+        dispatch(thunkPostReview(newReview, recipe.id))
     }
 
     return (

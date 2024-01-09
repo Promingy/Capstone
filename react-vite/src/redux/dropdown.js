@@ -1,6 +1,3 @@
-
-const initialState = {}
-
 const GET_DROP_DOWNS = 'dropdown/GET_DROP_DOWNS'
 
 const actionGetDropdown = (measurements, categories) => {
@@ -20,6 +17,8 @@ export const thunkGetDropdowns = () => async (dispatch) => {
     }
     return res
 }
+
+const initialState = {}
 
 function dropDownReducer(state = initialState, action) {
     switch(action.type){
