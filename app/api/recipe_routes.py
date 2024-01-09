@@ -32,7 +32,6 @@ def get_all_recipes():
 
     return categorized_recipes
 
-
 @recipe.route('', methods=['POST'])
 @login_required
 def create_new_recipe():
@@ -142,7 +141,7 @@ def create_new_recipe():
 @recipe.route('/<int:recipeId>')
 def get_single_recipe(recipeId):
     """
-    Route that returns all of the infor for a specific recipe
+    Route that returns all of the info for a specific recipe
     """
 
     recipe = Recipe.query.get(recipeId)

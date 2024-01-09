@@ -5,6 +5,7 @@ import { thunkGetSelectedRecipe } from '../../redux/recipe'
 import { thunkGetDropdowns } from "../../redux/dropdown"
 import { useParams } from 'react-router-dom'
 import { starCreator } from '../MainPage/RecipeTile'
+import Review from '../Review'
 
 export default function SelectedRecipe() {
     const dispatch = useDispatch()
@@ -150,14 +151,14 @@ export default function SelectedRecipe() {
 
             <div className='ingredients_and_steps_container'>
                 <div className='ingredients_and_steps_left'>
-                    <h2>Ingredients</h2>
+                    <h2>INGREDIENTS</h2>
 
                     <div className='yield_container'>
                         <h4 className='yield_title'>Yeild:</h4> &nbsp;
                         {recipe?.servings} servings
                     </div>
 
-                    {Object.values(recipe.ingredients)?.map(ingredient => {
+                    {recipe.ingredients && Object.values(recipe.ingredients)?.map(ingredient => {
                         const measurementId = ingredient.ingredient_measurement_id
                         let measurement = dropdowns.measurements[+measurementId].measurement_name
                         measurement = +ingredient.ingredient_quantity > 1 ? measurement + 's' : measurement
@@ -166,7 +167,7 @@ export default function SelectedRecipe() {
                         })}
                 </div>
                 <div className='ingredients_and_steps_right'>
-                    <h2>Preperation</h2>
+                    <h2>PREPERATION</h2>
 
                     <div className='selected_recipe_steps_container'>
                         {Object.values(recipe.steps).map(step => {
@@ -176,11 +177,14 @@ export default function SelectedRecipe() {
                                     <h3>Step {step.step_number}.</h3>
                                     <p>{step.description}</p>
                                 </div>
-
                             )
                         })}
                     </div>
                 </div>
+            </div>
+
+            <div>
+                <Review recipe={recipe}/>
             </div>
         </div>
     )
