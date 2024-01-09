@@ -12,7 +12,8 @@ const actionPostReview = (review) => {
 export const thunkPostReview = (review, recipeId) => async (dispatch) => {
     const res = await fetch(`/api/recipes/${recipeId}/reviews`, {
         method: 'POST',
-        body: review
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(review)
     })
 }
 

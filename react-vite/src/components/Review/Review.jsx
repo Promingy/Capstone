@@ -42,8 +42,7 @@ export default function Review ({ recipe }) {
 
         const newReview = {
             rating: +rating,
-            body: review,
-            submit: true
+            body: review
         }
 
         dispatch(thunkPostReview(newReview, recipe.id))

@@ -320,11 +320,10 @@ def delete_recipe(recipeId):
 @recipe.route('/<int:recipeId>/reviews', methods=['POST'])
 @login_required
 def post_review(recipeId):
-
     form = ReviewForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print('~~~~~~~~~~~~~', form.data)
-
 
     if form.validate_on_submit():
         data = form.data
+    else:
+        return {"errors": form.errors}, 400
