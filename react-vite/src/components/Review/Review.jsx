@@ -44,7 +44,11 @@ export default function Review ({ recipe }) {
                 </div>
                     <p className='your_rating_clear'>
                         Your rating
-                        {!!rating && <span onClick={() => {setRating(0)}}>clear</span>}
+                        {!!rating && <span onClick={() => {
+                            setRatingConfirmed(false)
+                            setHoverRating(0)
+                            setRating(0)
+                            }}>clear</span>}
                     </p>
                     <div className='your_rating_stars'>
                         {starCreatorHover()}
