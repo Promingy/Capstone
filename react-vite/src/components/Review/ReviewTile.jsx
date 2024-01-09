@@ -2,20 +2,54 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import ConfirmDelete from "../ConfirmDelete"
 import OpenModalButton from "../OpenModalButton/OpenModalButton"
+import TextareaAutosize from "react-textarea-autosize"
 
 export default function ReviewTile({ review }) {
-    const [bounceLike, setBounceLike] = useState(false)
     const sessionUser = useSelector(state => state.session.user)
+    const [bounceLike, setBounceLike] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
+    const [body, setBody] = useState(review?.body || "")
+    const [isPrivate, setIsPrivate] = useState(review.private || false)
+    const sessionUserName = sessionUser.first_name[0].toUpperCase() +
+                            sessionUser.first_name.slice(1) +
+                            " " +
+                            sessionUser.last_name[0].toUpperCase() +
+                            sessionUser.last_name.slice(1)
 
+    function handleReviewUpdate() {
+
+    }
 
     return (
         <div className="review" onMouseOver={() => setBounceLike(true)} onMouseLeave={() => setBounceLike(false)}>
-            <h3>{review.name}</h3>
-            <div className="review_body">
-                <p>{review.body}</p>
+            <h3>{review.user_id == sessionUser.id ? sessionUserName  : review.name}</h3>
+            <div className="review_body_container">
+                {!isEditing &&
+                    <p className="review_body">{review.body}</p>
+                }
+
+                {isEditing &&
+                    <div className="edit_review_box_container">
+                        <TextareaAutosize
+                        className="edit_review_box"
+                            value={body}
+                            onChange={e => setBody(e.target.value)}
+                        />
+                        <div className="edit_review_bottom">
+                            <div className="edit_private_container">
+                                <p className={isPrivate ? 'privacy_unselected' : 'privacy_selected'} onClick={() => setIsPrivate(false)}>Public</p>
+                                <p className={isPrivate ? "privacy_selected" : "privacy_unselected"} onClick={() => setIsPrivate(true)}>Private</p>
+                            </div>
+                            <div>
+                                <button className="submit_review submit_updated_review">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+
                 { review.user_id == sessionUser.id &&
                     <div className="review_owner_icons">
-                        <span>
+                        <span onClick={() => setIsEditing(true)}>
                             <i className="fa-regular fa-pen-to-square fa-lg" />
                         </span>
                         <span className="delete_review_modal">
@@ -34,14 +68,3 @@ export default function ReviewTile({ review }) {
         </div>
     )
 }
-
-{/* <span className='delete_recipe_icon'>
-    <OpenModalButton
-        buttonText={<span
-            id='delete_recipe'
-            className='fa-regular fa-trash-can fa-xl delete_recipe'
-            onClick={() => setConfirmDelete(!confirmDelete)}
-        />}
-        modalComponent={<ConfirmDelete recipe={recipe} />}
-    />
-</span> */}
