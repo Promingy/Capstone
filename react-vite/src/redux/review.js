@@ -1,4 +1,4 @@
-import { actionAddRating, actionRemoveRating, actionUpdateRating, actionPostReview } from "./recipe"
+import { actionAddRating, actionRemoveRating, actionUpdateRating, actionPostReview, actionDeleteReview } from "./recipe"
 
 const POST_REVIEW = 'review/POST_REVIEW'
 const POST_RATING = 'review/POST_RATING'
@@ -17,6 +17,20 @@ export const thunkPostReview = (review, recipeId) => async (dispatch) => {
         dispatch(actionPostReview(data))
     }
 
+    return data
+}
+
+export const thunkDeleteReview = (review) => async (dispatch) => {
+    const res = await fetch(`/api/reviews/${review.id}`, {
+        method: "DELETE"
+    })
+
+    const data = await res.json()
+
+    if (res.ok){
+        dispatch(actionDeleteReview(review))
+    }
+    
     return data
 }
 

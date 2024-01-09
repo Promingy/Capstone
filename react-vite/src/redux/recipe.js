@@ -7,6 +7,7 @@ const ADD_RATING =  'recipe/addRating'
 const REMOVE_RATING = 'recipe/removeRating'
 const UPDATE_RATING = 'recipe/updateRating'
 const POST_REVIEW = 'recipe/postReview'
+const DELETE_REVIEW = 'recipe/deleteReview'
 
 const actionGetAllRecipes = (recipes) => {
     return {
@@ -67,6 +68,13 @@ export const actionUpdateRating = (rating) => {
 export const actionPostReview = (review) => {
     return {
         type: POST_REVIEW,
+        review
+    }
+}
+
+export const actionDeleteReview = (review) => {
+    return {
+        type: DELETE_REVIEW,
         review
     }
 }
@@ -175,6 +183,14 @@ function recipeReducer(state=initialState, action){
         case GET_SELECTED_RECIPE: {
             const newState = { ...state }
             newState[action.recipe.id] = action.recipe
+            const newReviews = {}
+
+            for (let review of newState[action.recipe.id].reviews) {
+                newReviews[review.id] = review
+            }
+
+            newState[action.recipe.id].reviews = newReviews
+
             return newState
         }
         case CREATE_RECIPE: {
@@ -240,7 +256,14 @@ function recipeReducer(state=initialState, action){
 
         case POST_REVIEW: {
             const newState = { ...state }
-            newState[action.review.recipe_id].reviews.push(action.review)
+            newState[action.review.recipe_id].reviews[action.review.id] = action.review
+            return newState
+        }
+        case DELETE_REVIEW: {
+            const newState = { ...state }
+
+            delete newState[action.review.recipe_id].reviews[action.review.id]
+
             return newState
         }
         default:

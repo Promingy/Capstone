@@ -120,8 +120,8 @@ export default function Review ({ recipe }) {
                         <button className='submit_review' onClick={handlePostReview}>Submit</button>
                     </div>
                     <div className='review_container'>
-                        {!recipe.reviews.length && <h2>Be the first to post a note!</h2>}
-                        {recipe.reviews.map(review => {
+                        {!Object.values(recipe.reviews).length && <h2>Be the first to post a note!</h2>}
+                        {Object.values(recipe.reviews).map(review => {
                             if (!review.private){
                                return <ReviewTile review={review} key={`review${review.id}`}/>
                             }
