@@ -19,7 +19,6 @@ def update_review(reviewId):
 
     if form.validate_on_submit():
         data = form.data
-
         review.body = data['body']
         review.edited = True
         review.private = data['private']

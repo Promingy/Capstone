@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux"
 import ConfirmDelete from "../ConfirmDelete"
 import OpenModalButton from "../OpenModalButton/OpenModalButton"
 import TextareaAutosize from "react-textarea-autosize"
+import { thunkUpdateReview } from "../../redux/review"
 
 export default function ReviewTile({ review }) {
+    const dispatch = useDispatch()
     const sessionUser = useSelector(state => state.session.user)
     const [bounceLike, setBounceLike] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
-    const [body, setBody] = useState(review?.body || "")
+    const [body, setBody] = useState("")
     const [isPrivate, setIsPrivate] = useState(review.private || false)
     const sessionUserName = sessionUser.first_name[0].toUpperCase() +
                             sessionUser.first_name.slice(1) +
@@ -16,8 +18,17 @@ export default function ReviewTile({ review }) {
                             sessionUser.last_name[0].toUpperCase() +
                             sessionUser.last_name.slice(1)
 
-    function handleReviewUpdate() {
+    function handleReviewUpdate(e) {
+        e.preventDefault()
 
+        const updatedReview = {
+            id: review.id,
+            body,
+            private: isPrivate,
+            edited: true
+        }
+
+        dispatch(thunkUpdateReview(updatedReview))
     }
 
     return (
@@ -25,7 +36,10 @@ export default function ReviewTile({ review }) {
             <h3>{review.user_id == sessionUser.id ? sessionUserName  : review.name}</h3>
             <div className="review_body_container">
                 {!isEditing &&
+                <div className="edited_body">
+                    {review.edited && <span className="edited">(edited)</span>}
                     <p className="review_body">{review.body}</p>
+                </div>
                 }
 
                 {isEditing &&
@@ -41,7 +55,7 @@ export default function ReviewTile({ review }) {
                                 <p className={isPrivate ? "privacy_selected" : "privacy_unselected"} onClick={() => setIsPrivate(true)}>Private</p>
                             </div>
                             <div>
-                                <button className="submit_review submit_updated_review">Submit</button>
+                                <button className="submit_review submit_updated_review" onClick={handleReviewUpdate}>Submit</button>
                             </div>
                         </div>
                     </div>
@@ -49,8 +63,12 @@ export default function ReviewTile({ review }) {
 
                 { review.user_id == sessionUser.id &&
                     <div className="review_owner_icons">
-                        <span onClick={() => setIsEditing(true)}>
-                            <i className="fa-regular fa-pen-to-square fa-lg" />
+                        <span onClick={() => {
+                            setBody(review.body)
+                            setIsPrivate(review.private)
+                            setIsEditing(!isEditing)
+                            }}>
+                            <i className={`fa-regular fa-${isEditing ? 'x' : 'pen-to-square'} fa-lg`} />
                         </span>
                         <span className="delete_review_modal">
                             <OpenModalButton

@@ -15,6 +15,8 @@ export default function Review ({ recipe }) {
     const [ratingSubmitted, setRatingSubmitted] = useState(false)
     const [isPrivate, setIsPrivate] = useState(false)
 
+    const totalPrivateComments = Object.values(recipe.reviews).filter(review => review.user_id == sessionUser.id && review.private).length
+    const totalPublicComments = Object.values(recipe.reviews).filter(review => !review.private).length
     function starCreatorHover() {
         const stars = []
 
@@ -120,10 +122,16 @@ export default function Review ({ recipe }) {
                         <button className='submit_review' onClick={handlePostReview}>Submit</button>
                     </div>
                     <div className='review_container'>
+                    <div className='review_filter'>
+                        <h3 className={isPrivate ? "hidden_comments" : "visible_comments"} onClick={() => setIsPrivate(false)}>Public ({totalPublicComments})</h3>
+                        <h3 className={isPrivate ? "visible_comments" : "hidden_comments"} onClick={() => setIsPrivate(true)}>Private ({totalPrivateComments})</h3>
+                    </div>
                         {!Object.values(recipe.reviews).length && <h2>Be the first to post a note!</h2>}
                         {Object.values(recipe.reviews).map(review => {
-                            if (!review.private){
+                            if (!review.private && !isPrivate){
                                return <ReviewTile review={review} key={`review${review.id}`}/>
+                            } else if (review.private && isPrivate && sessionUser.id == review.user_id) {
+                                return <ReviewTile review={review} key={`review${review.id}`} />
                             }
                         })}
                     </div>

@@ -103,9 +103,14 @@
 }
 
 .review_container {
-    border-top: 1px solid lightgray;
-    margin-top: 50px;
     padding-top: 15px;
+}
+
+.review_filter {
+    display: flex;
+    gap: 30px;
+    border-bottom: 1px solid lightgray;
+    align-items: center;
 }
 
 .review {
@@ -158,10 +163,13 @@
     background-color: black;
     color: white;
     padding: 6px;
+    border-radius: 30px;
+    cursor: pointer;
 }
 
 .privacy_unselected {
     color: gray;
+    cursor: pointer;
 }
 
 .privacy_unselected:hover {
@@ -196,6 +204,7 @@
 .review_body {
     max-width: 85%;
     overflow-wrap: break-word;
+    margin: 5px 0;
 }
 .review_owner_icons {
     display: flex;
@@ -224,4 +233,37 @@
 
 .delete_review_modal {
     padding: 0;
+}
+
+.edited {
+    color: gray;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.edited_body {
+    width: 100%;
+}
+
+.visible_comments {
+    position: relative;
+    bottom: -1px;
+    cursor: pointer;
+    z-index: 0;
+}
+
+.visible_comments::after {
+    content: "";
+    display: block;
+    position: relative;
+    bottom: -19px;
+    width: 100%;
+    height: 1px;
+    background-color: black;
+    z-index: 0;
+}
+
+.hidden_comments {
+    color: gray;
+    cursor: pointer;
 }
