@@ -1,28 +1,23 @@
-import { actionAddRating, actionRemoveRating, actionUpdateRating } from "./recipe"
+import { actionAddRating, actionRemoveRating, actionUpdateRating, actionPostReview } from "./recipe"
 
 const POST_REVIEW = 'review/POST_REVIEW'
 const POST_RATING = 'review/POST_RATING'
 
-const actionPostReview = (review) => {
-    return {
-        type: POST_REVIEW,
-        review
-    }
-}
-
-const actionPostRating = (rating) => {
-    return {
-        type: POST_RATING,
-        rating
-    }
-}
-
 export const thunkPostReview = (review, recipeId) => async (dispatch) => {
+    console.log('before dispatch', review)
     const res = await fetch(`/api/recipes/${recipeId}/reviews`, {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(review)
     })
+
+    const data = await res.json()
+
+    if (res.ok){
+        dispatch(actionPostReview(data))
+    }
+
+    return data
 }
 
 export const thunkPostRating = (rating, recipeId) => async (dispatch) => {

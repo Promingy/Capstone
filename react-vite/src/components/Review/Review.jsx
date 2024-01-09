@@ -13,6 +13,7 @@ export default function Review ({ recipe }) {
     const [ratingConfirmed, setRatingConfirmed] = useState(!!recipe?.user_rating || false)
     const [review, setReview] = useState('')
     const [ratingSubmitted, setRatingSubmitted] = useState(false)
+    const [isPrivate, setIsPrivate] = useState(false)
 
     function starCreatorHover() {
         const stars = []
@@ -43,11 +44,14 @@ export default function Review ({ recipe }) {
         return stars
     }
 
-    function handleSubmit(e) {
+    function handlePostReview(e) {
         e.preventDefault()
 
         const newReview = {
-            body: review
+            body: review,
+            edited: false,
+            private: isPrivate,
+            submit: true
         }
 
         dispatch(thunkPostReview(newReview, recipe.id))
@@ -113,7 +117,7 @@ export default function Review ({ recipe }) {
                     />
                     <div className='submit_review_container'>
                         {!!review.length && <span onClick={() => setReview('')}>Cancel</span>}
-                        <button className='submit_review' onClick={handleSubmit}>Submit</button>
+                        <button className='submit_review' onClick={handlePostReview}>Submit</button>
                     </div>
                     <div className='review_container'>
                         {!recipe.reviews.length && <h2>Be the first to post a note!</h2>}

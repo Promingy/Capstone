@@ -6,6 +6,7 @@ const DELETE_RECIPE = 'recipe/deleteRecipe'
 const ADD_RATING =  'recipe/addRating'
 const REMOVE_RATING = 'recipe/removeRating'
 const UPDATE_RATING = 'recipe/updateRating'
+const POST_REVIEW = 'recipe/postReview'
 
 const actionGetAllRecipes = (recipes) => {
     return {
@@ -60,6 +61,13 @@ export const actionUpdateRating = (rating) => {
     return {
         type: UPDATE_RATING,
         rating
+    }
+}
+
+export const actionPostReview = (review) => {
+    return {
+        type: POST_REVIEW,
+        review
     }
 }
 
@@ -227,6 +235,12 @@ function recipeReducer(state=initialState, action){
             }
             newState[action.ratingId.recipe_id].avg_rating = newAvg / newState[action.ratingId.recipe_id].all_ratings || 0
 
+            return newState
+        }
+
+        case POST_REVIEW: {
+            const newState = { ...state }
+            newState[action.review.recipe_id].reviews.push(action.review)
             return newState
         }
         default:

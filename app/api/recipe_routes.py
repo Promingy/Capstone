@@ -1,5 +1,5 @@
 from flask import Blueprint, request, session
-from ..models import Recipe, Category, db, Quantity, Step, Rating
+from ..models import Recipe, Category, db, Quantity, Step, Rating, Review
 from ..forms import RecipeForm, QuantityForm, StepForm, ReviewForm, RatingForm
 from flask_login import login_required
 from app.aws import (upload_file_to_s3, get_unique_filename)
@@ -320,11 +320,29 @@ def delete_recipe(recipeId):
 @recipe.route('/<int:recipeId>/reviews', methods=['POST'])
 @login_required
 def post_review(recipeId):
+    """
+    Route that validates given data and creates a new post
+    """
+
     form = ReviewForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
         data = form.data
+
+        newReview = Review(
+            user_id = int(session['_user_id']),
+            recipe_id = int(recipeId),
+            body = data['body'],
+            edited = data['edited'],
+            private = data['private'],
+        )
+
+        db.session.add(newReview)
+        db.session.commit()
+
+        return newReview.to_dict()
+
     else:
         return {"errors": form.errors}, 400
 
@@ -332,6 +350,9 @@ def post_review(recipeId):
 @recipe.route('/<int:recipeId>/ratings', methods=['POST'])
 @login_required
 def post_rating(recipeId):
+    """
+    route that validates data and creates a new rating
+    """
 
     form = RatingForm()
     form['csrf_token'].data = request.cookies['csrf_token']

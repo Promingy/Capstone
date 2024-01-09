@@ -4,6 +4,6 @@ from wtforms.validators import DataRequired
 
 class ReviewForm(FlaskForm):
     body = StringField('body', validators=[DataRequired()])
-    edited = BooleanField('edited', validators=[DataRequired()])
-    private = BooleanField('private', validators=[DataRequired()])
+    edited = BooleanField('edited')
+    private = BooleanField('private')
     submit = SubmitField('submit')

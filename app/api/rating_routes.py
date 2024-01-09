@@ -39,12 +39,7 @@ def delete_rating(ratingId):
         return {"errors": "Rating not found"}, 404
 
     if int(rating.to_dict()['user_id']) == int(session['_user_id']):
-        print('!!!!!!!!!!!!!!!!!!!!!!!')
         db.session.delete(rating)
         db.session.commit()
 
         return {"message": "successfully deleted"}
-
-    else:
-        print('~~~~~~~~~~~~~~~~~~')
-        return {"test": "test"}
