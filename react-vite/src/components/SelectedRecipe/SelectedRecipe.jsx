@@ -119,7 +119,7 @@ export default function SelectedRecipe() {
                             </span>
                         </p>
                         <h3>Ratings</h3>
-                        <p>
+                        <div>
                             {recipe?.avg_rating > 0 &&
                                 <p className='ratings_box'>
                                     &nbsp;&nbsp;{recipe?.avg_rating} {starCreator(recipe)} ({recipe?.all_ratings})
@@ -130,7 +130,7 @@ export default function SelectedRecipe() {
                                     Be the first to leave a rating!
                                 </span>
                             }
-                        </p>
+                        </div>
 
                         <h3>Notes</h3>
                         <p>

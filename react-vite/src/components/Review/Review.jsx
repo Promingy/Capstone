@@ -34,6 +34,11 @@ export default function Review ({ recipe }) {
         return stars
     }
 
+    function handleSubmit(e) {
+        e.preventDefault()
+        console.log('hi')
+    }
+
     return (
         <div className='reviews_container'>
             <div className='review_left'>
@@ -69,11 +74,12 @@ export default function Review ({ recipe }) {
                     />
                     <div className='submit_review_container'>
                         {!!review.length && <span onClick={() => setReview('')}>Cancel</span>}
-                        <button className='submit_review'>Submit</button>
+                        <button className='submit_review' onClick={handleSubmit}>Submit</button>
                     </div>
                     <div className='review_container'>
-                        {Object.values(recipe.reviews).map(review => (
-                            <ReviewTile review={review} />
+                        {!recipe.reviews.length && <h2>Be the first to post a note!</h2>}
+                        {recipe.reviews.map(review => (
+                            <ReviewTile review={review} key={`review${review.id}`}/>
                         ))}
                     </div>
                 </div>
