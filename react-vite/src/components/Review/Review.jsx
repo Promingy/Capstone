@@ -2,15 +2,17 @@ import { useState } from 'react'
 import './Review.css'
 import TextareaAutoSize from 'react-textarea-autosize'
 import ReviewTile from './ReviewTile'
-import { useDispatch } from 'react-redux'
-import { thunkPostReview } from '../../redux/review'
+import { useDispatch, useSelector } from 'react-redux'
+import { thunkDeleteRating, thunkPostRating, thunkPostReview, thunkUpdateRating } from '../../redux/review'
 
 export default function Review ({ recipe }) {
     const dispatch = useDispatch()
-    const [rating, setRating] = useState(0)
-    const [hoverRating, setHoverRating] = useState(0)
-    const [ratingConfirmed, setRatingConfirmed] = useState(false)
+    const sessionUser = useSelector(state => state.session.user)
+    const [rating, setRating] = useState(recipe?.user_rating?.rating || 0)
+    const [hoverRating, setHoverRating] = useState(recipe?.user_rating?.rating || 0)
+    const [ratingConfirmed, setRatingConfirmed] = useState(!!recipe?.user_rating || false)
     const [review, setReview] = useState('')
+
     function starCreatorHover() {
         const stars = []
 
@@ -28,6 +30,7 @@ export default function Review ({ recipe }) {
                 onClick={() => {
                     setRatingConfirmed(true)
                     setRating(i + 1)
+                    handlePostRating(i + 1)
                 }}
                 key={`${recipe.id}star${i}`}
                 className={`fa-solid fa-star fa-sm ${ i < hoverRating ? 'your_rating' : 'your_rating2'}`}/>
@@ -41,13 +44,31 @@ export default function Review ({ recipe }) {
         e.preventDefault()
 
         const newReview = {
-            rating: +rating,
             body: review
         }
 
         dispatch(thunkPostReview(newReview, recipe.id))
     }
 
+    function handlePostRating(newRating) {
+        const ratingToPost = {
+            recipe_id: recipe.id,
+            user_id: sessionUser.id,
+            rating: newRating,
+            submit: true
+        }
+
+        dispatch(recipe?.user_rating ?
+            thunkUpdateRating(ratingToPost, recipe?.user_rating?.id)
+            :
+            thunkPostRating(ratingToPost, recipe.id))
+    }
+
+    function HandleDeleteRating() {
+        dispatch(thunkDeleteRating(recipe?.user_rating, recipe?.user_rating?.id))
+        recipe.user_rating = undefined
+    }
+    
     return (
         <div className='reviews_container'>
             <div className='review_left'>
@@ -55,8 +76,8 @@ export default function Review ({ recipe }) {
                 <div className='ratings_container'>
                     <p className='fa-solid fa-star fa-xl ratings_star'/>
                     <div className='reviews_out_of_container'>
-                        <h3 className='reviews_out_of'>{recipe.avg_rating} out of 5</h3>
-                        <p className='reviews_out_of reviews_out_of_p'>{recipe.reviews.length} user ratings</p>
+                        <h3 className='reviews_out_of'>{recipe.avg_rating.toFixed(1)} out of 5</h3>
+                        <p className='reviews_out_of reviews_out_of_p'>{recipe.all_ratings} user ratings</p>
                     </div>
                 </div>
                     <p className='your_rating_clear'>
@@ -64,7 +85,7 @@ export default function Review ({ recipe }) {
                         {!!rating && <span onClick={() => {
                             setRatingConfirmed(false)
                             setHoverRating(0)
-                            setRating(0)
+                            HandleDeleteRating(0)
                             }}>clear</span>}
                     </p>
                     <div className='your_rating_stars'>
@@ -87,9 +108,11 @@ export default function Review ({ recipe }) {
                     </div>
                     <div className='review_container'>
                         {!recipe.reviews.length && <h2>Be the first to post a note!</h2>}
-                        {recipe.reviews.map(review => (
-                            <ReviewTile review={review} key={`review${review.id}`}/>
-                        ))}
+                        {recipe.reviews.map(review => {
+                            if (!review.private){
+                               return <ReviewTile review={review} key={`review${review.id}`}/>
+                            }
+                        })}
                     </div>
                 </div>
             </div>

@@ -14,6 +14,7 @@ class Review(db.Model, UserMixin):
     body = db.Column(db.String)
     edited = db.Column(db.Boolean, default=False)
     rating = db.Column(db.Integer, default=5)
+    private = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime(timezone=True), default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), default=func.now())
 
@@ -27,6 +28,7 @@ class Review(db.Model, UserMixin):
             "recipe_id": self.recipe_id,
             "body": self.body,
             "edited": self.edited,
+            "private": self.private,
             "rating": self.rating,
             "created_at": self.created_at,
             "updated_at": self.updated_at

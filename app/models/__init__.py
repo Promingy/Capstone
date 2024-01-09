@@ -8,3 +8,4 @@ from .step import Step
 from .saved_recipe import SavedRecipe
 from .review import Review
 from .like import Like
+from .rating import Rating

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, session
-from ..models import Recipe, Category, db, Quantity, Step
-from ..forms import RecipeForm, QuantityForm, StepForm, ReviewForm
+from ..models import Recipe, Category, db, Quantity, Step, Rating
+from ..forms import RecipeForm, QuantityForm, StepForm, ReviewForm, RatingForm
 from flask_login import login_required
 from app.aws import (upload_file_to_s3, get_unique_filename)
 
@@ -28,7 +28,7 @@ def get_all_recipes():
         # If category has recipes,
         # set category as key and all recipes as a list for the value
         categorized_recipes[category] = \
-        [recipe.to_dict() for recipe in recipes]
+        [recipe.to_dict(rating=True) for recipe in recipes]
 
     return categorized_recipes
 
@@ -145,7 +145,7 @@ def get_single_recipe(recipeId):
     """
 
     recipe = Recipe.query.get(recipeId)
-    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True)
+    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=True)
 
     return recipe
 
@@ -325,5 +325,30 @@ def post_review(recipeId):
 
     if form.validate_on_submit():
         data = form.data
+    else:
+        return {"errors": form.errors}, 400
+
+
+@recipe.route('/<int:recipeId>/ratings', methods=['POST'])
+@login_required
+def post_rating(recipeId):
+
+    form = RatingForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        data = form.data
+
+        newRating = Rating(
+            recipe_id = data['recipe_id'],
+            user_id = data['user_id'],
+            rating = data['rating']
+        )
+
+        db.session.add(newRating)
+        db.session.commit()
+
+        return newRating.to_dict()
+
     else:
         return {"errors": form.errors}, 400

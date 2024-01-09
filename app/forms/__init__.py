@@ -6,3 +6,4 @@ from .recipe_form import RecipeForm
 from .review_form import ReviewForm
 from .signup_form import SignUpForm
 from .steps_form import StepForm
+from .rating_form import RatingForm

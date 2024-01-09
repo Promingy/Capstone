@@ -12,7 +12,8 @@ export default function SelectedRecipe() {
     let { recipeId } = useParams()
 
     recipeId = recipeId.split('-')[0]
-    const recipe = useSelector(state => state.recipes[recipeId])
+    const recipes = useSelector(state => state.recipes)
+    const recipe = recipes[recipeId]
     const dropdowns = useSelector(state => state.dropdowns)
     const postDate = new Date(recipe?.created_at)
 
@@ -47,7 +48,6 @@ export default function SelectedRecipe() {
         dispatch(thunkGetSelectedRecipe(recipeId))
         dispatch(thunkGetDropdowns())
     }, [dispatch, recipeId])
-
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
     return (
@@ -158,7 +158,7 @@ export default function SelectedRecipe() {
                         {recipe?.servings} servings
                     </div>
 
-                    {recipe.ingredients && Object.values(recipe.ingredients)?.map(ingredient => {
+                    {recipe?.ingredients && Object.values(recipe?.ingredients)?.map(ingredient => {
                         const measurementId = ingredient.ingredient_measurement_id
                         let measurement = dropdowns.measurements[+measurementId].measurement_name
                         measurement = +ingredient.ingredient_quantity > 1 ? measurement + 's' : measurement

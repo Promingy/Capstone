@@ -3,6 +3,9 @@ const GET_SELECTED_RECIPE = 'recipe/getSelectedRecipe'
 const CREATE_RECIPE = 'recipe/createRecipe'
 const UPDATE_RECIPE = 'recipe/updateRecipe'
 const DELETE_RECIPE = 'recipe/deleteRecipe'
+const ADD_RATING =  'recipe/addRating'
+const REMOVE_RATING = 'recipe/removeRating'
+const UPDATE_RATING = 'recipe/updateRating'
 
 const actionGetAllRecipes = (recipes) => {
     return {
@@ -36,6 +39,27 @@ const actionDeleteRecipe = (recipe) => {
     return {
         type: DELETE_RECIPE,
         recipe
+    }
+}
+
+export const actionAddRating = (rating) => {
+    return {
+        type: ADD_RATING,
+        rating
+    }
+}
+
+export const actionRemoveRating = (ratingId) => {
+    return {
+        type: REMOVE_RATING,
+        ratingId
+    }
+}
+
+export const actionUpdateRating = (rating) => {
+    return {
+        type: UPDATE_RATING,
+        rating
     }
 }
 
@@ -159,6 +183,50 @@ function recipeReducer(state=initialState, action){
             const newState = { ...state }
             delete newState[action.recipe.id]
             delete newState.categories[action.recipe.category_id][action.recipe.id]
+            return newState
+        }
+        case ADD_RATING: {
+            const newState = { ...state }
+            newState[action.rating.recipe_id].all_ratings ++
+            newState[action.rating.recipe_id].user_rating = action.rating
+            let newAvg = action.rating.rating
+
+            for (let rating of newState[action.rating.recipe_id].ratings){
+                newAvg += rating.rating
+            }
+
+            newState[action.rating.recipe_id].avg_rating = newAvg / newState[action.rating.recipe_id].all_ratings
+
+            return newState
+        }
+        case UPDATE_RATING: {
+            const newState = { ...state }
+            newState[action.rating.recipe_id].user_rating = action.rating
+            let newAvg = action.rating.rating
+
+            for (let rating of newState[action.rating.recipe_id].ratings){
+                if (rating.id != action.rating.id){
+                    newAvg += rating.rating
+                }
+            }
+
+            console.log((newAvg / newState[action.rating.recipe_id].all_ratings), newAvg)
+            newState[action.rating.recipe_id].avg_rating = (newAvg / newState[action.rating.recipe_id].all_ratings) || 0
+
+            return newState
+        }
+        case REMOVE_RATING: {
+            const newState = { ...state }
+            newState[action.ratingId.recipe_id].all_ratings --
+            let newAvg = 0
+
+            for (let rating of newState[action.ratingId.recipe_id].ratings){
+                if (rating.id != action.ratingId.id){
+                    newAvg += rating.rating
+                }
+            }
+            newState[action.ratingId.recipe_id].avg_rating = newAvg / newState[action.ratingId.recipe_id].all_ratings || 0
+
             return newState
         }
         default:
