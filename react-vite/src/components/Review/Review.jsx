@@ -12,6 +12,7 @@ export default function Review ({ recipe }) {
     const [hoverRating, setHoverRating] = useState(recipe?.user_rating?.rating || 0)
     const [ratingConfirmed, setRatingConfirmed] = useState(!!recipe?.user_rating || false)
     const [review, setReview] = useState('')
+    const [ratingSubmitted, setRatingSubmitted] = useState(false)
 
     function starCreatorHover() {
         const stars = []
@@ -28,9 +29,11 @@ export default function Review ({ recipe }) {
                     }
                 }}
                 onClick={() => {
-                    setRatingConfirmed(true)
-                    setRating(i + 1)
-                    handlePostRating(i + 1)
+                    if (!ratingSubmitted){
+                        setRatingConfirmed(true)
+                        setRating(i + 1)
+                        handlePostRating(i + 1)
+                    }
                 }}
                 key={`${recipe.id}star${i}`}
                 className={`fa-solid fa-star fa-sm ${ i < hoverRating ? 'your_rating' : 'your_rating2'}`}/>
@@ -51,6 +54,8 @@ export default function Review ({ recipe }) {
     }
 
     function handlePostRating(newRating) {
+        setRatingSubmitted(true)
+
         const ratingToPost = {
             recipe_id: recipe.id,
             user_id: sessionUser.id,
@@ -61,14 +66,15 @@ export default function Review ({ recipe }) {
         dispatch(recipe?.user_rating ?
             thunkUpdateRating(ratingToPost, recipe?.user_rating?.id)
             :
-            thunkPostRating(ratingToPost, recipe.id))
+            thunkPostRating(ratingToPost, recipe.id)).then(() => setRatingSubmitted(false))
     }
 
     function HandleDeleteRating() {
-        dispatch(thunkDeleteRating(recipe?.user_rating, recipe?.user_rating?.id))
+        setRatingSubmitted(true)
+        dispatch(thunkDeleteRating(recipe?.user_rating, recipe?.user_rating?.id)).then(() => setRatingSubmitted(false))
         recipe.user_rating = undefined
     }
-    
+
     return (
         <div className='reviews_container'>
             <div className='review_left'>
@@ -82,10 +88,13 @@ export default function Review ({ recipe }) {
                 </div>
                     <p className='your_rating_clear'>
                         Your rating
-                        {!!rating && <span onClick={() => {
-                            setRatingConfirmed(false)
-                            setHoverRating(0)
-                            HandleDeleteRating(0)
+                        {!!hoverRating && <span onClick={() => {
+                            if (!ratingSubmitted){
+                                setRatingConfirmed(false)
+                                setHoverRating(0)
+                                setRating(0)
+                                HandleDeleteRating(0)
+                            }
                             }}>clear</span>}
                     </p>
                     <div className='your_rating_stars'>
