@@ -285,6 +285,12 @@ export default function CreateRecipe ({ prevForm, update }) {
                                     <div className="remove_ingredient" onClick={() => {
                                             const newSteps = {...steps}
                                             delete newSteps[step.step_number]
+                                            setLastStepNum(Object.values(steps).length - 1)
+
+                                            if (+stepNumber === lastStepNum + 1){
+                                                setStepNumber(lastStepNum)
+                                            }
+
                                             setSteps(newSteps)
                                         }}>
                                         <i className="fa-solid fa-x fa-xs" />
@@ -298,9 +304,13 @@ export default function CreateRecipe ({ prevForm, update }) {
                     <div className="step_and_add">
                         <label>
                                 <div>
-                                    <i className="fa-solid fa-caret-up" onClick={e => setStepNumber(prevNum => +prevNum + 1 <= +lastStepNum + 1 ?  +prevNum + 1 : lastStepNum + 1)}/>
-                                    <p>{stepNumber}</p>
-                                    <i className="fa-solid fa-caret-down" onClick={e => setStepNumber(prevNum => +prevNum - 1 > 0 ? +prevNum - 1 : 1)}/>
+                                    <span className="custom_input_arrows_container">
+                                        <i className="fa-solid fa-caret-up custom_input_arrows" onClick={e => setStepNumber(prevNum => +prevNum + 1 <= +lastStepNum + 1 ?  +prevNum + 1 : lastStepNum + 1)}/>
+                                    </span>
+                                    <p className="custom_input_text">{stepNumber}</p>
+                                    <span className="custom_input_arrows_container">
+                                        <i className="fa-solid fa-caret-down custom_input_arrows" onClick={e => setStepNumber(prevNum => +prevNum - 1 > 0 ? +prevNum - 1 : 1)}/>
+                                    </span>
                                 </div>
                         </label>
                         <div className={`add_step_text_container

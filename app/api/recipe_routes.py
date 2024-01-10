@@ -222,7 +222,6 @@ def update_recipe(recipeId):
         # it already passed the validation check if we're right here
         #/ if statement removed - was preventing new ingredients being added if some were removed
         #/ ex. 1 ingredient removed, 1 ingredient added - length would be the same.
-        # if len(db_ingredients) < len(ingredients):
         for ingredient in ingredients:
             reqIngredient = ingredients[ingredient]
             try:

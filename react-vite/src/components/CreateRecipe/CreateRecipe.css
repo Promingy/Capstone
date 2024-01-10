@@ -248,3 +248,24 @@
     margin: 0 auto;
 
 }
+
+.custom_input_arrows_container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 3px 5px;
+}
+
+.custom_input_arrows_container:hover {
+    background-color: lightgrey;
+    border-radius: 5px;;
+}
+
+.custom_input_arrows {
+    padding: 0;
+    margin: 0;
+}
+
+.custom_input_text {
+    padding: 0 5px;
+}
