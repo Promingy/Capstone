@@ -29,6 +29,15 @@
     width: 40%;
 }
 
+.title_icon_container {
+    display: flex;
+    gap: 10px;
+}
+
+.title_icons {
+    font-size: 20px;
+}
+
 .single_owner {
     text-decoration: underline;
 }

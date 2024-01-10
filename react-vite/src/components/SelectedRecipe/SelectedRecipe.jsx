@@ -6,11 +6,13 @@ import { thunkGetDropdowns } from "../../redux/dropdown"
 import { useParams } from 'react-router-dom'
 import { starCreator } from '../MainPage/RecipeTile'
 import Review from '../Review'
+import OpenModalButton from '../OpenModalButton/OpenModalButton'
+import ConfirmDelete from '../ConfirmDelete'
 
 export default function SelectedRecipe() {
     const dispatch = useDispatch()
     let { recipeId } = useParams()
-    const sessionUser = useSelector(state => state.session)
+    const sessionUser = useSelector(state => state.session.user)
 
     recipeId = recipeId.split('-')[0]
     const recipes = useSelector(state => state.recipes)
@@ -53,11 +55,27 @@ export default function SelectedRecipe() {
     }, [dispatch, recipeId])
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
+
     return (
         <div className='spacer selected_recipe'>
             <div className='header_image_title'>
                 <div className='single_title_owner'>
-                    <h1>{recipe.title}</h1>
+                    <h1 >{recipe.title}</h1>
+                    <div className='title_icon_container'>
+                        {sessionUser?.id == recipe.owner_id &&
+                        <>
+                            <span onClick={() => {}}>
+                            <i className={`fa-regular fa-pen-to-square fa-lg`} />
+                        </span>
+                        <span className="delete_review_modal">
+                            <OpenModalButton
+                            buttonText={<span className="fa-regular fa-trash-can fa-xl"/>}
+                            modalComponent={<ConfirmDelete recipe={recipe}/>}
+                            />
+                        </span>
+                        </>
+                        }
+                    </div>
                     <div>
                         <h4 >By <span className='single_owner'>{ownerFirstName} {ownerLastName}</span></h4>
                         <p>Posted {months[postDate.getMonth() + 1]} {postDate.getDay()}, {postDate.getFullYear()}</p>
