@@ -15,7 +15,7 @@ export default function Review ({ recipe }) {
     const [ratingSubmitted, setRatingSubmitted] = useState(false)
     const [isPrivate, setIsPrivate] = useState(false)
     const [viewPrivate, setViewPrivate] = useState(false)
-    const [privacySelector, setPrivacySelector] = useState(false)
+    const [privacySelector, setPrivacySelector] = useState(true)
 
     const totalPrivateComments = Object.values(recipe.reviews).filter(review => review.user_id == sessionUser.id && review.private).length
     const totalPublicComments = Object.values(recipe.reviews).filter(review => !review.private).length
@@ -120,12 +120,11 @@ export default function Review ({ recipe }) {
                         value={review}
                         onChange={e => setReview(e.target.value)}
                         className='post_review'
-                        onFocus={() => setPrivacySelector(true)}
-                        onBlur={() => setPrivacySelector(false)}
+                        // onFocus={() => setPrivacySelector(true)}
                         placeholder='Share your notes with other cooks...'
                     />
                     <div className='submit_review_container'>
-                        <div className='privacy_selector_main'>
+                        <div className={ privacySelector ? `privacy_selector_main` : ""}>
                             <p className={isPrivate ? 'privacy_unselected' : 'privacy_selected'} onClick={() => setIsPrivate(false)}>Public</p>
                             <p className={isPrivate ? "privacy_selected" : "privacy_unselected"} onClick={() => setIsPrivate(true)}>Private</p>
                         </div>
@@ -136,7 +135,7 @@ export default function Review ({ recipe }) {
                     </div>
                     <div className='review_container'>
                     <div className='review_filter'>
-                        <h3 className={viewPrivate ? "hidden_comments" : "visible_comments"} onClick={() => setViewPrivate(false)}>Public ({totalPublicComments})</h3>
+                        <h3 id='public_comments' className={viewPrivate ? "hidden_comments" : "visible_comments"} onClick={() => setViewPrivate(false)}>Public ({totalPublicComments})</h3>
                         <h3 className={viewPrivate ? "visible_comments" : "hidden_comments"} onClick={() => setViewPrivate(true)}>Private ({totalPrivateComments})</h3>
                     </div>
                         {!Object.values(recipe.reviews).length && <h2>Be the first to post a note!</h2>}

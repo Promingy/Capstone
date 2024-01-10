@@ -1,5 +1,5 @@
 from flask import Blueprint, request, session
-from ..models import Rating, db
+from ..models import Rating, db, Like
 from ..forms import RatingForm
 from flask_login import login_required
 
@@ -43,3 +43,8 @@ def delete_rating(ratingId):
         db.session.commit()
 
         return {"message": "successfully deleted"}
+
+@rating.route('/<int:ratingId>', methods=['POST'])
+@login_required
+def like_review(ratingId):
+    pass

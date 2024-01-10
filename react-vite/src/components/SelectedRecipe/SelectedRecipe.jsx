@@ -29,7 +29,7 @@ export default function SelectedRecipe() {
     const totalCookTimeHours = Math.floor((recipe?.cook_time + recipe?.prep_time) / 60)
     const totalCookTimeMinutes = (recipe?.cook_time + recipe?.prep_time) % 60
 
-    const totalPublicComments = Object.values(recipe.reviews).filter(review => !review.private).length
+    const totalPublicComments = recipe?.reviews && Object.values(recipe?.reviews).filter(review => !review.private).length
 
     const months = {
         1: "Jan.",
@@ -135,9 +135,11 @@ export default function SelectedRecipe() {
                         </div>
 
                         <h3>Notes</h3>
-                        <p>
+                        <p onClick={() => document.getElementById('public_comments').scrollIntoView({behavior: "smooth"})}>
                             <span className='notes'>
-                                &nbsp;&nbsp;{recipe?.all_ratings ? `Read ${totalPublicComments} community notes` : 'Be the first to leave a note!'}
+                                {recipe?.all_ratings ? `Read ${totalPublicComments} community notes` : 'Be the first to leave a note!'}
+                            </span>
+                            <span>
                                 &nbsp;&nbsp;<i className='fa-solid fa-turn-down fa-xs' />
                             </span>
                         </p>
