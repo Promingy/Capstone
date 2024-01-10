@@ -15,7 +15,7 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [category, setCategory] = useState( prevForm?.category || 0)
     const [measurement, setMeasurement] = useState('Measurement')
     const [ingredient, setIngredient] = useState('')
-    const [quantity, setQuantity] = useState(0)
+    const [quantity, setQuantity] = useState(1)
     const [ingredients, setIngredients] = useState(prevForm?.ingredients || {})
     const [title, setTitle] = useState(prevForm?.title || '')
     const [description, setDescription] = useState( prevForm?.description || '')
@@ -31,6 +31,7 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [imageLoading, setImageLoading] = useState(false)
     const [submitted, setSubmitted] = useState(false)
     const [lastStepNum, setLastStepNum] = useState(Object.values(steps).length)
+    const [countType, setCountType] = useState(true)
 
     const [errors, setErrors] = useState({})
 
@@ -235,14 +236,35 @@ export default function CreateRecipe ({ prevForm, update }) {
                         className={`${errors.ingredient ? "error_container" : ''}`}
                     />
 
-                    <input
+                    {/* <input
                         type='number'
                         placeholder="Quantity"
                         value={quantity || ''}
-                        min={0}
+                        min={1}
                         onChange={e => setQuantity(e.target.value)}
                         className={`${errors.ingredient ? "error_container" : ''}`}
-                    />
+                    /> */}
+                    <div className="custom_quantity">
+                        <span className="custom_input_arrows_container" onClick={() => {
+                                if (countType) {
+                                    setQuantity(prevNum => prevNum + 1)
+                                } else {
+                                    setQuantity(prevNum => prevNum + .25)
+                                }
+                            }}>
+                            <i className="fa-solid fa-caret-up"/>
+                        </span>
+                        <p className="custom_input_text">{quantity.toFixed(2)}</p>
+                        <span className="custom_input_arrows_container" onClick={() => {
+                            if (countType) {
+                                setQuantity(prevNum => prevNum - 1 > 1 ? prevNum - 1 : 1)
+                            } else {
+                                setQuantity(prevNum => prevNum - .25 > 0.25 ? prevNum - .25 : 0.25)
+                            }
+                            }}>
+                            <i className="fa-solid fa-caret-down"/>
+                        </span>
+                    </div>
                     <div className='add_ingredient' onClick={() => {
                             // add ingredient to ingredients obj
                             if (+quantity < 0) setQuantity(1)
@@ -255,8 +277,7 @@ export default function CreateRecipe ({ prevForm, update }) {
 
                                 // reset ingredient values
                                 setIngredient('')
-                                setQuantity(0)
-                                // setMeasurement('Measurement')
+                                setQuantity(1)
                             }
                         }}>
 

@@ -252,6 +252,7 @@
 .custom_input_arrows_container {
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
     padding: 3px 5px;
 }
@@ -268,4 +269,8 @@
 
 .custom_input_text {
     padding: 0 5px;
+}
+
+.custom_quantity {
+    width: fit-content;
 }
