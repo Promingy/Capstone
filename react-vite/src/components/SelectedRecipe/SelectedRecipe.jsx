@@ -10,6 +10,7 @@ import Review from '../Review'
 export default function SelectedRecipe() {
     const dispatch = useDispatch()
     let { recipeId } = useParams()
+    const sessionUser = useSelector(state => state.session)
 
     recipeId = recipeId.split('-')[0]
     const recipes = useSelector(state => state.recipes)
@@ -163,11 +164,11 @@ export default function SelectedRecipe() {
                     </div>
 
                     {recipe?.ingredients && Object.values(recipe?.ingredients)?.map(ingredient => {
-                        const measurementId = ingredient.ingredient_measurement_id
-                        let measurement = dropdowns.measurements[+measurementId].measurement_name
-                        measurement = +ingredient.ingredient_quantity > 1 ? measurement + 's' : measurement
+                        const measurementId = ingredient?.ingredient_measurement_id
+                        let measurement = dropdowns?.measurements?.[+measurementId]?.measurement_name
+                        measurement = +ingredient?.ingredient_quantity > 1 ? measurement + 's' : measurement
 
-                        return (<p key={`ingredient${recipe.id}${ingredient.id}`}>{ingredient.ingredient_quantity} {measurement} {ingredient.ingredient}</p>)
+                        return (<p key={`ingredient${recipe.id}${ingredient?.id}`}>{ingredient?.ingredient_quantity} {measurement} {ingredient?.ingredient}</p>)
                         })}
                 </div>
                 <div className='ingredients_and_steps_right'>
@@ -188,7 +189,7 @@ export default function SelectedRecipe() {
             </div>
 
             <div>
-                <Review recipe={recipe}/>
+                <Review recipe={recipe} />
             </div>
         </div>
     )

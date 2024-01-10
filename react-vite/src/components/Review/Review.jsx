@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './Review.css'
 import TextareaAutoSize from 'react-textarea-autosize'
 import ReviewTile from './ReviewTile'
@@ -8,8 +8,8 @@ import { thunkDeleteRating, thunkPostRating, thunkPostReview, thunkUpdateRating 
 export default function Review ({ recipe }) {
     const dispatch = useDispatch()
     const sessionUser = useSelector(state => state.session.user)
-    const [rating, setRating] = useState(recipe?.user_rating?.rating || 0)
-    const [hoverRating, setHoverRating] = useState(recipe?.user_rating?.rating || 0)
+    const [rating, setRating] = useState(0)
+    const [hoverRating, setHoverRating] = useState(0)
     const [ratingConfirmed, setRatingConfirmed] = useState(!!recipe?.user_rating || false)
     const [review, setReview] = useState('')
     const [ratingSubmitted, setRatingSubmitted] = useState(false)
@@ -17,7 +17,12 @@ export default function Review ({ recipe }) {
     const [viewPrivate, setViewPrivate] = useState(false)
     // const [privacySelector, setPrivacySelector] = useState(true)
 
-    const totalPrivateComments = Object.values(recipe.reviews).filter(review => review.user_id == sessionUser.id && review.private).length
+    useEffect(() => {
+        setRating(sessionUser && recipe?.user_rating?.rating || 0)
+        setHoverRating(sessionUser && recipe?.user_rating?.rating || 0)
+    }, [sessionUser])
+
+    const totalPrivateComments = sessionUser && Object.values(recipe.reviews).filter(review => review.user_id == sessionUser.id && review.private).length || 0
     const totalPublicComments = Object.values(recipe.reviews).filter(review => !review.private).length
     function starCreatorHover() {
         const stars = []

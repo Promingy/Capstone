@@ -12,7 +12,8 @@ export default function ReviewTile({ review }) {
     const [isEditing, setIsEditing] = useState(false)
     const [body, setBody] = useState("")
     const [isPrivate, setIsPrivate] = useState(review.private || false)
-    const sessionUserName = sessionUser.first_name[0].toUpperCase() +
+    const sessionUserName =sessionUser &&
+                            sessionUser.first_name[0].toUpperCase() +
                             sessionUser.first_name.slice(1) +
                             " " +
                             sessionUser.last_name[0].toUpperCase() +
@@ -33,7 +34,7 @@ export default function ReviewTile({ review }) {
 
     return (
         <div className="review" onMouseOver={() => setBounceLike(true)} onMouseLeave={() => setBounceLike(false)}>
-            <h3>{review.user_id == sessionUser.id ? sessionUserName  : review.name}</h3>
+            <h3>{review.user_id == sessionUser?.id ? sessionUserName  : review.name}</h3>
             <div className="review_body_container">
                 {!isEditing &&
                 <div className="edited_body">
@@ -61,7 +62,7 @@ export default function ReviewTile({ review }) {
                     </div>
                 }
 
-                { review.user_id == sessionUser.id &&
+                { review.user_id == sessionUser?.id &&
                     <div className="review_owner_icons">
                         <span onClick={() => {
                             setBody(review.body)

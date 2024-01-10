@@ -144,8 +144,16 @@ def get_single_recipe(recipeId):
     Route that returns all of the info for a specific recipe
     """
 
+    includeRating = False
+
+    try:
+        int(session['_user_id'])
+        includeRating = True
+    except:
+        ""
+
     recipe = Recipe.query.get(recipeId)
-    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=True)
+    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=includeRating)
 
     return recipe
 
