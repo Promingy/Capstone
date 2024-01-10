@@ -15,7 +15,7 @@ export default function Review ({ recipe }) {
     const [ratingSubmitted, setRatingSubmitted] = useState(false)
     const [isPrivate, setIsPrivate] = useState(false)
     const [viewPrivate, setViewPrivate] = useState(false)
-    const [privacySelector, setPrivacySelector] = useState(true)
+    // const [privacySelector, setPrivacySelector] = useState(true)
 
     const totalPrivateComments = Object.values(recipe.reviews).filter(review => review.user_id == sessionUser.id && review.private).length
     const totalPublicComments = Object.values(recipe.reviews).filter(review => !review.private).length
@@ -124,7 +124,7 @@ export default function Review ({ recipe }) {
                         placeholder='Share your notes with other cooks...'
                     />
                     <div className='submit_review_container'>
-                        <div className={ privacySelector ? `privacy_selector_main` : ""}>
+                        <div className={`privacy_selector_main`}>
                             <p className={isPrivate ? 'privacy_unselected' : 'privacy_selected'} onClick={() => setIsPrivate(false)}>Public</p>
                             <p className={isPrivate ? "privacy_selected" : "privacy_unselected"} onClick={() => setIsPrivate(true)}>Private</p>
                         </div>

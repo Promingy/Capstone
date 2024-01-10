@@ -1,8 +1,5 @@
 import { actionAddRating, actionRemoveRating, actionUpdateRating, actionPostReview, actionDeleteReview, actionUpdateReviw } from "./recipe"
 
-const POST_REVIEW = 'review/POST_REVIEW'
-const POST_RATING = 'review/POST_RATING'
-
 export const thunkPostReview = (review, recipeId) => async (dispatch) => {
     console.log('before dispatch', review)
     const res = await fetch(`/api/recipes/${recipeId}/reviews`, {
