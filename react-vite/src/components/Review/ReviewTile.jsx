@@ -18,6 +18,7 @@ export default function ReviewTile({ review }) {
                             " " +
                             sessionUser.last_name[0].toUpperCase() +
                             sessionUser.last_name.slice(1)
+    const [closeEditTimeout, setCloseEditTimeout] = useState(null)
 
     function handleReviewUpdate(e) {
         e.preventDefault()
@@ -31,6 +32,7 @@ export default function ReviewTile({ review }) {
 
         dispatch(thunkUpdateReview(updatedReview))
     }
+
 
     return (
         <div className="review" onMouseOver={() => setBounceLike(true)} onMouseLeave={() => setBounceLike(false)}>
@@ -49,6 +51,17 @@ export default function ReviewTile({ review }) {
                         className="edit_review_box"
                             value={body}
                             onChange={e => setBody(e.target.value)}
+                            onFocus={() => {
+                                clearTimeout(closeEditTimeout)
+                                setCloseEditTimeout(null)
+                            }}
+                            onBlur={() => {
+                                if (closeEditTimeout) {
+                                    clearTimeout(closeEditTimeout)
+                                    setCloseEditTimeout(null)
+                                }
+                                setCloseEditTimeout(setTimeout(() => setIsEditing(false), 10000))
+                            }}
                         />
                         <div className="edit_review_bottom">
                             <div className="edit_private_container">
