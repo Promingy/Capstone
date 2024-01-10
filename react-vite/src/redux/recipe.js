@@ -158,10 +158,12 @@ export const thunkUploadImage = (image) => async (dispatch) => {
         body: image
     })
 
+    const data = await res.json()
     if (res.ok) {
-        const data = await res.json();
         return data
     }
+    
+    return data
 }
 
 export const thunkDeleteImage = (imageUrl) => async (dispatch) => {
