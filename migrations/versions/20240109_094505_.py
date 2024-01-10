@@ -111,7 +111,6 @@ def upgrade():
     sa.Column('recipe_id', sa.Integer(), nullable=True),
     sa.Column('body', sa.String(), nullable=True),
     sa.Column('edited', sa.Boolean(), nullable=True),
-    sa.Column('rating', sa.Integer(), nullable=True),
     sa.Column('private', sa.Boolean(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), nullable=True),
     sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
@@ -130,7 +129,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('user_id', 'recipe_id')
     )
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE savedrecipes SET SCHEMA {SCHEMA};")
 
     op.create_table('steps',
     sa.Column('id', sa.Integer(), nullable=False),
