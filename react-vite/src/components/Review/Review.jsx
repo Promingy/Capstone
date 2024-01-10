@@ -15,7 +15,6 @@ export default function Review ({ recipe }) {
     const [ratingSubmitted, setRatingSubmitted] = useState(false)
     const [isPrivate, setIsPrivate] = useState(false)
     const [viewPrivate, setViewPrivate] = useState(false)
-    // const [privacySelector, setPrivacySelector] = useState(true)
 
     useEffect(() => {
         setRating(sessionUser && recipe?.user_rating?.rating || 0)
@@ -56,6 +55,10 @@ export default function Review ({ recipe }) {
     function handlePostReview(e) {
         e.preventDefault()
 
+        if (review.length > 2000 || e.key && e.key != 'Enter' || ratingSubmitted) return
+
+        setRatingSubmitted(true)
+
         const newReview = {
             body: review,
             edited: false,
@@ -63,7 +66,7 @@ export default function Review ({ recipe }) {
             submit: true
         }
 
-        dispatch(thunkPostReview(newReview, recipe.id))
+        dispatch(thunkPostReview(newReview, recipe.id)).then(() => setRatingSubmitted(false))
 
         setReview('')
         setIsPrivate(false)
@@ -121,13 +124,16 @@ export default function Review ({ recipe }) {
                 <h2 className='review_headers'>COOKING NOTES</h2>
                 <div>
                     <h4 className='post_review_title'>Add Note</h4>
-                    <TextareaAutoSize
-                        value={review}
-                        onChange={e => setReview(e.target.value)}
-                        className='post_review'
-                        // onFocus={() => setPrivacySelector(true)}
-                        placeholder='Share your notes with other cooks...'
-                    />
+                    <div className='post_review_container'>
+                        <TextareaAutoSize
+                            value={review}
+                            onChange={e => setReview(e.target.value)}
+                            className='post_review'
+                            onKeyUp={handlePostReview}
+                            placeholder='Share your notes with other cooks...'
+                        />
+                        <span className={review.length >= 1800 ? review.length >= 2000 ? 'at_limit' : 'approaching_limit' : 'within_limit'}>{review.length} / 2000</span>
+                    </div>
                     <div className='submit_review_container'>
                         <div className={`privacy_selector_main`}>
                             <p className={isPrivate ? 'privacy_unselected' : 'privacy_selected'} onClick={() => setIsPrivate(false)}>Public</p>

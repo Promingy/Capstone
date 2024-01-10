@@ -19,9 +19,14 @@ export default function ReviewTile({ review }) {
                             sessionUser.last_name[0].toUpperCase() +
                             sessionUser.last_name.slice(1)
     const [closeEditTimeout, setCloseEditTimeout] = useState(null)
+    const [submitted, setSubmitted] = useState(false)
 
     function handleReviewUpdate(e) {
         e.preventDefault()
+        console.log('hi', body.length > 2000, e.key != "Enter", submitted, e.key)
+        if (body.length > 2000 || e.key && e.key != 'Enter' || submitted) return
+
+        setSubmitted(true)
 
         const updatedReview = {
             id: review.id,
@@ -30,7 +35,8 @@ export default function ReviewTile({ review }) {
             edited: true
         }
 
-        dispatch(thunkUpdateReview(updatedReview))
+        dispatch(thunkUpdateReview(updatedReview)).then(() => setSubmitted(false))
+        setIsEditing(false)
     }
 
 
@@ -47,22 +53,26 @@ export default function ReviewTile({ review }) {
 
                 {isEditing &&
                     <div className="edit_review_box_container">
-                        <TextareaAutosize
-                        className="edit_review_box"
-                            value={body}
-                            onChange={e => setBody(e.target.value)}
-                            onFocus={() => {
-                                clearTimeout(closeEditTimeout)
-                                setCloseEditTimeout(null)
-                            }}
-                            onBlur={() => {
-                                if (closeEditTimeout) {
+                        <div className="edit_review_container">
+                            <TextareaAutosize
+                            className="edit_review_box"
+                                value={body}
+                                onChange={e => setBody(e.target.value)}
+                                onFocus={() => {
                                     clearTimeout(closeEditTimeout)
                                     setCloseEditTimeout(null)
-                                }
-                                setCloseEditTimeout(setTimeout(() => setIsEditing(false), 10000))
-                            }}
-                        />
+                                }}
+                                onKeyUp={handleReviewUpdate}
+                                onBlur={() => {
+                                    if (closeEditTimeout) {
+                                        clearTimeout(closeEditTimeout)
+                                        setCloseEditTimeout(null)
+                                    }
+                                    setCloseEditTimeout(setTimeout(() => setIsEditing(false), 10000))
+                                }}
+                            />
+                            <span className={body.length >= 1800 ? body.length >= 2000 ? 'at_limit' : 'approaching_limit' : 'within_limit'}>{body.length} / 2000</span>
+                        </div>
                         <div className="edit_review_bottom">
                             <div className="edit_private_container">
                                 <p className={isPrivate ? 'privacy_unselected' : 'privacy_selected'} onClick={() => setIsPrivate(false)}>Public</p>
