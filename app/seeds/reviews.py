@@ -8,7 +8,6 @@ def seed_reviews() :
         recipe_id=1,
         body="Delicious dish! I loved it.",
         edited=False,
-        rating=4,
         created_at=datetime.now(),
         updated_at=datetime.now()
     )
@@ -18,7 +17,6 @@ def seed_reviews() :
         recipe_id=2,
         body="Healthy and tasty salad.",
         edited=False,
-        rating=5,
         created_at=datetime.now(),
         updated_at=datetime.now()
     )
@@ -28,7 +26,6 @@ def seed_reviews() :
         recipe_id=3,
         body="Quick and easy stir-fry recipe!",
         edited=False,
-        rating=4,
         created_at=datetime.now(),
         updated_at=datetime.now()
     )
@@ -38,7 +35,6 @@ def seed_reviews() :
         recipe_id=4,
         body="Best chocolate chip cookies ever!",
         edited=False,
-        rating=5,
         created_at=datetime.now(),
         updated_at=datetime.now()
     )
@@ -48,7 +44,6 @@ def seed_reviews() :
         recipe_id=5,
         body="Simple and delicious pasta dish.",
         edited=False,
-        rating=4,
         created_at=datetime.now(),
         updated_at=datetime.now()
     )
