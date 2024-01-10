@@ -57,7 +57,7 @@
 }
 
 .your_rating_clear > span:hover,
-.submit_review_container > span:hover {
+.submit_cancel_review > span:hover {
     text-decoration: underline;
     cursor: pointer;
 }
@@ -79,11 +79,17 @@
 
 .submit_review_container{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     gap: 20px;
     width: 97%;
     padding: 10px
+}
+
+.submit_cancel_review {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .submit_review {
@@ -266,4 +272,15 @@
 .hidden_comments {
     color: gray;
     cursor: pointer;
+}
+
+.privacy_selector_main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid gray;
+    border-radius: 30px;
+}
+.privacy_selector_main > * {
+    margin: 5px;
 }

@@ -29,6 +29,8 @@ export default function SelectedRecipe() {
     const totalCookTimeHours = Math.floor((recipe?.cook_time + recipe?.prep_time) / 60)
     const totalCookTimeMinutes = (recipe?.cook_time + recipe?.prep_time) % 60
 
+    const totalPublicComments = Object.values(recipe.reviews).filter(review => !review.private).length
+
     const months = {
         1: "Jan.",
         2: "Feb.",
@@ -135,7 +137,7 @@ export default function SelectedRecipe() {
                         <h3>Notes</h3>
                         <p>
                             <span className='notes'>
-                                &nbsp;&nbsp;{recipe?.all_ratings ? `Read ${recipe?.all_ratings} community notes` : 'Be the first to leave a note!'}
+                                &nbsp;&nbsp;{recipe?.all_ratings ? `Read ${totalPublicComments} community notes` : 'Be the first to leave a note!'}
                                 &nbsp;&nbsp;<i className='fa-solid fa-turn-down fa-xs' />
                             </span>
                         </p>
