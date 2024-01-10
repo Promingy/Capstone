@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 7c0371185503
+Revision ID: 4c7cb170180a
 Revises: 
-Create Date: 2024-01-03 16:14:36.727353
+Create Date: 2024-01-09 09:45:05.708694
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7c0371185503'
+revision = '4c7cb170180a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -71,6 +71,15 @@ def upgrade():
     sa.ForeignKeyConstraint(['recipe_id'], ['recipes.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('ratings',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('recipe_id', sa.Integer(), nullable=True),
+    sa.Column('rating', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['recipe_id'], ['recipes.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('reviews',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -78,6 +87,7 @@ def upgrade():
     sa.Column('body', sa.String(), nullable=True),
     sa.Column('edited', sa.Boolean(), nullable=True),
     sa.Column('rating', sa.Integer(), nullable=True),
+    sa.Column('private', sa.Boolean(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), nullable=True),
     sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
     sa.ForeignKeyConstraint(['recipe_id'], ['recipes.id'], ),
@@ -107,6 +117,7 @@ def downgrade():
     op.drop_table('steps')
     op.drop_table('savedrecipes')
     op.drop_table('reviews')
+    op.drop_table('ratings')
     op.drop_table('quantities')
     op.drop_table('likes')
     op.drop_table('recipes')

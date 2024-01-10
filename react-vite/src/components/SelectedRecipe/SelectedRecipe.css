@@ -78,6 +78,10 @@ span > h3,
     align-items: center;
 }
 
+.notes:hover {
+    text-decoration: underline;
+}
+
 .ingredients_and_steps_container {
     margin-top: 50px;
     display: flex;

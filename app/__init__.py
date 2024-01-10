@@ -11,6 +11,7 @@ from .api.recipe_routes import recipe
 from .api.dropdown_routes import dropdown
 from .api.image_routes import image_routes
 from .api.review_routes import review
+from .api.rating_routes import rating
 from .seeds import seed_commands
 from .config import Config
 
@@ -36,6 +37,7 @@ app.register_blueprint(recipe, url_prefix='/api/recipes')
 app.register_blueprint(dropdown, url_prefix='/api/dropdowns')
 app.register_blueprint(image_routes, url_prefix='/api/image_routes')
 app.register_blueprint(review, url_prefix='/api/reviews')
+app.register_blueprint(rating, url_prefix='/api/ratings')
 db.init_app(app)
 Migrate(app, db)
 

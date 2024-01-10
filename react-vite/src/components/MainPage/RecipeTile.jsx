@@ -32,12 +32,15 @@ export default function RecipeTile({ recipe }) {
     function onClickHandle (e) {
         const node = e.target.attributes.id?.value
 
-        console.log(node)
-        if (node != 'delete_recipe' && node != 'bookmark_icon_tile' && node != "edit_recipe_icon") {
+        if (node != 'delete_recipe' &&
+            node != 'bookmark_icon_tile' &&
+            node != "edit_recipe_icon" &&
+            node != "modalButton") {
             navigate(`/recipes/${recipe.id}-${recipe.title.toLowerCase().split(' ').join('-')}`, {state: recipe})
         }
     }
 
+    console.log(recipe)
     return (
         <div className='recipeTile'
         onClick={onClickHandle}

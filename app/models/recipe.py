@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from flask import session
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from datetime import datetime
@@ -24,8 +25,9 @@ class Recipe(db.Model, UserMixin):
     owner = db.relationship('User', back_populates=('recipes'))
     quantities = db.relationship('Quantity', back_populates='recipe')
     steps = db.relationship('Step', back_populates='recipe')
+    ratings = db.relationship('Rating', back_populates='recipe')
 
-    def to_dict(self, rating=False, reviews=False, steps=False, quantities=False):
+    def to_dict(self, rating=False, reviews=False, steps=False, quantities=False, user_rating=False):
         dictionary = {
             "id": self.id,
             "owner_id": self.owner_id,
@@ -56,17 +58,19 @@ class Recipe(db.Model, UserMixin):
             # calculates the average rating for the current recipe and adds it to the dictionary
             avg_rating = 0
 
-            if len(self.reviews):
-                avg_rating = sum([review.to_dict()['rating'] for review in self.reviews]) / len(self.reviews)
+            if len(self.ratings):
+                avg_rating = sum(rating.to_dict()['rating'] for rating in self.ratings) / len(self.ratings)
+
 
             dictionary['avg_rating'] = avg_rating
 
             # adds total amount of reviews for the current refcipe to the dictionary
-            dictionary['all_ratings'] = len(self.reviews)
+            dictionary['all_ratings'] = len(self.ratings)
+            dictionary['ratings'] = [rating.to_dict() for rating in self.ratings]
 
         if reviews:
             # Adds list of reviews, sorted by date, to the dictionary
-            dictionary['reviews'] = sorted([review.to_dict() for review in self.reviews],
+            dictionary['reviews'] = sorted([review.to_dict(name=True) for review in self.reviews],
                                            key=lambda msg: datetime(msg['created_at'].year,
                                                                     msg['created_at'].month,
                                                                     msg['created_at'].day,
@@ -74,5 +78,10 @@ class Recipe(db.Model, UserMixin):
                                                                     msg['created_at'].minute,
                                                                     msg['created_at'].second),
                                                                     reverse=True)
+
+        if user_rating:
+            for rating in self.ratings:
+                if rating.to_dict()['user_id'] == int(session['_user_id']):
+                    dictionary["user_rating"] = rating.to_dict()
 
         return dictionary

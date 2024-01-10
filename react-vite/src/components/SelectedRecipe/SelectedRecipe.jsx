@@ -12,7 +12,8 @@ export default function SelectedRecipe() {
     let { recipeId } = useParams()
 
     recipeId = recipeId.split('-')[0]
-    const recipe = useSelector(state => state.recipes[recipeId])
+    const recipes = useSelector(state => state.recipes)
+    const recipe = recipes[recipeId]
     const dropdowns = useSelector(state => state.dropdowns)
     const postDate = new Date(recipe?.created_at)
 
@@ -27,6 +28,8 @@ export default function SelectedRecipe() {
 
     const totalCookTimeHours = Math.floor((recipe?.cook_time + recipe?.prep_time) / 60)
     const totalCookTimeMinutes = (recipe?.cook_time + recipe?.prep_time) % 60
+
+    const totalPublicComments = recipe?.reviews && Object.values(recipe?.reviews).filter(review => !review.private).length
 
     const months = {
         1: "Jan.",
@@ -47,7 +50,6 @@ export default function SelectedRecipe() {
         dispatch(thunkGetSelectedRecipe(recipeId))
         dispatch(thunkGetDropdowns())
     }, [dispatch, recipeId])
-
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
     return (
@@ -119,7 +121,7 @@ export default function SelectedRecipe() {
                             </span>
                         </p>
                         <h3>Ratings</h3>
-                        <p>
+                        <div>
                             {recipe?.avg_rating > 0 &&
                                 <p className='ratings_box'>
                                     &nbsp;&nbsp;{recipe?.avg_rating} {starCreator(recipe)} ({recipe?.all_ratings})
@@ -130,12 +132,14 @@ export default function SelectedRecipe() {
                                     Be the first to leave a rating!
                                 </span>
                             }
-                        </p>
+                        </div>
 
                         <h3>Notes</h3>
-                        <p>
+                        <p onClick={() => document.getElementById('public_comments').scrollIntoView({behavior: "smooth"})}>
                             <span className='notes'>
-                                &nbsp;&nbsp;{recipe?.all_ratings ? `Read ${recipe?.all_ratings} community notes` : 'Be the first to leave a note!'}
+                                {recipe?.all_ratings ? `Read ${totalPublicComments} community notes` : 'Be the first to leave a note!'}
+                            </span>
+                            <span>
                                 &nbsp;&nbsp;<i className='fa-solid fa-turn-down fa-xs' />
                             </span>
                         </p>
@@ -158,7 +162,7 @@ export default function SelectedRecipe() {
                         {recipe?.servings} servings
                     </div>
 
-                    {recipe.ingredients && Object.values(recipe.ingredients)?.map(ingredient => {
+                    {recipe?.ingredients && Object.values(recipe?.ingredients)?.map(ingredient => {
                         const measurementId = ingredient.ingredient_measurement_id
                         let measurement = dropdowns.measurements[+measurementId].measurement_name
                         measurement = +ingredient.ingredient_quantity > 1 ? measurement + 's' : measurement
