@@ -57,8 +57,8 @@ def upgrade():
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('category_id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=75), nullable=False),
-    sa.Column('description', sa.String(), nullable=False),
-    sa.Column('servings', sa.Integer(), nullable=False),
+    sa.Column('description', sa.String(length=2000), nullable=False),
+    sa.Column('servings', sa.Float(), nullable=False),
     sa.Column('prep_time', sa.Integer(), nullable=False),
     sa.Column('cook_time', sa.Integer(), nullable=False),
     sa.Column('preview_image', sa.String(), nullable=False),
@@ -85,7 +85,7 @@ def upgrade():
     sa.Column('recipe_id', sa.Integer(), nullable=True),
     sa.Column('ingredient_measurement_id', sa.Integer(), nullable=True),
     sa.Column('ingredient', sa.String(), nullable=False),
-    sa.Column('ingredient_quantity', sa.Integer(), nullable=False),
+    sa.Column('ingredient_quantity', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['ingredient_measurement_id'], ['measurements.id'], ),
     sa.ForeignKeyConstraint(['recipe_id'], ['recipes.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -134,7 +134,7 @@ def upgrade():
     op.create_table('steps',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('recipe_id', sa.Integer(), nullable=False),
-    sa.Column('step_number', sa.Integer(), nullable=False),
+    sa.Column('step_number', sa.Float(), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['recipe_id'], ['recipes.id'], ),
     sa.PrimaryKeyConstraint('id')
