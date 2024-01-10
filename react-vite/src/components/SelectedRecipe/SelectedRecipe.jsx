@@ -3,7 +3,7 @@ import './SelectedRecipe.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetSelectedRecipe } from '../../redux/recipe'
 import { thunkGetDropdowns } from "../../redux/dropdown"
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { starCreator } from '../MainPage/RecipeTile'
 import Review from '../Review'
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
@@ -12,6 +12,7 @@ import ConfirmDelete from '../ConfirmDelete'
 export default function SelectedRecipe() {
     const dispatch = useDispatch()
     let { recipeId } = useParams()
+    const navigate = useNavigate()
     const sessionUser = useSelector(state => state.session.user)
 
     recipeId = recipeId.split('-')[0]
@@ -64,10 +65,10 @@ export default function SelectedRecipe() {
                     <div className='title_icon_container'>
                         {sessionUser?.id == recipe.owner_id &&
                         <>
-                            <span onClick={() => {}}>
+                            <span onClick={() => {navigate(`/recipes/${recipeId}/edit`)}}>
                             <i className={`fa-regular fa-pen-to-square fa-lg`} />
                         </span>
-                        <span className="delete_review_modal">
+                        <span className='delete_recipe_icon_title' >
                             <OpenModalButton
                             buttonText={<span className="fa-regular fa-trash-can fa-xl"/>}
                             modalComponent={<ConfirmDelete recipe={recipe}/>}
