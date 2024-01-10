@@ -130,7 +130,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('user_id', 'recipe_id')
     )
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE savedrecipes SET SCHEMA {SCHEMA};")
 
     op.create_table('steps',
     sa.Column('id', sa.Integer(), nullable=False),
