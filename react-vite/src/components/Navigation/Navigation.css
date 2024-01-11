@@ -72,10 +72,6 @@
   cursor: pointer;
   border-bottom: 7px solid transparent;
 }
-/* .nav_links:hover {
-  border-bottom: 4px solid #CF1A00;
-  padding: 0;
-} */
 
 .nav_links:hover:after {
   content: "";
