@@ -8,10 +8,8 @@ import { starCreator } from '../MainPage/RecipeTile'
 import Review from '../Review'
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
 import ConfirmDelete from '../ConfirmDelete'
-import SignUpFormModal from '../SignupFormModal'
 import LoginFormModal from '../LoginFormModal'
 import { useModal } from '../../context/Modal'
-import { Modal } from '../../context/Modal'
 
 export default function SelectedRecipe() {
     const dispatch = useDispatch()
