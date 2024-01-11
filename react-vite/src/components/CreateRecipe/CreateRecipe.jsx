@@ -68,7 +68,7 @@ export default function CreateRecipe ({ prevForm, update }) {
             setImageLoading(true)
             returnImage = await dispatch(thunkUploadImage(formData))
         }else {
-            if (prevForm?.preview_image != previewImage){
+            if (prevForm?.previewImage != previewImage){
                 setImageLoading(true)
                 formData.append("image", previewImage)
 
@@ -80,7 +80,6 @@ export default function CreateRecipe ({ prevForm, update }) {
     }
 
         const newErrors = {};
-
         const newRecipe = {
             category_id: category,
             title,
@@ -88,7 +87,7 @@ export default function CreateRecipe ({ prevForm, update }) {
             servings: +servings,
             prep_time: +prepTimeHours * 60 + +prepTimeMinutes,
             cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
-            preview_image: update? returnImage.url || prevForm?.previewImage: returnImage.url,
+            preview_image: update? returnImage?.url || prevForm?.previewImage : returnImage.url,
             ingredients,
             steps
         };
