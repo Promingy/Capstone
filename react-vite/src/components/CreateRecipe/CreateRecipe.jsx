@@ -22,7 +22,7 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [servings, setServings] = useState(prevForm?.servings || 0)
     const [step, setStep] = useState('')
     const [steps, setSteps] = useState(prevForm?.steps || {})
-    const [stepNumber, setStepNumber] = useState( prevForm?.steps && Object.values(prevForm?.steps).length + 1 || 1)
+    const [stepNumber, setStepNumber] = useState( prevForm?.steps && (Object.values(prevForm?.steps).length + 1).toFixed(1) || 1.0)
     const [prepTimeHours, setPrepTimeHours] = useState(Math.floor(prevForm?.prepTime / 60)|| 0)
     const [prepTimeMinutes, setPrepTimeMinutes] = useState(prevForm?.prepTime % 60|| 0)
     const [cookTimeHours, setCookTimeHours] = useState(Math.floor(prevForm?.cookTime / 60) || 0)
@@ -234,14 +234,6 @@ export default function CreateRecipe ({ prevForm, update }) {
                         className={`${errors.ingredient ? "error_container" : ''}`}
                     />
 
-                    {/* <input
-                        type='number'
-                        placeholder="Quantity"
-                        value={quantity || ''}
-                        min={1}
-                        onChange={e => setQuantity(e.target.value)}
-                        className={`${errors.ingredient ? "error_container" : ''}`}
-                    /> */}
                     <div className="custom_quantity">
                         <span className="custom_input_arrows_container" onClick={() => {
                                 if (countType) {
@@ -295,7 +287,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                                 <div key={`steps${step.step_number}`} className="steps_and_remove">
                                     <div className="full_step">
                                         <p>
-                                            Step {step.step_number}.
+                                            Step {(+step.step_number).toFixed(0)}.
                                         </p>
                                         <p className="step_description">
                                             {step.description}
@@ -303,11 +295,11 @@ export default function CreateRecipe ({ prevForm, update }) {
                                     </div>
                                     <div className="remove_ingredient" onClick={() => {
                                             const newSteps = {...steps}
-                                            delete newSteps[step.step_number]
+                                            delete newSteps[(+step.step_number).toFixed(1)]
                                             setLastStepNum(Object.values(steps).length - 1)
 
                                             if (+stepNumber === lastStepNum + 1){
-                                                setStepNumber(lastStepNum)
+                                                setStepNumber(+lastStepNum)
                                             }
 
                                             setSteps(newSteps)
@@ -322,13 +314,20 @@ export default function CreateRecipe ({ prevForm, update }) {
 
                     <div className="step_and_add">
                         <label>
+                            {/* Create custom number input element */}
                                 <div>
-                                    <span className="custom_input_arrows_container">
-                                        <i className="fa-solid fa-caret-up custom_input_arrows" onClick={() => setStepNumber(prevNum => +prevNum + 1 <= +lastStepNum + 1 ?  +prevNum + 1 : lastStepNum + 1)}/>
+
+                                    <span className="custom_input_arrows_container"
+                                    // onClick runs logic to make sure that the number can only be incremented to the next step
+                                    // example. if the last step was 2 then our new step can only be up step 3
+                                        onClick={() => setStepNumber(prevNum => +prevNum + 1 <= +lastStepNum + 1 ?  +prevNum + 1 : lastStepNum + 1)}>
+                                        <i className="fa-solid fa-caret-up custom_input_arrows"/>
                                     </span>
-                                    <p className="custom_input_text">{stepNumber}</p>
-                                    <span className="custom_input_arrows_container">
-                                        <i className="fa-solid fa-caret-down custom_input_arrows" onClick={() => setStepNumber(prevNum => +prevNum - 1 > 0 ? +prevNum - 1 : 1)}/>
+                                    <p className="custom_input_text">{(+stepNumber).toFixed(0)}</p>
+                                    <span className="custom_input_arrows_container"
+                                    // onClick runs logic to make sure that our decremented step never goes below 1
+                                        onClick={() => setStepNumber(prevNum => +prevNum - 1 > 0 ? +prevNum - 1 : 1)}>
+                                        <i className="fa-solid fa-caret-down custom_input_arrows"/>
                                     </span>
                                 </div>
                         </label>
@@ -347,19 +346,12 @@ export default function CreateRecipe ({ prevForm, update }) {
                             // add step to steps obj
                             if (!step || step.length > 2000) return
 
-                            let newStepNum = +stepNumber >= 0 ? +stepNumber : 1
+                            const newStep = {step_number: stepNumber, description: step}
 
-                            while (steps[+newStepNum - 1] == undefined && +newStepNum != 1){
-                                newStepNum -= 1
-
-                                if (newStepNum < 0) break
-                            }
-
-                            const newStep = {step_number: newStepNum, description: step}
-                            setSteps({...steps, [newStepNum]: newStep})
+                            setSteps({...steps, [(+stepNumber).toFixed(1)]: newStep})
                             // reset step values
                             setStep('')
-                            setStepNumber(+newStepNum + 1)
+                            setStepNumber((+stepNumber + 1).toFixed(1))
                             setLastStepNum(Object.values(steps).length + 1)
                         }}>
 

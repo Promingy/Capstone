@@ -313,8 +313,12 @@
 }
 
 .hidden_comments {
-    color: gray;
+    color: darkgray;
     cursor: pointer;
+}
+
+.hidden_comments:hover {
+    color: gray;
 }
 
 .privacy_selector_main {
