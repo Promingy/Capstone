@@ -1,9 +1,12 @@
 import {  useNavigate } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
+import { useModal } from "../../context/Modal";
 
 function Navigation() {
   const navigate = useNavigate()
+  const {closeModal} = useModal()
+
   return (
     <div className="nav_bar">
       <div className="header_top_container">
@@ -18,7 +21,10 @@ function Navigation() {
       </div>
 
       <div className="header_bottom_container">
-        <h2 className="nav_links" onClick={() => navigate('/')}>Home</h2>
+        <h2 className="nav_links" onClick={() => {
+          closeModal()
+          navigate('/')
+          }}>Home</h2>
       </div>
     </div>
   );

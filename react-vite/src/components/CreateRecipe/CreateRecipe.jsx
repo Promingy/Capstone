@@ -99,7 +99,6 @@ export default function CreateRecipe ({ prevForm, update }) {
             const data = res
 
             if (data.errors){
-                console.log(data.errors)
                 for (let error in data.errors){
                     newErrors[error] = data.errors[error]
                     setSubmitted(false)

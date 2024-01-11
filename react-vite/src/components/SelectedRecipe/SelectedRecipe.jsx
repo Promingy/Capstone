@@ -8,12 +8,23 @@ import { starCreator } from '../MainPage/RecipeTile'
 import Review from '../Review'
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
 import ConfirmDelete from '../ConfirmDelete'
+import SignUpFormModal from '../SignupFormModal'
+import { useModal } from '../../context/Modal'
+import { Modal } from '../../context/Modal'
 
 export default function SelectedRecipe() {
     const dispatch = useDispatch()
     let { recipeId } = useParams()
     const navigate = useNavigate()
     const sessionUser = useSelector(state => state.session.user)
+    const {setModalContent, closeable} = useModal()
+
+    useEffect(() => {
+        if (sessionUser) return closeable(true)
+        
+        closeable(false)
+        setModalContent(<SignUpFormModal />)
+    }, [sessionUser])
 
     recipeId = recipeId.split('-')[0]
     const recipes = useSelector(state => state.recipes)
@@ -57,9 +68,9 @@ export default function SelectedRecipe() {
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
 
-    console.log(recipe)
     return (
-        <div className='spacer selected_recipe'>
+        <div className={`spacer selected_recipe ${!sessionUser && 'no_scroll'}`}>
+            {/* {!sessionUser && <Modal closeable={false}/>} */}
             <div className='header_image_title'>
                 <div className='single_title_owner'>
                     <h1 >{recipe.title}</h1>

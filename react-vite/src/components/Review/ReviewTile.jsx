@@ -23,7 +23,7 @@ export default function ReviewTile({ review }) {
 
     function handleReviewUpdate(e) {
         e.preventDefault()
-        console.log('hi', body.length > 2000, e.key != "Enter", submitted, e.key)
+
         if (body.length > 2000 || e.key && e.key != 'Enter' || submitted) return
 
         setSubmitted(true)
@@ -117,7 +117,7 @@ export default function ReviewTile({ review }) {
             </div>
             <div className="is_this_helpful_container" onClick={handleReviewLike}>
                 <span className="is_this_helpful_text">Is this helpful?</span>
-                <i className={`fa-regular fa-thumbs-up ${bounceLike && 'fa-bounce'} ${review.review_likes?.[sessionUser.id] ? 'liked_review' : ""}`}/>
+                <i className={`fa-regular fa-thumbs-up ${bounceLike && 'fa-bounce'} ${review.review_likes?.[sessionUser?.id] ? 'liked_review' : ""}`}/>
                 {Object.values(review.review_likes).length}
             </div>
         </div>
