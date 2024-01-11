@@ -1,11 +1,9 @@
 import {  useNavigate } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
-import { useModal } from "../../context/Modal";
 
 function Navigation() {
   const navigate = useNavigate()
-  const {closeModal} = useModal()
 
   return (
     <div className="nav_bar">
