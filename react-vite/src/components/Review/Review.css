@@ -240,6 +240,10 @@
     text-decoration: underline;
 }
 
+.liked_review {
+    color: #DD1D00
+}
+
 .review_body_container {
     display: flex;
     align-items: center;

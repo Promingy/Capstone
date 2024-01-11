@@ -1,4 +1,4 @@
-import { actionAddRating, actionRemoveRating, actionUpdateRating, actionPostReview, actionDeleteReview, actionUpdateReviw } from "./recipe"
+import { actionAddRating, actionRemoveRating, actionUpdateRating, actionPostReview, actionDeleteReview, actionUpdateReviw, actionLikeReview, actionDeleteLike } from "./recipe"
 
 export const thunkPostReview = (review, recipeId) => async (dispatch) => {
     console.log('before dispatch', review)
@@ -26,6 +26,23 @@ export const thunkDeleteReview = (review) => async (dispatch) => {
 
     if (res.ok){
         dispatch(actionDeleteReview(review))
+    }
+
+    return data
+}
+
+export const thunkLikeReview = (reviewId, user, recipeId, method) => async (dispatch) => {
+    // handles both post and delete
+    console.log('METHDO', method)
+    const res = await fetch(`/api/reviews/${reviewId}/likes`, {
+        method: method
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(method == 'POST' ? actionLikeReview(reviewId, user, recipeId) : actionDeleteLike(reviewId, user, recipeId))
+        return data
     }
 
     return data

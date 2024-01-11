@@ -9,6 +9,8 @@ const UPDATE_RATING = 'recipe/updateRating'
 const POST_REVIEW = 'recipe/postReview'
 const DELETE_REVIEW = 'recipe/deleteReview'
 const UPDATE_REVIEW = 'recipe/updateReview'
+const LIKE_REVIEW = 'recipe/likeReview'
+const DELETE_LIKE = 'recipe/deleteLike'
 
 const actionGetAllRecipes = (recipes) => {
     return {
@@ -84,6 +86,24 @@ export const actionUpdateReviw = (review) => {
     return {
         type: UPDATE_REVIEW,
         review
+    }
+}
+
+export const actionLikeReview = (reviewId, user, recipeId) => {
+    return {
+        type: LIKE_REVIEW,
+        reviewId,
+        user,
+        recipeId
+    }
+}
+
+export const actionDeleteLike = (reviewId, user, recipeId) => {
+    return {
+        type: DELETE_LIKE,
+        reviewId,
+        user,
+        recipeId
     }
 }
 
@@ -278,9 +298,20 @@ function recipeReducer(state=initialState, action){
         }
         case DELETE_REVIEW: {
             const newState = { ...state }
-
+            console.log('hi', ' why am i getting hit')
             delete newState[action.review.recipe_id].reviews[action.review.id]
 
+            return newState
+        }
+        case LIKE_REVIEW: {
+            const newState = { ...state }
+            newState[action.recipeId].reviews[action.reviewId].review_likes[action.user.id] = action.user
+            return newState
+        }
+        case DELETE_LIKE: {
+            const newState = { ...state }
+            delete newState[action.recipeId].reviews[action.reviewId].review_likes[action.user.id]
+            console.log('newState', newState)
             return newState
         }
         default:

@@ -32,11 +32,14 @@ class Review(db.Model, UserMixin):
             "private": self.private,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
-            "review_likes": [like.to_dict() for like in self.review_likes]
+            "review_likes": {}
         }
 
         if name:
             review_owner = self.user.to_dict()
             dictionary['name'] = f"{review_owner['first_name'].title()} {review_owner['last_name'].title()}"
 
+
+        for like in self.review_likes:
+            dictionary['review_likes'][like.to_dict()['id']] = like.to_dict()
         return dictionary

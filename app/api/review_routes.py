@@ -1,7 +1,7 @@
 from flask import Blueprint, session, request
 from ..models import Review, Like, db
 from ..forms import ReviewForm
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 review = Blueprint('reviews', __name__)
 
@@ -48,20 +48,17 @@ def delete_review(reviewId):
 @review.route('/<int:reviewId>/likes', methods=['POST', 'DELETE'])
 @login_required
 def like_review(reviewId):
+    review = Review.query.get(reviewId)
 
-    oldLike = Like.query.get((int(reviewId), int(session['_user_id'])))
+    like = [like for like in review.review_likes if like.id == int(session['_user_id'])]
 
-    if oldLike:
-        db.session.delete()
+    if len(like) > 0:
+        review.review_likes.remove(like[0])
         db.session.commit()
         return {"message": "successfully deleted"}
 
-    newLike = Like(
-        review_id = int(reviewId),
-        user_id = int(session['_user_id'])
-    )
+    review.review_likes.append(current_user)
 
-    db.session.add(newLike)
     db.session.commit()
 
     return {'message': 'operation successful'}
