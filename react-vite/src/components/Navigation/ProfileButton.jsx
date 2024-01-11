@@ -6,6 +6,7 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import PreferencesModal from "../PreferencesModal/PreferencesModal.jsx";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "../../context/Modal.jsx";
 
 function ProfileButton() {
   const navigate = useNavigate()
@@ -15,6 +16,7 @@ function ProfileButton() {
   const ulRef = useRef();
   const [togglePref, setTogglePref] = useState(false)
   const [togglePref2, setTogglePref2] = useState(false)
+  const { closeModal } = useModal()
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
@@ -45,6 +47,7 @@ function ProfileButton() {
   function logout () {
     dispatch(thunkLogout());
     closeMenu();
+    closeModal()
   }
 
   useEffect(() => {
