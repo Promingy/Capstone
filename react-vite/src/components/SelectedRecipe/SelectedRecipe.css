@@ -143,3 +143,7 @@ span > h3,
     flex-direction: column;
     gap: 20px;
 }
+
+.no_scroll {
+    overflow: hidden ;
+}

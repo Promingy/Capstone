@@ -16,7 +16,7 @@ function ProfileButton() {
   const ulRef = useRef();
   const [togglePref, setTogglePref] = useState(false)
   const [togglePref2, setTogglePref2] = useState(false)
-  const { closeModal } = useModal()
+  const { closeModal, closeable } = useModal()
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
@@ -111,14 +111,14 @@ function ProfileButton() {
     {!user &&
 
     <div className='log_in_sign_up_buttons'>
-      <div className="login_button">
+      <div className="login_button" onClick={() => closeable(true)}>
         <OpenModalMenuItem
           itemText='Login'
           modalComponent={<LoginFormModal />}
         />
       </div>
 
-      <div className="sign_up_button">
+      <div className="sign_up_button" onClick={() => closeable(true)}>
       <OpenModalMenuItem
           itemText='Sign Up'
           onItemClick={closeMenu}

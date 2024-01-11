@@ -8,12 +8,36 @@ import { starCreator } from '../MainPage/RecipeTile'
 import Review from '../Review'
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
 import ConfirmDelete from '../ConfirmDelete'
+import LoginFormModal from '../LoginFormModal'
+import { useModal } from '../../context/Modal'
 
 export default function SelectedRecipe() {
     const dispatch = useDispatch()
     let { recipeId } = useParams()
     const navigate = useNavigate()
     const sessionUser = useSelector(state => state.session.user)
+    const {setModalContent, closeable} = useModal()
+
+    useEffect(() => {
+        // get body to disable scroll
+        const body = document.getElementsByTagName('body')
+
+        // if user is logged in, re-enable scroll
+        if (sessionUser) {
+            body[0]?.classList.remove('no_scroll')
+            return closeable(true)
+        }
+
+        // disable scroll
+        body[0]?.classList?.add('no_scroll')
+
+        // scroll back to top of screen
+        window.scrollTo({behavior: "smooth", top: 0})
+
+        // disable ability to close modal and open modal
+        closeable(false)
+        setModalContent(<LoginFormModal />)
+    }, [sessionUser])
 
     recipeId = recipeId.split('-')[0]
     const recipes = useSelector(state => state.recipes)
@@ -57,7 +81,6 @@ export default function SelectedRecipe() {
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
 
-    console.log(recipe)
     return (
         <div className='spacer selected_recipe'>
             <div className='header_image_title'>

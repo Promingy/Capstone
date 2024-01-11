@@ -40,7 +40,6 @@ export default function RecipeTile({ recipe }) {
         }
     }
 
-    console.log(recipe)
     return (
         <div className='recipeTile'
         onClick={onClickHandle}

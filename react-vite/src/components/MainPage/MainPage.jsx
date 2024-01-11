@@ -4,9 +4,11 @@ import './MainPage.css'
 import { thunkGetAllRecipes } from '../../redux/recipe'
 import RecipeTile from './RecipeTile'
 import { thunkGetDropdowns } from '../../redux/dropdown'
+import { useModal } from '../../context/Modal'
 
 export default function MainPage() {
     const dispatch = useDispatch()
+    const { closeModal } = useModal()
     let recipes = useSelector(state => state.recipes)
     recipes = recipes.categories
     const dropdowns = useSelector(state => state.dropdowns.categories)
@@ -14,6 +16,7 @@ export default function MainPage() {
     useEffect(() => {
         dispatch(thunkGetAllRecipes())
         dispatch(thunkGetDropdowns())
+        closeModal()
     }, [dispatch])
 
     return (

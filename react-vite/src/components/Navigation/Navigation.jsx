@@ -4,6 +4,7 @@ import "./Navigation.css";
 
 function Navigation() {
   const navigate = useNavigate()
+
   return (
     <div className="nav_bar">
       <div className="header_top_container">

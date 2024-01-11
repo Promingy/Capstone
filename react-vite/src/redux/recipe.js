@@ -267,7 +267,6 @@ function recipeReducer(state=initialState, action){
                 }
             }
 
-            console.log((newAvg / newState[action.rating.recipe_id].all_ratings), newAvg)
             newState[action.rating.recipe_id].avg_rating = (newAvg / newState[action.rating.recipe_id].all_ratings) || 0
 
             return newState
@@ -298,7 +297,7 @@ function recipeReducer(state=initialState, action){
         }
         case DELETE_REVIEW: {
             const newState = { ...state }
-            console.log('hi', ' why am i getting hit')
+
             delete newState[action.review.recipe_id].reviews[action.review.id]
 
             return newState
@@ -311,7 +310,6 @@ function recipeReducer(state=initialState, action){
         case DELETE_LIKE: {
             const newState = { ...state }
             delete newState[action.recipeId].reviews[action.reviewId].review_likes[action.user.id]
-            console.log('newState', newState)
             return newState
         }
         default:

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import SignupFormModal from '../SignupFormModal'
 import "./LoginForm.css";
 
 function LoginFormModal() {
@@ -9,7 +10,7 @@ function LoginFormModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
+  const { closeModal, setModalContent } = useModal();
   const [submitted, setSubmitted] = useState(false)
   const demoUser = {
     email: 'demo@aa.io',
@@ -66,6 +67,7 @@ function LoginFormModal() {
         </label>
         <button className="login_button_submit" type="submit">Log In</button>
         <button type='button' className="demo_button_submit" onClick={() => dispatch(thunkLogin(demoUser)).then(closeModal)}>Demo User</button>
+        <span className="or_sign_up" onClick={() => setModalContent(<SignupFormModal />)}>Sign up</span>
       </form>
     </div>
   );
