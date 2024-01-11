@@ -113,3 +113,17 @@
 .logout_button:active {
     color: #CF1A00
 }
+
+.user_info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+}
+
+.user_profile_pic {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 5px;
+}

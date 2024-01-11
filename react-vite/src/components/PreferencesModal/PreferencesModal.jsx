@@ -9,7 +9,10 @@ function PreferencesModal({ close }) {
         <div className={close ? 'background_color_pref2': 'background_color_pref'} id='background_color_pref'/>
         <div className={close ? 'preferences_modal_container2':'preferences_modal_container'} id='preference_modal_container'>
             <div className='user_pref_header'>
-                <p>{close ? 'hidden' : user.email}</p>
+                <div className='user_info'>
+                    <img className='user_profile_pic' src={user?.profile_pic}/>
+                    <p>{close ? 'hidden' : user.email}</p>
+                </div>
                 <div className='exit_pref'>
                     <i id='xmark' className='fa-solid fa-xmark fa-xl'/>
                 </div>
