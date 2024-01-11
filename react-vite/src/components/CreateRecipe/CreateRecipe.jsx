@@ -326,11 +326,11 @@ export default function CreateRecipe ({ prevForm, update }) {
                         <label>
                                 <div>
                                     <span className="custom_input_arrows_container">
-                                        <i className="fa-solid fa-caret-up custom_input_arrows" onClick={e => setStepNumber(prevNum => +prevNum + 1 <= +lastStepNum + 1 ?  +prevNum + 1 : lastStepNum + 1)}/>
+                                        <i className="fa-solid fa-caret-up custom_input_arrows" onClick={() => setStepNumber(prevNum => +prevNum + 1 <= +lastStepNum + 1 ?  +prevNum + 1 : lastStepNum + 1)}/>
                                     </span>
                                     <p className="custom_input_text">{stepNumber}</p>
                                     <span className="custom_input_arrows_container">
-                                        <i className="fa-solid fa-caret-down custom_input_arrows" onClick={e => setStepNumber(prevNum => +prevNum - 1 > 0 ? +prevNum - 1 : 1)}/>
+                                        <i className="fa-solid fa-caret-down custom_input_arrows" onClick={() => setStepNumber(prevNum => +prevNum - 1 > 0 ? +prevNum - 1 : 1)}/>
                                     </span>
                                 </div>
                         </label>
@@ -350,12 +350,6 @@ export default function CreateRecipe ({ prevForm, update }) {
                             if (!step || step.length > 2000) return
 
                             let newStepNum = +stepNumber >= 0 ? +stepNumber : 1
-
-                            for (let key in Object.keys(steps)) {
-                                if (+newStepNum + 1 > key +1) {
-
-                                }
-                            }
 
                             while (steps[+newStepNum - 1] == undefined && +newStepNum != 1){
                                 newStepNum -= 1

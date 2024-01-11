@@ -30,7 +30,8 @@
     font-weight: bolder;
 }
 
-.login_button_submit {
+.login_button_submit,
+.demo_button_submit {
     margin-top: 20px;
     background-color: #CF1A02;
     border-radius: 5px;
@@ -40,6 +41,12 @@
     font-weight: bolder;
     font-size: 20px;
     width: 100%;
+    cursor: pointer;
+}
+
+.demo_button_submit {
+    background-color: lightgrey;
+    color: black;
 }
 
 .login_error_inputs {

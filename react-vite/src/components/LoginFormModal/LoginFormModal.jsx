@@ -11,9 +11,15 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const [submitted, setSubmitted] = useState(false)
+  const demoUser = {
+    email: 'demo@aa.io',
+    password: 'password'
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (submitted) return
 
     setSubmitted(true)
 
@@ -26,6 +32,7 @@ function LoginFormModal() {
 
     if (serverResponse) {
       setErrors(serverResponse);
+      setSubmitted(false)
     } else {
       closeModal();
     }
@@ -58,6 +65,7 @@ function LoginFormModal() {
           />
         </label>
         <button className="login_button_submit" type="submit">Log In</button>
+        <button type='button' className="demo_button_submit" onClick={() => dispatch(thunkLogin(demoUser)).then(closeModal)}>Demo User</button>
       </form>
     </div>
   );
