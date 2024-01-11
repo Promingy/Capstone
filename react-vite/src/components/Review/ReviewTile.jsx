@@ -12,14 +12,21 @@ export default function ReviewTile({ review }) {
     const [isEditing, setIsEditing] = useState(false)
     const [body, setBody] = useState("")
     const [isPrivate, setIsPrivate] = useState(review.private || false)
-    const sessionUserName = sessionUser.first_name[0].toUpperCase() +
+    const sessionUserName =sessionUser &&
+                            sessionUser.first_name[0].toUpperCase() +
                             sessionUser.first_name.slice(1) +
                             " " +
                             sessionUser.last_name[0].toUpperCase() +
                             sessionUser.last_name.slice(1)
+    const [closeEditTimeout, setCloseEditTimeout] = useState(null)
+    const [submitted, setSubmitted] = useState(false)
 
     function handleReviewUpdate(e) {
         e.preventDefault()
+        console.log('hi', body.length > 2000, e.key != "Enter", submitted, e.key)
+        if (body.length > 2000 || e.key && e.key != 'Enter' || submitted) return
+
+        setSubmitted(true)
 
         const updatedReview = {
             id: review.id,
@@ -28,12 +35,14 @@ export default function ReviewTile({ review }) {
             edited: true
         }
 
-        dispatch(thunkUpdateReview(updatedReview))
+        dispatch(thunkUpdateReview(updatedReview)).then(() => setSubmitted(false))
+        setIsEditing(false)
     }
+
 
     return (
         <div className="review" onMouseOver={() => setBounceLike(true)} onMouseLeave={() => setBounceLike(false)}>
-            <h3>{review.user_id == sessionUser.id ? sessionUserName  : review.name}</h3>
+            <h3>{review.user_id == sessionUser?.id ? sessionUserName  : review.name}</h3>
             <div className="review_body_container">
                 {!isEditing &&
                 <div className="edited_body">
@@ -44,11 +53,26 @@ export default function ReviewTile({ review }) {
 
                 {isEditing &&
                     <div className="edit_review_box_container">
-                        <TextareaAutosize
-                        className="edit_review_box"
-                            value={body}
-                            onChange={e => setBody(e.target.value)}
-                        />
+                        <div className="edit_review_container">
+                            <TextareaAutosize
+                            className="edit_review_box"
+                                value={body}
+                                onChange={e => setBody(e.target.value)}
+                                onFocus={() => {
+                                    clearTimeout(closeEditTimeout)
+                                    setCloseEditTimeout(null)
+                                }}
+                                onKeyUp={handleReviewUpdate}
+                                onBlur={() => {
+                                    if (closeEditTimeout) {
+                                        clearTimeout(closeEditTimeout)
+                                        setCloseEditTimeout(null)
+                                    }
+                                    setCloseEditTimeout(setTimeout(() => setIsEditing(false), 10000))
+                                }}
+                            />
+                            <span className={body.length >= 1800 ? body.length >= 2000 ? 'at_limit' : 'approaching_limit' : 'within_limit'}>{body.length} / 2000</span>
+                        </div>
                         <div className="edit_review_bottom">
                             <div className="edit_private_container">
                                 <p className={isPrivate ? 'privacy_unselected' : 'privacy_selected'} onClick={() => setIsPrivate(false)}>Public</p>
@@ -61,7 +85,7 @@ export default function ReviewTile({ review }) {
                     </div>
                 }
 
-                { review.user_id == sessionUser.id &&
+                { review.user_id == sessionUser?.id &&
                     <div className="review_owner_icons">
                         <span onClick={() => {
                             setBody(review.body)

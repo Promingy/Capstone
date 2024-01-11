@@ -11,7 +11,7 @@ class Quantity(db.Model, UserMixin):
     recipe_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('recipes.id')))
     ingredient_measurement_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('measurements.id')))
     ingredient = db.Column(db.String, nullable=False)
-    ingredient_quantity = db.Column(db.Integer, nullable=False)
+    ingredient_quantity = db.Column(db.Float, nullable=False)
 
     recipe = db.relationship('Recipe', back_populates='quantities')
 

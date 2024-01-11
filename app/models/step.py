@@ -9,7 +9,7 @@ class Step(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("recipes.id")), nullable=False)
-    step_number = db.Column(db.Integer, nullable=False)
+    step_number = db.Column(db.Float, nullable=False)
     description = db.Column(db.String, nullable=False)
 
     recipe = db.relationship('Recipe', back_populates='steps')

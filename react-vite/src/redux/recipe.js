@@ -144,10 +144,12 @@ export const thunkDeleteRecipe = (recipe) => async (dispatch) => {
         method: "DELETE"
     })
 
+    const data = await res.json()
+
     if (res.ok){
         dispatch(actionDeleteRecipe(recipe))
     }
-    return await res.json()
+    return data
 }
 
 export const thunkUploadImage = (image) => async (dispatch) => {
@@ -156,10 +158,12 @@ export const thunkUploadImage = (image) => async (dispatch) => {
         body: image
     })
 
+    const data = await res.json()
     if (res.ok) {
-        const data = await res.json();
         return data
     }
+    
+    return data
 }
 
 export const thunkDeleteImage = (imageUrl) => async (dispatch) => {
@@ -202,8 +206,9 @@ function recipeReducer(state=initialState, action){
             return newState
         }
         case CREATE_RECIPE: {
-            const newState = { ...state }
+            const newState = { ...state, categories: {[action.recipe.category_id]: {}} }
             newState[action.recipe.id] = action.recipe
+            newState.categories[action.recipe.category_id][action.recipe.id] = action.recipe
             return newState
         }
         case UPDATE_RECIPE: {

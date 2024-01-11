@@ -6,7 +6,6 @@ from app.aws import (upload_file_to_s3, get_unique_filename, remove_file_from_s3
 image_routes = Blueprint('images', __name__)
 
 @image_routes.route("", methods=['POST'])
-@login_required
 def upload_image():
         form = ImageForm()
         form['csrf_token'].data = request.cookies['csrf_token']
@@ -27,13 +26,7 @@ def upload_image():
             return {"url": url}
 
         else:
-             print('~~~~~~~~~~~~~~~~~', form.errors)
-             errors = {}
-
-             for field, error in form.errors.items():
-                  errors[field] = error
-
-             return {"errors", errors}
+            return form.errors, 400
 
 @image_routes.route("/<img>", methods=['DELETE'])
 @login_required

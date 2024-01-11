@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './Review.css'
 import TextareaAutoSize from 'react-textarea-autosize'
 import ReviewTile from './ReviewTile'
@@ -8,16 +8,20 @@ import { thunkDeleteRating, thunkPostRating, thunkPostReview, thunkUpdateRating 
 export default function Review ({ recipe }) {
     const dispatch = useDispatch()
     const sessionUser = useSelector(state => state.session.user)
-    const [rating, setRating] = useState(recipe?.user_rating?.rating || 0)
-    const [hoverRating, setHoverRating] = useState(recipe?.user_rating?.rating || 0)
+    const [rating, setRating] = useState(0)
+    const [hoverRating, setHoverRating] = useState(0)
     const [ratingConfirmed, setRatingConfirmed] = useState(!!recipe?.user_rating || false)
     const [review, setReview] = useState('')
     const [ratingSubmitted, setRatingSubmitted] = useState(false)
     const [isPrivate, setIsPrivate] = useState(false)
     const [viewPrivate, setViewPrivate] = useState(false)
-    // const [privacySelector, setPrivacySelector] = useState(true)
 
-    const totalPrivateComments = Object.values(recipe.reviews).filter(review => review.user_id == sessionUser.id && review.private).length
+    useEffect(() => {
+        setRating(sessionUser && recipe?.user_rating?.rating || 0)
+        setHoverRating(sessionUser && recipe?.user_rating?.rating || 0)
+    }, [sessionUser])
+
+    const totalPrivateComments = sessionUser && Object.values(recipe.reviews).filter(review => review.user_id == sessionUser.id && review.private).length || 0
     const totalPublicComments = Object.values(recipe.reviews).filter(review => !review.private).length
     function starCreatorHover() {
         const stars = []
@@ -51,6 +55,10 @@ export default function Review ({ recipe }) {
     function handlePostReview(e) {
         e.preventDefault()
 
+        if (review.length > 2000 || e.key && e.key != 'Enter' || ratingSubmitted) return
+
+        setRatingSubmitted(true)
+
         const newReview = {
             body: review,
             edited: false,
@@ -58,7 +66,7 @@ export default function Review ({ recipe }) {
             submit: true
         }
 
-        dispatch(thunkPostReview(newReview, recipe.id))
+        dispatch(thunkPostReview(newReview, recipe.id)).then(() => setRatingSubmitted(false))
 
         setReview('')
         setIsPrivate(false)
@@ -116,13 +124,16 @@ export default function Review ({ recipe }) {
                 <h2 className='review_headers'>COOKING NOTES</h2>
                 <div>
                     <h4 className='post_review_title'>Add Note</h4>
-                    <TextareaAutoSize
-                        value={review}
-                        onChange={e => setReview(e.target.value)}
-                        className='post_review'
-                        // onFocus={() => setPrivacySelector(true)}
-                        placeholder='Share your notes with other cooks...'
-                    />
+                    <div className='post_review_container'>
+                        <TextareaAutoSize
+                            value={review}
+                            onChange={e => setReview(e.target.value)}
+                            className='post_review'
+                            onKeyUp={handlePostReview}
+                            placeholder='Share your notes with other cooks...'
+                        />
+                        <span className={review.length >= 1800 ? review.length >= 2000 ? 'at_limit' : 'approaching_limit' : 'within_limit'}>{review.length} / 2000</span>
+                    </div>
                     <div className='submit_review_container'>
                         <div className={`privacy_selector_main`}>
                             <p className={isPrivate ? 'privacy_unselected' : 'privacy_selected'} onClick={() => setIsPrivate(false)}>Public</p>

@@ -29,6 +29,34 @@
     width: 40%;
 }
 
+.title_icon_container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title_icon_container > * {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.title_icon_container > *:hover {
+    background-color: gray;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.delete_recipe_icon_title > * {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+.title_icons {
+    font-size: 20px;
+}
+
 .single_owner {
     text-decoration: underline;
 }

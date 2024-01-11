@@ -15,7 +15,7 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [category, setCategory] = useState( prevForm?.category || 0)
     const [measurement, setMeasurement] = useState('Measurement')
     const [ingredient, setIngredient] = useState('')
-    const [quantity, setQuantity] = useState(0)
+    const [quantity, setQuantity] = useState(1)
     const [ingredients, setIngredients] = useState(prevForm?.ingredients || {})
     const [title, setTitle] = useState(prevForm?.title || '')
     const [description, setDescription] = useState( prevForm?.description || '')
@@ -30,6 +30,8 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [previewImage, setPreviewImage] = useState(prevForm?.previewImage || null)
     const [imageLoading, setImageLoading] = useState(false)
     const [submitted, setSubmitted] = useState(false)
+    const [lastStepNum, setLastStepNum] = useState(Object.values(steps).length)
+    const [countType, setCountType] = useState(true)
 
     const [errors, setErrors] = useState({})
 
@@ -52,6 +54,9 @@ export default function CreateRecipe ({ prevForm, update }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+
+        if (description.length > 2000) return setErrors({description: ['Description must be 2000 characters or less']})
+
         setSubmitted(true);
         let returnImage;
         const formData = new FormData();
@@ -106,8 +111,11 @@ export default function CreateRecipe ({ prevForm, update }) {
                 navigate(`/recipes/${res.id}-${res.title}`)
             }
         })
-
     }
+
+    useEffect(() => {
+        window.scrollTo({top: 0, behavior: "smooth"})
+    }, [errors])
 
     if (!sessionUser) navigate('/')
     if (!measurements || !categories) return
@@ -148,7 +156,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         />
-                        <span> {description.length} / 2000</span>
+                        <span className={description.length > 1800 ? description.length > 2000 ? 'at_limit' : 'approaching_limit' : 'within_limit'}> {description.length} / 2000</span>
                     </div>
                 </label>
 
@@ -228,14 +236,35 @@ export default function CreateRecipe ({ prevForm, update }) {
                         className={`${errors.ingredient ? "error_container" : ''}`}
                     />
 
-                    <input
+                    {/* <input
                         type='number'
                         placeholder="Quantity"
                         value={quantity || ''}
                         min={1}
                         onChange={e => setQuantity(e.target.value)}
                         className={`${errors.ingredient ? "error_container" : ''}`}
-                    />
+                    /> */}
+                    <div className="custom_quantity">
+                        <span className="custom_input_arrows_container" onClick={() => {
+                                if (countType) {
+                                    setQuantity(prevNum => prevNum + 1)
+                                } else {
+                                    setQuantity(prevNum => prevNum + .25)
+                                }
+                            }}>
+                            <i className="fa-solid fa-caret-up"/>
+                        </span>
+                        <p className="custom_input_text">{quantity.toFixed(2)}</p>
+                        <span className="custom_input_arrows_container" onClick={() => {
+                            if (countType) {
+                                setQuantity(prevNum => prevNum - 1 > 1 ? prevNum - 1 : 1)
+                            } else {
+                                setQuantity(prevNum => prevNum - .25 > 0.25 ? prevNum - .25 : 0.25)
+                            }
+                            }}>
+                            <i className="fa-solid fa-caret-down"/>
+                        </span>
+                    </div>
                     <div className='add_ingredient' onClick={() => {
                             // add ingredient to ingredients obj
                             if (+quantity < 0) setQuantity(1)
@@ -248,8 +277,7 @@ export default function CreateRecipe ({ prevForm, update }) {
 
                                 // reset ingredient values
                                 setIngredient('')
-                                setQuantity(0)
-                                // setMeasurement('Measurement')
+                                setQuantity(1)
                             }
                         }}>
 
@@ -278,6 +306,12 @@ export default function CreateRecipe ({ prevForm, update }) {
                                     <div className="remove_ingredient" onClick={() => {
                                             const newSteps = {...steps}
                                             delete newSteps[step.step_number]
+                                            setLastStepNum(Object.values(steps).length - 1)
+
+                                            if (+stepNumber === lastStepNum + 1){
+                                                setStepNumber(lastStepNum)
+                                            }
+
                                             setSteps(newSteps)
                                         }}>
                                         <i className="fa-solid fa-x fa-xs" />
@@ -290,16 +324,19 @@ export default function CreateRecipe ({ prevForm, update }) {
 
                     <div className="step_and_add">
                         <label>
-                            <input
-                                type="number"
-                                placeholder="Step"
-                                value={stepNumber}
-                                onChange={e => setStepNumber(e.target.value)}
-                                min={1}
-                                max={Object.values(steps).length + 1}
-                                />
+                                <div>
+                                    <span className="custom_input_arrows_container">
+                                        <i className="fa-solid fa-caret-up custom_input_arrows" onClick={() => setStepNumber(prevNum => +prevNum + 1 <= +lastStepNum + 1 ?  +prevNum + 1 : lastStepNum + 1)}/>
+                                    </span>
+                                    <p className="custom_input_text">{stepNumber}</p>
+                                    <span className="custom_input_arrows_container">
+                                        <i className="fa-solid fa-caret-down custom_input_arrows" onClick={() => setStepNumber(prevNum => +prevNum - 1 > 0 ? +prevNum - 1 : 1)}/>
+                                    </span>
+                                </div>
                         </label>
-                        <div className={`add_step_text_container ${errors.step_description ? "error_container" : ""}`}>
+                        <div className={`add_step_text_container
+                                        ${errors.step_description ? "error_container" : ""}
+                                        ${step.length > 1800 ? step.length > 2000 ? 'at_limit' : 'approaching_limit' : 'within_limit'}`}>
                             <TextareaAutoSize
                                 className="add_step_text_area"
                                 placeholder="Add Step"
@@ -310,14 +347,14 @@ export default function CreateRecipe ({ prevForm, update }) {
                         </div>
                         <div className='add_ingredient' onClick={() => {
                             // add step to steps obj
-                            if (!step) return
+                            if (!step || step.length > 2000) return
 
-                            let newStepNum = +stepNumber >= 1 ? +stepNumber : 1
+                            let newStepNum = +stepNumber >= 0 ? +stepNumber : 1
 
-                            while (steps[+newStepNum - 1] == undefined && +newStepNum !== 1){
+                            while (steps[+newStepNum - 1] == undefined && +newStepNum != 1){
                                 newStepNum -= 1
 
-                                if (newStepNum < 1) break
+                                if (newStepNum < 0) break
                             }
 
                             const newStep = {step_number: newStepNum, description: step}
@@ -325,6 +362,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                             // reset step values
                             setStep('')
                             setStepNumber(+newStepNum + 1)
+                            setLastStepNum(Object.values(steps).length + 1)
                         }}>
 
                         <div className="add_ingredient">

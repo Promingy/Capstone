@@ -144,8 +144,16 @@ def get_single_recipe(recipeId):
     Route that returns all of the info for a specific recipe
     """
 
+    includeRating = False
+
+    try:
+        int(session['_user_id'])
+        includeRating = True
+    except:
+        ""
+
     recipe = Recipe.query.get(recipeId)
-    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=True)
+    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=includeRating)
 
     return recipe
 
@@ -214,7 +222,6 @@ def update_recipe(recipeId):
         # it already passed the validation check if we're right here
         #/ if statement removed - was preventing new ingredients being added if some were removed
         #/ ex. 1 ingredient removed, 1 ingredient added - length would be the same.
-        # if len(db_ingredients) < len(ingredients):
         for ingredient in ingredients:
             reqIngredient = ingredients[ingredient]
             try:

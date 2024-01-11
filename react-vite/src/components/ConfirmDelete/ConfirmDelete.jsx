@@ -3,8 +3,10 @@ import { useModal } from "../../context/Modal"
 import { useDispatch } from "react-redux";
 import { thunkDeleteImage, thunkDeleteRecipe } from "../../redux/recipe";
 import { thunkDeleteReview } from "../../redux/review";
+import { useNavigate } from "react-router-dom";
 export default function ConfirmDelete({ recipe, review }) {
     const { closeModal } = useModal();
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     async function handleDeleteRecipe(e){
@@ -12,11 +14,13 @@ export default function ConfirmDelete({ recipe, review }) {
         await dispatch(thunkDeleteImage(recipe.preview_image))
 
         await dispatch(thunkDeleteRecipe(recipe))
+        .then(() => navigate('/'))
         .then(closeModal)
     }
 
     async function handleDeleteReview(e) {
         e.preventDefault()
+
 
         dispatch(thunkDeleteReview(review))
         .then(closeModal)

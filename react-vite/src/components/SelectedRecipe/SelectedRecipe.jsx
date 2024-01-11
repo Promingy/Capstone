@@ -3,13 +3,17 @@ import './SelectedRecipe.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetSelectedRecipe } from '../../redux/recipe'
 import { thunkGetDropdowns } from "../../redux/dropdown"
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { starCreator } from '../MainPage/RecipeTile'
 import Review from '../Review'
+import OpenModalButton from '../OpenModalButton/OpenModalButton'
+import ConfirmDelete from '../ConfirmDelete'
 
 export default function SelectedRecipe() {
     const dispatch = useDispatch()
     let { recipeId } = useParams()
+    const navigate = useNavigate()
+    const sessionUser = useSelector(state => state.session.user)
 
     recipeId = recipeId.split('-')[0]
     const recipes = useSelector(state => state.recipes)
@@ -52,11 +56,27 @@ export default function SelectedRecipe() {
     }, [dispatch, recipeId])
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
+
     return (
         <div className='spacer selected_recipe'>
             <div className='header_image_title'>
                 <div className='single_title_owner'>
-                    <h1>{recipe.title}</h1>
+                    <h1 >{recipe.title}</h1>
+                    <div className='title_icon_container'>
+                        {sessionUser?.id == recipe.owner_id &&
+                        <>
+                            <span onClick={() => {navigate(`/recipes/${recipeId}/edit`)}}>
+                            <i className={`fa-regular fa-pen-to-square fa-lg`} />
+                        </span>
+                        <span className='delete_recipe_icon_title' >
+                            <OpenModalButton
+                            buttonText={<span className="fa-regular fa-trash-can fa-xl"/>}
+                            modalComponent={<ConfirmDelete recipe={recipe}/>}
+                            />
+                        </span>
+                        </>
+                        }
+                    </div>
                     <div>
                         <h4 >By <span className='single_owner'>{ownerFirstName} {ownerLastName}</span></h4>
                         <p>Posted {months[postDate.getMonth() + 1]} {postDate.getDay()}, {postDate.getFullYear()}</p>
@@ -163,11 +183,11 @@ export default function SelectedRecipe() {
                     </div>
 
                     {recipe?.ingredients && Object.values(recipe?.ingredients)?.map(ingredient => {
-                        const measurementId = ingredient.ingredient_measurement_id
-                        let measurement = dropdowns.measurements[+measurementId].measurement_name
-                        measurement = +ingredient.ingredient_quantity > 1 ? measurement + 's' : measurement
+                        const measurementId = ingredient?.ingredient_measurement_id
+                        let measurement = dropdowns?.measurements?.[+measurementId]?.measurement_name
+                        measurement = +ingredient?.ingredient_quantity > 1 ? measurement + 's' : measurement
 
-                        return (<p key={`ingredient${recipe.id}${ingredient.id}`}>{ingredient.ingredient_quantity} {measurement} {ingredient.ingredient}</p>)
+                        return (<p key={`ingredient${recipe.id}${ingredient?.id}`}>{ingredient?.ingredient_quantity} {measurement} {ingredient?.ingredient}</p>)
                         })}
                 </div>
                 <div className='ingredients_and_steps_right'>
@@ -188,7 +208,7 @@ export default function SelectedRecipe() {
             </div>
 
             <div>
-                <Review recipe={recipe}/>
+                <Review recipe={recipe} />
             </div>
         </div>
     )

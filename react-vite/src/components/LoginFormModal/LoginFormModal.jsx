@@ -10,9 +10,18 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const [submitted, setSubmitted] = useState(false)
+  const demoUser = {
+    email: 'demo@aa.io',
+    password: 'password'
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (submitted) return
+
+    setSubmitted(true)
 
     const serverResponse = await dispatch(
       thunkLogin({
@@ -23,38 +32,42 @@ function LoginFormModal() {
 
     if (serverResponse) {
       setErrors(serverResponse);
+      setSubmitted(false)
     } else {
       closeModal();
     }
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="login_form_container">
+      <h1 className="login_header">Log In</h1>
+      <form className="login_form" onSubmit={handleSubmit}>
         <label>
-          Email
+          <p className="login_errors">{errors.email && `*${errors.email}`}</p>
           <input
-            type="text"
+            type="email"
+            placeholder="Email"
+            className={errors.email && 'login_error_inputs'}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
         <label>
-          Password
+          <p className="login_errors">{errors.password && `*${errors.password}`}</p>
           <input
+            placeholder="Password"
             type="password"
+            className={errors.password && 'login_error_inputs'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
+        <button className="login_button_submit" type="submit">Log In</button>
+        <button type='button' className="demo_button_submit" onClick={() => dispatch(thunkLogin(demoUser)).then(closeModal)}>Demo User</button>
       </form>
-    </>
+    </div>
   );
 }
 

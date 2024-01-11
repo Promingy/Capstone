@@ -25,8 +25,8 @@ export default function RecipeTile({ recipe }) {
     const cookTimeMinutes = (recipe.cook_time + recipe.prep_time) % 60
     const ownerFirstName = recipe.owner.first_name[0].toUpperCase() + recipe.owner.first_name.slice(1)
     const ownerLastName = recipe.owner.last_name[0].toUpperCase() + recipe.owner.last_name.slice(1)
-    const [bookmark, setBookmark] = useState('fa-regular fa-bookmark fa-lg')
-    const [saved, setSaved] = useState(false)
+    // const [bookmark, setBookmark] = useState('fa-regular fa-bookmark fa-lg') /// future feature
+    // const [saved, setSaved] = useState(false) /// future feature
     const [confirmDelete, setConfirmDelete] = useState(false)
 
     function onClickHandle (e) {
@@ -77,7 +77,7 @@ export default function RecipeTile({ recipe }) {
                             }
                         </p>
                         <div className='tile_icons_container'>
-                            <span
+                            {/* <span ///future feature
                                 id='bookmark_icon_tile'
                                 className={bookmark}
                                 onMouseOver={() => {
@@ -97,7 +97,7 @@ export default function RecipeTile({ recipe }) {
                                     }
                                     setSaved(!saved)
                                 }}
-                                />
+                                /> */}
 
                                 {sessionUser?.id == recipe.owner_id &&
                                 <>

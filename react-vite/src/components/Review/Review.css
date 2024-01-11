@@ -70,11 +70,34 @@
     margin-bottom: 10px;
 }
 
+.post_review_container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 0 4px;
+}
+
+.post_review_container > span {
+    align-self: flex-end;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+.at_limit {
+    color: red;
+}
+
+.approaching_limit {
+    color: orange;
+}
+
 .post_review {
     resize: none;
     width: 97%;
     min-height: 150px;
     padding: 10px;
+    border: 0;
+    outline: none;
 }
 
 .submit_review_container{
@@ -141,7 +164,23 @@
     margin: 10px 0;
     box-sizing: border-box;
     width: 100%;
+    border: none;
+    outline: none;
 }
+
+.edit_review_container {
+    border: 1px solid black;
+    padding-right: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit_review_container > span {
+    align-self: flex-end;
+    padding: 5px;
+}
+
 .edit_review_bottom {
     display: flex;
     justify-content: space-between;

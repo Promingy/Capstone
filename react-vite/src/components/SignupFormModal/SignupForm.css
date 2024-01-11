@@ -1,0 +1,66 @@
+.signup_form_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    gap: 30px;
+    width: 25vw;
+}
+
+.signup_form_container > * {
+    margin: 0 ;
+}
+
+.signup_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 60%;
+}
+
+.signup_input {
+    width: 100%;
+}
+.signup_input > * {
+    width: 100%;
+    margin: 5px 0 ;
+}
+
+.bio_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid black;
+    padding: 5px;
+    width: 99%;
+    max-height: 150px;
+}
+
+.bio_container > span {
+    align-self: flex-end;
+}
+
+.bio_text {
+    resize: none;
+    outline: none;
+    border: none;
+}
+
+.signup_input > p {
+    height: 15px;
+    margin-bottom: 3px;
+}
+
+.signup_errors {
+    color: red;
+    font-weight: bolder;
+    padding: 0;
+    margin: 0;
+}
+
+.signup_error_inputs {
+    box-shadow: 0 0 10px red;
+    border: none;
+}
+
