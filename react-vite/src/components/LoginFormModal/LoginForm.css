@@ -33,7 +33,7 @@
 .login_button_submit,
 .demo_button_submit {
     margin-top: 20px;
-    background-color: #CF1A02;
+    background-color: #E33D26;
     border-radius: 5px;
     border: none;
     color: white;
@@ -44,12 +44,43 @@
     cursor: pointer;
 }
 
+.login_button_submit:hover {
+    background-color: #D02E1E;
+}
+
+.login_button_submit:active {
+    background-color: #BB1F17;
+}
+
 .demo_button_submit {
     background-color: lightgrey;
     color: black;
 }
 
+.demo_button_submit:hover {
+    background-color: #c1bbbb;
+}
+
+.demo_button_submit:active {
+    background-color: #afafaf;
+}
+
 .login_error_inputs {
     box-shadow: 0 0 10px red;
     border: none;
+}
+
+.or_sign_up {
+    margin: 10px auto 0;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.or_sign_up:hover {
+    color:#E33D26
+}
+
+.or_sign_up:active {
+    color: #BB1F17
 }

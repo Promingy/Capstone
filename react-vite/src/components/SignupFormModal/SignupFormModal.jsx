@@ -5,6 +5,7 @@ import { thunkSignup } from "../../redux/session";
 import TextareaAutoSize from 'react-textarea-autosize'
 import "./SignupForm.css";
 import { thunkDeleteImage, thunkUploadImage } from "../../redux/recipe";
+import LoginFormModal from "../LoginFormModal/LoginFormModal";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
+  const { closeModal, setModalContent } = useModal();
   const [submitted, setSubmitted] = useState(false)
 
   const handleSubmit = async (e) => {
@@ -144,6 +145,7 @@ function SignupFormModal() {
           />
         </label>
         <button className="login_button_submit" disabled={bio.length > 1000} type="submit">Sign Up</button>
+        <span className="or_sign_up" onClick={() => setModalContent(<LoginFormModal />)}>Log in</span>
       </form>
     </div>
   );
