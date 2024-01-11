@@ -64,3 +64,11 @@
     border: none;
 }
 
+.login_button_submit:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.signup_errors_password {
+    padding-bottom: 17px;
+}

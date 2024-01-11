@@ -18,7 +18,6 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const [submitted, setSubmitted] = useState(false)
-  const [imageLoading, setImageLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,9 +37,7 @@ function SignupFormModal() {
     const formData = new FormData()
     formData.append('image', profilePic)
 
-    setImageLoading(true)
     const returnImage = await dispatch(thunkUploadImage(formData))
-    setImageLoading(false)
 
     const serverResponse = await dispatch(
       thunkSignup({
@@ -123,10 +120,9 @@ function SignupFormModal() {
             accept='image/*'
             onChange={e => setProfilePic(e.target.files[0])}
           />
-          {imageLoading && <p>Loading...</p>}
         </label>
         <label className="signup_input">
-          <p className="signup_errors">{errors.confirmPassword && `*${errors.confirmPassword}`}</p>
+          <p className="signup_errors signup_errors_password">{errors.confirmPassword && `*${errors.confirmPassword}`}</p>
           <input
             placeholder="Password"
             type="password"
@@ -147,7 +143,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        <button className="login_button_submit" type="submit">Sign Up</button>
+        <button className="login_button_submit" disabled={bio.length > 1000} type="submit">Sign Up</button>
       </form>
     </div>
   );

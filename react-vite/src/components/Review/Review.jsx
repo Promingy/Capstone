@@ -153,7 +153,7 @@ export default function Review ({ recipe }) {
                         {Object.values(recipe.reviews).map(review => {
                             if (!review.private && !viewPrivate){
                                return <ReviewTile review={review} key={`review${review.id}`}/>
-                            } else if (review.private && viewPrivate && sessionUser.id == review.user_id) {
+                            } else if (review.private && viewPrivate && sessionUser?.id == review.user_id) {
                                 return <ReviewTile review={review} key={`review${review.id}`} />
                             }
                         })}

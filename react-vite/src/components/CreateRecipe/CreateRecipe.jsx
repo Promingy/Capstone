@@ -88,7 +88,7 @@ export default function CreateRecipe ({ prevForm, update }) {
             servings: +servings,
             prep_time: +prepTimeHours * 60 + +prepTimeMinutes,
             cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
-            preview_image: returnImage.url,
+            preview_image: update? returnImage.url || prevForm?.previewImage: returnImage.url,
             ingredients,
             steps
         };
