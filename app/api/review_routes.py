@@ -44,3 +44,24 @@ def delete_review(reviewId):
         db.session.commit()
 
         return {"message": "success"}
+
+@review.route('/<int:reviewId>/likes', methods=['POST', 'DELETE'])
+@login_required
+def like_review(reviewId):
+
+    oldLike = Like.query.get((int(reviewId), int(session['_user_id'])))
+
+    if oldLike:
+        db.session.delete()
+        db.session.commit()
+        return {"message": "successfully deleted"}
+
+    newLike = Like(
+        review_id = int(reviewId),
+        user_id = int(session['_user_id'])
+    )
+
+    db.session.add(newLike)
+    db.session.commit()
+
+    return {'message': 'operation successful'}

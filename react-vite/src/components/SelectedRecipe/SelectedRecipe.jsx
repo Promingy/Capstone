@@ -57,6 +57,7 @@ export default function SelectedRecipe() {
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
 
+    console.log(recipe)
     return (
         <div className='spacer selected_recipe'>
             <div className='header_image_title'>

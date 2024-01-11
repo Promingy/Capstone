@@ -106,6 +106,7 @@ export default function ReviewTile({ review }) {
             <div className="is_this_helpful_container">
                 <span className="is_this_helpful_text">Is this helpful?</span>
                 <i className={`fa-regular fa-thumbs-up ${bounceLike && 'fa-bounce'}`}/>
+                {review.review_likes.length}
             </div>
         </div>
     )

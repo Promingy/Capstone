@@ -162,7 +162,7 @@ export const thunkUploadImage = (image) => async (dispatch) => {
     if (res.ok) {
         return data
     }
-    
+
     return data
 }
 

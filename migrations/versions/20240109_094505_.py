@@ -72,10 +72,10 @@ def upgrade():
 
     op.create_table('likes',
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('recipe_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['recipe_id'], ['recipes.id'], ),
+    sa.Column('review_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['review_id'], ['reviews.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('user_id', 'recipe_id')
+    sa.PrimaryKeyConstraint('user_id', 'review_id')
     )
     if environment == "production":
         op.execute(f"ALTER TABLE likes SET SCHEMA {SCHEMA};")
