@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import ConfirmDelete from "../ConfirmDelete"
 import OpenModalButton from "../OpenModalButton/OpenModalButton"
 import TextareaAutosize from "react-textarea-autosize"
-import { thunkUpdateReview } from "../../redux/review"
+import { thunkLikeReview, thunkUpdateReview } from "../../redux/review"
 
 export default function ReviewTile({ review }) {
     const dispatch = useDispatch()
@@ -39,6 +39,18 @@ export default function ReviewTile({ review }) {
         setIsEditing(false)
     }
 
+    function handleReviewLike(e) {
+        e.preventDefault()
+        // handles both like and delete
+        if (submitted) return
+
+        setSubmitted(true)
+
+        const method = review.review_likes[sessionUser.id] ? 'DELETE' : "POST"
+
+        dispatch(thunkLikeReview(review.id, sessionUser, review.recipe_id, method))
+        .then(() => setSubmitted(false))
+    }
 
     return (
         <div className="review" onMouseOver={() => setBounceLike(true)} onMouseLeave={() => setBounceLike(false)}>
@@ -103,9 +115,10 @@ export default function ReviewTile({ review }) {
                     </div>
                 }
             </div>
-            <div className="is_this_helpful_container">
+            <div className="is_this_helpful_container" onClick={handleReviewLike}>
                 <span className="is_this_helpful_text">Is this helpful?</span>
-                <i className={`fa-regular fa-thumbs-up ${bounceLike && 'fa-bounce'}`}/>
+                <i className={`fa-regular fa-thumbs-up ${bounceLike && 'fa-bounce'} ${review.review_likes?.[sessionUser.id] ? 'liked_review' : ""}`}/>
+                {Object.values(review.review_likes).length}
             </div>
         </div>
     )

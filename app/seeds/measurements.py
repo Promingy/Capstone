@@ -36,8 +36,14 @@ def seed_measurements() :
     count = Measurement(
         measurement_name = "Count"
     )
+    tbsp = Measurement(
+        measurement_name = "Table Spoon"
+    )
+    tsp = Measurement(
+        measurement_name = 'Tea Spoon'
+    )
 
-    measurements = [floz, c, pt, qt, gal, oz, lb, g, kg, count]
+    measurements = [floz, c, pt, qt, gal, oz, lb, g, kg, count, tsp, tbsp]
     [db.session.add(measurement) for measurement in measurements]
     db.session.commit()
 

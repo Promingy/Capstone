@@ -1,6 +1,9 @@
 from app.models import db, Review, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import datetime
+from .users import users
+
+user1, user2, user3 = users
 
 def seed_reviews() :
     review1 = Review(
@@ -9,7 +12,8 @@ def seed_reviews() :
         body="Delicious dish! I loved it.",
         edited=False,
         created_at=datetime.now(),
-        updated_at=datetime.now()
+        updated_at=datetime.now(),
+        review_likes = [user1, user2]
     )
 
     review2 = Review(
@@ -18,7 +22,8 @@ def seed_reviews() :
         body="Healthy and tasty salad.",
         edited=False,
         created_at=datetime.now(),
-        updated_at=datetime.now()
+        updated_at=datetime.now(),
+        review_likes = [user2, user3]
     )
 
     review3 = Review(
@@ -27,7 +32,8 @@ def seed_reviews() :
         body="Quick and easy stir-fry recipe!",
         edited=False,
         created_at=datetime.now(),
-        updated_at=datetime.now()
+        updated_at=datetime.now(),
+        review_likes = [user1, user3]
     )
 
     review4 = Review(
@@ -36,7 +42,8 @@ def seed_reviews() :
         body="Best chocolate chip cookies ever!",
         edited=False,
         created_at=datetime.now(),
-        updated_at=datetime.now()
+        updated_at=datetime.now(),
+        review_likes = [user2, user3]
     )
 
     review5 = Review(
@@ -45,7 +52,8 @@ def seed_reviews() :
         body="Simple and delicious pasta dish.",
         edited=False,
         created_at=datetime.now(),
-        updated_at=datetime.now()
+        updated_at=datetime.now(),
+        review_likes = [user1, user3]
     )
 
     reviews = [ review1, review2, review3, review4, review5]
