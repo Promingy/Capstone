@@ -8,7 +8,6 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    margin-top: 134px;
 }
 
 .new_recipe_form > * {

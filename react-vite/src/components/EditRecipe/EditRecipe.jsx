@@ -13,6 +13,7 @@ export default function EditRecipe() {
 
     const prevForm = {
         id: recipe?.id,
+        owner_id: recipe?.owner_id,
         title: recipe?.title,
         description: recipe?.description,
         servings: recipe?.servings,
