@@ -32,6 +32,7 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [submitted, setSubmitted] = useState(false)
     const [lastStepNum, setLastStepNum] = useState(Object.values(steps).length)
     const [countType, setCountType] = useState(true)
+    const [tempImage, setTempImage] = useState(prevForm?.previewImage || null)
 
     const [errors, setErrors] = useState({})
 
@@ -52,6 +53,20 @@ export default function CreateRecipe ({ prevForm, update }) {
         setSteps(returnSteps)
     }
 
+    function previewImageSetter(e) {
+        e.stopPropagation();
+
+        const tempFile = e.target.files[0]
+        console.log(tempFile)
+        // Check for max image size of 5mb
+        if (tempFile.size > 5000000) {
+            return setErrors({preview_image_size: "Selected image exceeds the maximum file size of 5MB"})
+        }
+
+        const newImgURL = URL.createObjectURL(tempFile); //generate a local url to render the image
+        setTempImage(newImgURL)
+        setPreviewImage(tempFile)
+    }
     async function handleSubmit(e) {
         e.preventDefault();
 
@@ -131,6 +146,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                     {errors.prep_time && <p className="errors">* Please include the prep time</p>}
                     {errors.cook_time && <p className="errors">* Please include the cook time</p>}
                     {errors.preview_image && <p className="errors">* Please include a preview image</p>}
+                    {errors.preview_image_size && <p className="errors">*{errors.preview_image_size}</p>}
                 </div>
 
                 <label className="recipe_title_container">
@@ -417,16 +433,22 @@ export default function CreateRecipe ({ prevForm, update }) {
                         </div>
                 </label>
 
-                <label className="preview_image_container">
+                <div className="preview_image_container">
                     <span>Image:</span>
-                    <input
-                        type='file'
-                        className={`preview_image ${errors.preview_image ? "error_container" : ""}`}
-                        accept='image/*'
-                        onChange={e => setPreviewImage(e.target.files[0])}
-                    />
+                    <div>
+                        <input
+                            type='file'
+                            className={`preview_image ${errors.preview_image || errors.preview_image_size ? "error_container" : ""}`}
+                            accept='image/*'
+                            onChange={previewImageSetter}
+                        />
+                    </div>
+                    <div className="temp_image_container">
+                        <i className="fa-regular fa-plus fa-xl temp_image_icon"/>
+                        {tempImage && <img className="temp_image" src={tempImage} />}
+                    </div>
                     {imageLoading && <p>Loading...</p>}
-                </label>
+                </div>
 
                 <button disabled={submitted} className="submit_recipe">Submit</button>
             </form>
