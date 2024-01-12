@@ -7,12 +7,15 @@
 
 .login_modal_left {
     display:flex;
-    width: 100%;
+    width: 60%;
     height: 100%;
+    box-sizing: 1px solid red;;
 }
 
 .login_image {
     border-radius: 20px 0 0 20px;
+    width: 100%;
+    object-fit: cover;
 }
 .login_image_header {
     position: absolute;
@@ -30,7 +33,7 @@
     height: 100%;
     position: absolute;
     top: 0;
-    width: 53.5%;
+    width: 60%;
     box-shadow: inset 0 75px 75px -7px black;
     border-radius: 19px 0 0 20px;
 }
@@ -39,7 +42,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 40%;
 }
 
 .login_header {

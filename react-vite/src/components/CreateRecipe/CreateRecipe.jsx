@@ -114,8 +114,8 @@ export default function CreateRecipe ({ prevForm, update }) {
     useEffect(() => {
         window.scrollTo({top: 0, behavior: "smooth"})
     }, [errors])
-
-    if (!sessionUser) navigate('/')
+    console.log(prevForm)
+    if (sessionUser?.id !== prevForm?.owner_id && prevForm || !sessionUser) navigate('/')
     if (!measurements || !categories) return
 
     return(

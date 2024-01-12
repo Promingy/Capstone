@@ -1,7 +1,7 @@
 .signup_form_container {
     display: flex;
     width: 35vw;
-    height: 85vh;
+    max-height: 85vh;
 }
 
 .signup_form_container > * {
@@ -33,14 +33,16 @@
 
 .signup_image {
     border-radius: 20px 0 0 20px;
+    width: 100%;
+    object-fit: cover;
 }
 
 .signup_form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
     width: 85%;
+    margin-bottom: 15px;
 }
 
 .signup_input {
