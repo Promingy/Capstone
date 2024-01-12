@@ -6,7 +6,7 @@ export default function Footer() {
         <div className='footer_container'>
             <div className='footer_left'>
                 <h4>About Me</h4>
-                <p></p>
+                <p className='about_me'>With a recent foray into software engineering, I bring a fresh perspective shaped by my background as a professional content creator and musician. Amidst the challenges of the Covid pandemic, I seized the opportunity to self-learn Japanese, symbolizing my resilience and passion for embracing new skills.</p>
             </div>
             <div className='footer_right'>
                 <h4>Creator Github</h4>

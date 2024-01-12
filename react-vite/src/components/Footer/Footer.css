@@ -40,3 +40,15 @@
 .github_link:active {
     color: #BB1F17;
 }
+
+.footer_left {
+    gap: 30px;
+}
+
+.footer_left > * {
+    margin: 0;
+}
+
+.about_me {
+    max-width: 50%;
+}
