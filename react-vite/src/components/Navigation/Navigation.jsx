@@ -6,6 +6,26 @@ import { useState } from "react";
 function Navigation() {
   const navigate = useNavigate()
   const [showMenu, setShowMenu] = useState(false)
+  let timeout1;
+  let timeout2;
+
+  function createDelay() {
+    clearTimeout(timeout1)
+    clearTimeout(timeout2)
+
+    timeout1 = null
+    timeout2 = null
+
+    setShowMenu(true)
+  }
+
+  function removeDelay() {
+    clearTimeout(timeout2)
+
+    timeout2 = null
+
+    setShowMenu(false)
+  }
 
   return (
     <div className="nav_bar">
@@ -24,8 +44,24 @@ function Navigation() {
         <h2 className="nav_links" onClick={() => navigate('/')}>Home</h2>
         <div>
         <h2 className='nav_links'
-          onMouseOver={() => setTimeout(() => setShowMenu(true), 250)}
-          onMouseLeave={() => setTimeout(() => setShowMenu(false), 250)}
+          onMouseOver={() => {
+            clearTimeout(timeout1)
+            clearTimeout(timeout2)
+
+            timeout1 = null
+            timeout2 = null
+            
+            timeout1 = setTimeout(createDelay, 250)
+          }}
+          onMouseLeave={() => {
+            clearTimeout(timeout1)
+            clearTimeout(timeout2)
+
+            timeout1 = null
+            timeout2 = null
+
+            timeout2 = setTimeout(removeDelay, 250)
+          }}
           >
             About
             {showMenu &&
