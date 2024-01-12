@@ -14,7 +14,7 @@
 .login_image {
     border-radius: 20px 0 0 20px;
 }
-.test {
+.login_image_header {
     position: absolute;
     color: white;
     max-width: 50%;

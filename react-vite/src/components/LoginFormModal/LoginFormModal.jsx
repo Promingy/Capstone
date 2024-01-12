@@ -42,8 +42,7 @@ function LoginFormModal() {
   return (
     <div className="login_form_container">
       <div className="login_modal_left">
-        <h4 className="test">Unlock Recipe Rendezvous recipes and your personal recipe box with a free account.
-        </h4>
+        <h4 className="login_image_header">Unlock Recipe Rendezvous recipes and your personal recipe box with a free account.</h4>
         <img className="login_image" src="https://playswellwithbutter.com/wp-content/uploads/2021/02/Mise-en-Place-Meal-Prep-3-960x1440.jpg" />
       </div>
       <div className="login_modal_right">
