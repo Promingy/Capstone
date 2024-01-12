@@ -9,6 +9,7 @@ import { useModal } from '../../context/Modal'
 export default function MainPage() {
     const dispatch = useDispatch()
     const { closeModal } = useModal()
+    const sessionUser = useSelector(state => state.session.user)
     let recipes = useSelector(state => state.recipes)
     recipes = recipes.categories
     const dropdowns = useSelector(state => state.dropdowns.categories)
@@ -16,8 +17,15 @@ export default function MainPage() {
     useEffect(() => {
         dispatch(thunkGetAllRecipes())
         dispatch(thunkGetDropdowns())
+
+        // set css styling back to normal if logged out and navigating from selected recipe page
+        if (!sessionUser) {
+            const body = document.getElementsByTagName('body')
+            body[0].classList.remove('no_scroll')
+        }
+
         closeModal()
-    }, [dispatch])
+    }, [dispatch, sessionUser])
 
     return (
         <div className='spacer'>

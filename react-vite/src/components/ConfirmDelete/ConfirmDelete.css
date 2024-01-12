@@ -23,19 +23,22 @@
     border: none;
     background-color: transparent;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 3px;
     font-weight: 600;
 }
 
 .confirm_delete {
-    background-color: #CF1A00;
+    background-color: #E33D26;
     color: white;
     cursor: pointer;
 }
 
+.confirm_delete:hover {
+    background-color: #D02E1E;
+}
+
 .confirm_delete:active {
-    color: black;
-    background-color: lightgray;
+    background-color: #BB1F17;
 }
 
 .cancel_delete {
@@ -43,7 +46,10 @@
     cursor: pointer;
 }
 
+.cancel_delete:hover {
+    background-color: #c1bbbb;
+}
+
 .cancel_delete:active {
-    background-color: #CF1A00;
-    color: white
+    background-color: #afafaf;
 }
