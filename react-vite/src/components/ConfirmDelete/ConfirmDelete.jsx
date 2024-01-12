@@ -14,7 +14,7 @@ export default function ConfirmDelete({ recipe, review }) {
         await dispatch(thunkDeleteImage(recipe.preview_image))
 
         await dispatch(thunkDeleteRecipe(recipe))
-        .then(() => navigate('/'))
+        .then(() => navigate('/', {state: recipe.preview_image}))
         .then(closeModal)
     }
 
