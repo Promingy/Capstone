@@ -3,6 +3,7 @@ import './UserRecipe.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetUserRecipes } from '../../redux/session'
 import { useParams } from 'react-router-dom'
+import RecipeTile from '../MainPage/RecipeTile'
 
 export default function UserRecipe() {
     const dispatch = useDispatch()
@@ -26,6 +27,8 @@ export default function UserRecipe() {
         return firstLetter + body
     }
 
+    useEffect(() => {}, [])
+
     if (!recipes) return
 
     return (
@@ -41,15 +44,17 @@ export default function UserRecipe() {
                     <p>{recipeOwner?.bio}</p>
                 </div>
             </header>
-            <div>
-                {Object.values(recipes).map(recipe => {
-                    if (!recipeOwner) return setRecipeOwner(recipe.owner)
+            <div className='user_recipes_content_container'>
+                <p>{Object.values(recipes).length} results</p>
+                <div className='user_recipe_tile_container'>
+                    {Object.values(recipes).map(recipe => {
+                        if (!recipeOwner) return setRecipeOwner(recipe.owner)
 
-                    return (
-                        <div>
-                        </div>
-                    )
-                })}
+                        return (
+                            <RecipeTile recipe={recipe} />
+                        )
+                    })}
+                </div>
 
             </div>
         </div>
