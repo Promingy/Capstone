@@ -85,6 +85,7 @@
 }
 .user_profile:hover {
   color: #777777;
+  cursor: pointer;
 }
 
 .user_profile:active {

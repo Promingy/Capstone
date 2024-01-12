@@ -41,34 +41,40 @@ function LoginFormModal() {
 
   return (
     <div className="login_form_container">
-      <h1 className="login_header">Log In</h1>
-      <form className="login_form" onSubmit={handleSubmit}>
-        <label>
-          <p className="login_errors">{errors.email && `*${errors.email}`}</p>
-          <input
-            type="email"
-            placeholder="Email"
-            className={errors.email && 'login_error_inputs'}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          <p className="login_errors">{errors.password && `*${errors.password}`}</p>
-          <input
-            placeholder="Password"
-            type="password"
-            className={errors.password && 'login_error_inputs'}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button className="login_button_submit" type="submit">Log In</button>
-        <button type='button' className="demo_button_submit" onClick={() => dispatch(thunkLogin(demoUser)).then(closeModal)}>Demo User</button>
-        <span className="or_sign_up" onClick={() => setModalContent(<SignupFormModal />)}>Sign up</span>
-      </form>
+      <div className="login_modal_left">
+        <h4 className="login_image_header">Unlock Recipe Rendezvous recipes and your personal recipe box with a free account.</h4>
+        <img className="login_image" src="https://playswellwithbutter.com/wp-content/uploads/2021/02/Mise-en-Place-Meal-Prep-3-960x1440.jpg" />
+      </div>
+      <div className="login_modal_right">
+        <h1 className="login_header">Log In</h1>
+        <form className="login_form" onSubmit={handleSubmit}>
+          <label>
+            <p className="login_errors">{errors.email && `*${errors.email}`}</p>
+            <input
+              type="email"
+              placeholder="Email"
+              className={errors.email && 'login_error_inputs'}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            <p className="login_errors">{errors.password && `*${errors.password}`}</p>
+            <input
+              placeholder="Password"
+              type="password"
+              className={errors.password && 'login_error_inputs'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          <button className="login_button_submit" type="submit">Log In</button>
+          <button type='button' className="demo_button_submit" onClick={() => dispatch(thunkLogin(demoUser)).then(closeModal)}>Demo User</button>
+          <span className="or_sign_up" onClick={() => setModalContent(<SignupFormModal />)}>Sign up</span>
+        </form>
+      </div>
     </div>
   );
 }
