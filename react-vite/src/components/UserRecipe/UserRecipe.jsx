@@ -21,9 +21,9 @@ export default function UserRecipe() {
     if (!recipes) return
 
     return (
-        <div>
+        <div className='user_recipes_container'>
             <header>
-
+                test
             </header>
             <div>
                 {Object.values(recipes).map(recipe => {
