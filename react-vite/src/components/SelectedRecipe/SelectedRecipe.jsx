@@ -82,7 +82,7 @@ export default function SelectedRecipe() {
     if (!recipe || !recipe.steps || !recipe.ingredients) return
 
     return (
-        <div className='spacer selected_recipe'>
+        <div className='selected_recipe'>
             <div className='header_image_title'>
                 <div className='single_title_owner'>
                     <h1 >{recipe.title}</h1>
