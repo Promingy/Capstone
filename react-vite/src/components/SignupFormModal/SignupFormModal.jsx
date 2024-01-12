@@ -19,6 +19,7 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal, setModalContent } = useModal();
   const [submitted, setSubmitted] = useState(false)
+  const [ tempImage, setTempImage] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,11 +63,32 @@ function SignupFormModal() {
     }
   };
 
+  function previewImageSetter(e) {
+    e.stopPropagation();
+
+    const tempFile = e.target.files[0]
+
+    if (!tempFile) {
+        setTempImage (null)
+        setProfilePic (null)
+        return
+    }
+
+    // Check for max image size of 5mb
+    if (tempFile?.size > 5000000) {
+        return setErrors({profile_pic: "Selected image exceeds the maximum file size of 5MB"})
+    }
+
+    const newImgURL = URL.createObjectURL(tempFile); //generate a local url to render the image
+    setTempImage(newImgURL)
+    setProfilePic(tempFile)
+}
+
   return (
     <div className="signup_form_container">
       <div className="signup_container_left">
     <h4 className="login_image_header">Unlock Recipe Rendezvous recipes and your personal recipe box with a free account.</h4>
-        <img className="signup_image" src="https://playswellwithbutter.com/wp-content/uploads/2021/02/Mise-en-Place-Meal-Prep-3-960x1440.jpg"/>
+        <img className="signup_image" src="https://recipe-rendezvous.s3.us-west-2.amazonaws.com/Mise-en-Place-Meal-Prep-3-960x1440+(1).png"/>
       </div>
       <div className="signup_container_right">
         <h1 className="signup_header">Sign Up</h1>
@@ -118,15 +140,21 @@ function SignupFormModal() {
               <span className={bio.length > 800 ? bio.length > 1000 ? "at_limit": "approaching_limit": "within_limit"}>{bio.length} / 1000</span>
             </div>
           </label>
-          <label className="signup_input">
+          <div className="signup_input">
             <p className="signup_errors">{errors.profile_pic && `*${errors.profile_pic}`}</p>
-            <input
-              type='file'
-              className={errors.profile_pic && 'signup_error_inputs test'}
-              accept='image/*'
-              onChange={e => setProfilePic(e.target.files[0])}
-            />
-          </label>
+            <div className="file_input_container">
+              <input
+                type='file'
+                className={`profile_pic_input ${errors.profile_pic && 'signup_error_inputs'}`}
+                accept='image/*'
+                onChange={previewImageSetter}
+              />
+              <div className="signup_image_container">
+                <i className="fa-regular fa-plus fa-xl temp_image_icon"/>
+                <img className="temp_image" src={tempImage}/>
+              </div>
+            </div>
+          </div>
           <label className="signup_input">
             <p className="signup_errors signup_errors_password">{errors.confirmPassword && `*${errors.confirmPassword}`}</p>
             <input

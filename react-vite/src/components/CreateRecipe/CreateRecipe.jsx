@@ -57,9 +57,15 @@ export default function CreateRecipe ({ prevForm, update }) {
         e.stopPropagation();
 
         const tempFile = e.target.files[0]
-        console.log(tempFile)
+
+        if (!tempFile) {
+            setTempImage (prevForm?.previewImage || null)
+            setPreviewImage (prevForm?.previewImage || null)
+            return
+        }
+
         // Check for max image size of 5mb
-        if (tempFile.size > 5000000) {
+        if (tempFile?.size > 5000000) {
             return setErrors({preview_image_size: "Selected image exceeds the maximum file size of 5MB"})
         }
 
@@ -443,11 +449,11 @@ export default function CreateRecipe ({ prevForm, update }) {
                             onChange={previewImageSetter}
                         />
                     </div>
+                    {imageLoading && <p>Loading...</p>}
                     <div className="temp_image_container">
                         <i className="fa-regular fa-plus fa-xl temp_image_icon"/>
                         {tempImage && <img className="temp_image" src={tempImage} />}
                     </div>
-                    {imageLoading && <p>Loading...</p>}
                 </div>
 
                 <button disabled={submitted} className="submit_recipe">Submit</button>

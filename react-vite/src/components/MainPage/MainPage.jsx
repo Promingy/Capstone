@@ -31,7 +31,11 @@ export default function MainPage() {
         closeModal()
     }, [dispatch, sessionUser])
 
-    if (location?.state == firstRecipe?.preview_image) setFirstRecipe(null)
+    useEffect(() => {
+        // if the recipe associated with the picture was removed, reset the picture link to null
+        // so that a new link can be grabbed by the logic below
+        if (location?.state == firstRecipe?.preview_image) setFirstRecipe(null)
+    })
 
     return (
         <div className='recipe_tile_category_container'>
