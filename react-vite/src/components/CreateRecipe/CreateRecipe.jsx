@@ -449,7 +449,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                             onChange={previewImageSetter}
                         />
                     </div>
-                    {imageLoading && <p>Loading...</p>}
+                    <p className="loading_text">{imageLoading && "Loading..."}</p>
                     <div className="temp_image_container">
                         <i className="fa-regular fa-plus fa-xl temp_image_icon"/>
                         {tempImage && <img className="temp_image" src={tempImage} />}
