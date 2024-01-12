@@ -1,9 +1,11 @@
 import {  useNavigate } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
+import { useState } from "react";
 
 function Navigation() {
   const navigate = useNavigate()
+  const [showMenu, setShowMenu] = useState(false)
 
   return (
     <div className="nav_bar">
@@ -20,7 +22,37 @@ function Navigation() {
 
       <div className="header_bottom_container">
         <h2 className="nav_links" onClick={() => navigate('/')}>Home</h2>
+        <div>
+        <h2 className='nav_links'
+          onMouseOver={() => setTimeout(() => setShowMenu(true), 250)}
+          onMouseLeave={() => setTimeout(() => setShowMenu(false), 250)}
+          >
+            About
+            {showMenu &&
+              <div className="about_me_menu">
+                <a
+                  className="about_me_links"
+                  target="_blank"
+                  rel='noreferrer'
+                  href="https://github.com/Promingy"
+                  >
+                    <i className="fa-brands fa-github"/>
+                    Corbin&apos;s Github
+                </a>
+                <a
+                  className="about_me_links"
+                  target="_blank"
+                  rel='noreferrer'
+                  href="https://github.com/Promingy/Capstone">
+                    <i className="fa-brands fa-git-alt"/>
+                    Project Repo
+                </a>
+              </div>
+            }
+        </h2>
+        </div>
       </div>
+
     </div>
   );
 }
