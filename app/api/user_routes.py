@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
-from app.models import User
+from app.models import User, Recipe
 
 user_routes = Blueprint('users', __name__)
 
@@ -23,3 +23,12 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+@user_routes.route('/<int:userId>/recipes')
+def get_user_routes(userId):
+    """
+    Query for all recipes from a specific user
+    """
+    recipes = Recipe.query.filter(Recipe.owner_id == userId).all()
+
+    return {recipe.to_dict()['id']: recipe.to_dict() for recipe in recipes}

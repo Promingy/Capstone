@@ -118,8 +118,9 @@ export const thunkGetAllRecipes = () => async(dispatch) => {
     return await res.json()
 }
 
+
 export const thunkGetSelectedRecipe = (recipeId) => async (dispatch) => {
-    const res = await (fetch(`/api/recipes/${recipeId}`))
+    const res = await fetch(`/api/recipes/${recipeId}`)
 
     if (res.ok){
         const data = await res.json()

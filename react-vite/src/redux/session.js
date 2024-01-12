@@ -1,5 +1,7 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const GET_USER_RECIPES = 'recipe/getUserRecipes';
+
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -9,6 +11,14 @@ const setUser = (user) => ({
 const removeUser = () => ({
   type: REMOVE_USER
 });
+
+const actionGetUserRecipes = (recipes, ownerId) => {
+  return {
+      type: GET_USER_RECIPES,
+      recipes,
+      ownerId
+  }
+}
 
 export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");
@@ -63,6 +73,18 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
+export const thunkGetUserRecipes = (userId) => async (dispatch) => {
+  const res = await fetch(`/api/users/${userId}/recipes`)
+
+  const data = await res.json()
+  console.log('data', data)
+  if (res.ok) {
+      dispatch(actionGetUserRecipes(data, userId))
+      return data
+  }
+  return data
+}
+
 const initialState = { user: null };
 
 function sessionReducer(state = initialState, action) {
@@ -71,6 +93,15 @@ function sessionReducer(state = initialState, action) {
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
+    case GET_USER_RECIPES: {
+      const newState = { ...state, [action.ownerId]: {} }
+
+        for (let recipe of Object.values(action.recipes)) {
+            newState[action.ownerId][recipe.id] = recipe
+        }
+
+        return newState
+    }
     default:
       return state;
   }
