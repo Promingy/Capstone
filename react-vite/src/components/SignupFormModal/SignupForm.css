@@ -99,3 +99,23 @@
 .signup_errors_password {
     padding-bottom: 17px;
 }
+
+.signup_image_container {
+    border: 1px solid lightgrey;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.file_input_container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.profile_pic_input {
+    max-width: 180px;
+}
