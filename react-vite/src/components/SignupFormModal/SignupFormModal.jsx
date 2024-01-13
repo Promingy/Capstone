@@ -67,7 +67,7 @@ function SignupFormModal() {
     e.stopPropagation();
 
     const tempFile = e.target.files[0]
-
+    
     if (!tempFile) {
         setTempImage (null)
         setProfilePic (null)
@@ -151,7 +151,7 @@ function SignupFormModal() {
               />
               <div className="signup_image_container">
                 <i className="fa-regular fa-plus fa-xl temp_image_icon"/>
-                <img className="temp_image" src={tempImage}/>
+                <img className="temp_image_signup" src={tempImage}/>
               </div>
             </div>
           </div>
