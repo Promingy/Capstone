@@ -95,7 +95,20 @@
     padding: 20px 0;
     border-bottom: 1px solid lightgray;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
 }
+
+.no_glow{
+    margin-right: 5px;
+    padding: 3px 5px;
+}
+
+.enter_icons {
+    border-radius: 50px;
+    background-color: lightgrey;
+}
+
 
 .logout_button {
     text-decoration: underline;
