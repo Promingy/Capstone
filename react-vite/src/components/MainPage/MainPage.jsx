@@ -50,7 +50,7 @@ export default function MainPage() {
                 const categoryRecipes = Object.values(recipes[category])
                 category = dropdowns?.[category].category
 
-                if (!categoryRecipes.length) return
+                if (!categoryRecipes.length || !category) return
 
                 return (
                     <div key={`${category}`} className='recipe_tile_category_container'>
