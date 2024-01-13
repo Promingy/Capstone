@@ -28,14 +28,14 @@ export default function MainPage() {
             body[0].classList.remove('no_scroll')
         }
 
-        closeModal
+        closeModal()
     }, [sessionUser])
 
     useEffect(() => {
         // if the recipe associated with the picture was removed, reset the picture link to null
         // so that a new link can be grabbed by the logic below
         if (location?.state == firstRecipe?.preview_image) setFirstRecipe(null)
-    })
+    }, [location.state, firstRecipe?.preview_image])
 
     return (
         <div className='recipe_tile_category_container'>
@@ -49,6 +49,8 @@ export default function MainPage() {
             {recipes && Object.keys(recipes).map(category => {
                 const categoryRecipes = Object.values(recipes[category])
                 category = dropdowns?.[category].category
+
+                if (!categoryRecipes.length) return
 
                 return (
                     <div key={`${category}`} className='recipe_tile_category_container'>

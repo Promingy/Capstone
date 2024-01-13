@@ -27,7 +27,7 @@ export default function EditRecipe() {
 
     useEffect(() => {
         dispatch(thunkGetSelectedRecipe(recipeId))
-    }, [dispatch])
+    }, [dispatch, recipeId])
 
     if (!recipe || !prevForm.steps || !prevForm.ingredients) return
     return (

@@ -19,6 +19,10 @@ export default function Review ({ recipe }) {
     useEffect(() => {
         setRating(sessionUser && recipe?.user_rating?.rating || 0)
         setHoverRating(sessionUser && recipe?.user_rating?.rating || 0)
+    }, [sessionUser, recipe?.user_rating?.rating])
+
+    useEffect(() => {
+        setViewPrivate(false)
     }, [sessionUser])
 
     const totalPrivateComments = sessionUser && Object.values(recipe.reviews).filter(review => review.user_id == sessionUser.id && review.private).length || 0

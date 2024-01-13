@@ -13,7 +13,7 @@ export default function ConfirmDelete({ recipe, review }) {
     async function handleDeleteRecipe(e){
         e.preventDefault()
         await dispatch(thunkDeleteImage(recipe.preview_image))
-        const urlParts = userId.split(' ')
+        const urlParts = userId?.split(' ')
 
         await dispatch(thunkDeleteRecipe(recipe))
         .then(() => navigate(userId ? `${urlParts[0]} ${urlParts[1]} ${urlParts[2]}/recipes` : '/', {state: recipe.preview_image}))

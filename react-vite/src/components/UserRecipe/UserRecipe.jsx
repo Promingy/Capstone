@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import './UserRecipe.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetUserRecipes } from '../../redux/session'
@@ -11,13 +11,14 @@ export default function UserRecipe() {
     let { userId } = useParams()
     const { closeModal } = useModal()
     const sessionUser = useSelector(state => state.session.user)
-    userId = +userId.split(' ')[0]
+    userId = +userId?.split(' ')?.[0]
     let recipes = useSelector(state => state.session)
     const owner = recipes?.[+userId]?.owner
     recipes = recipes?.[+userId]
 
     useEffect(() => {
         dispatch(thunkGetUserRecipes(userId))
+        window.scrollTo(0, 0)
     }, [dispatch])
 
     useEffect(() => {
@@ -32,8 +33,6 @@ export default function UserRecipe() {
 
         return firstLetter + body
     }
-
-    useEffect(() => {}, [])
 
     if (!recipes || !owner) return
 
@@ -56,7 +55,7 @@ export default function UserRecipe() {
                     {Object.values(recipes).map(recipe => {
                         if (recipe == owner) return
                         return (
-                            <RecipeTile recipe={recipe} />
+                            <RecipeTile recipe={recipe} key={`recipe${recipe.id}`}/>
                         )
                     })}
                 </div>
