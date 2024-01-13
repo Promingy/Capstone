@@ -329,6 +329,165 @@ def seed_quantities():
         ingredient_quantity=200
     )
 
+    # Quantities for Recipe 16
+    quantity46 = Quantity(
+        recipe_id=16,
+        ingredient_measurement_id=7,
+        ingredient="cream cheese",
+        ingredient_quantity=8
+    )
+    quantity47 = Quantity(
+        recipe_id=16,
+        ingredient_measurement_id=6,
+        ingredient="mayonnaise",
+        ingredient_quantity=1
+    )
+    quantity48 = Quantity(
+        recipe_id=16,
+        ingredient_measurement_id=6,
+        ingredient="sour cream",
+        ingredient_quantity=1
+    )
+    quantity49 = Quantity(
+        recipe_id=16,
+        ingredient_measurement_id=8,
+        ingredient="parmesan cheese",
+        ingredient_quantity=0.5
+    )
+    quantity50 = Quantity(
+        recipe_id=16,
+        ingredient_measurement_id=9,
+        ingredient="artichoke hearts",
+        ingredient_quantity=1
+    )
+
+    # Quantities for Recipe 17
+    quantity51 = Quantity(
+        recipe_id=17,
+        ingredient_measurement_id=9,
+        ingredient="chicken breasts",
+        ingredient_quantity=2
+    )
+    quantity52 = Quantity(
+        recipe_id=17,
+        ingredient_measurement_id=2,
+        ingredient="fettuccine pasta",
+        ingredient_quantity=8
+    )
+    quantity53 = Quantity(
+        recipe_id=17,
+        ingredient_measurement_id=8,
+        ingredient="butter",
+        ingredient_quantity=0.5
+    )
+    quantity54 = Quantity(
+        recipe_id=17,
+        ingredient_measurement_id=10,
+        ingredient="heavy cream",
+        ingredient_quantity=1
+    )
+    quantity55 = Quantity(
+        recipe_id=17,
+        ingredient_measurement_id=10,
+        ingredient="parmesan cheese (grated)",
+        ingredient_quantity=0.5
+    )
+    # Quantities for Recipe 18
+    quantity56 = Quantity(
+        recipe_id=18,
+        ingredient_measurement_id=6,
+        ingredient="heavy cream",
+        ingredient_quantity=1
+    )
+    quantity57 = Quantity(
+        recipe_id=18,
+        ingredient_measurement_id=10,
+        ingredient="semi-sweet chocolate",
+        ingredient_quantity=8
+    )
+    quantity58 = Quantity(
+        recipe_id=18,
+        ingredient_measurement_id=9,
+        ingredient="egg yolks",
+        ingredient_quantity=4
+    )
+    quantity59 = Quantity(
+        recipe_id=18,
+        ingredient_measurement_id=10,
+        ingredient="granulated sugar",
+        ingredient_quantity=2
+    )
+    quantity60 = Quantity(
+        recipe_id=18,
+        ingredient_measurement_id=1,
+        ingredient="vanilla extract",
+        ingredient_quantity=1
+    )
+    # Quantities for Recipe 19
+    quantity61 = Quantity(
+        recipe_id=19,
+        ingredient_measurement_id=4,
+        ingredient="romaine lettuce (chopped)",
+        ingredient_quantity=1
+    )
+    quantity62 = Quantity(
+        recipe_id=19,
+        ingredient_measurement_id=5,
+        ingredient="croutons",
+        ingredient_quantity=0.5
+    )
+    quantity63 = Quantity(
+        recipe_id=19,
+        ingredient_measurement_id=10,
+        ingredient="parmesan cheese (grated)",
+        ingredient_quantity=0.25
+    )
+    quantity64 = Quantity(
+        recipe_id=19,
+        ingredient_measurement_id=9,
+        ingredient="caesar dressing",
+        ingredient_quantity=0.5
+    )
+    quantity65 = Quantity(
+        recipe_id=19,
+        ingredient_measurement_id=10,
+        ingredient="black pepper",
+        ingredient_quantity=0.25
+    )
+
+    # Quantities for Recipe 20
+    quantity66 = Quantity(
+        recipe_id=20,
+        ingredient_measurement_id=6,
+        ingredient="onion (chopped)",
+        ingredient_quantity=1
+    )
+    quantity67 = Quantity(
+        recipe_id=20,
+        ingredient_measurement_id=6,
+        ingredient="garlic (minced)",
+        ingredient_quantity=2
+    )
+    quantity68 = Quantity(
+        recipe_id=20,
+        ingredient_measurement_id=5,
+        ingredient="carrots (chopped)",
+        ingredient_quantity=2
+    )
+    quantity69 = Quantity(
+        recipe_id=20,
+        ingredient_measurement_id=5,
+        ingredient="celery (chopped)",
+        ingredient_quantity=2
+    )
+    quantity70 = Quantity(
+        recipe_id=20,
+        ingredient_measurement_id=9,
+        ingredient="canned crushed tomatoes",
+        ingredient_quantity=28
+    )
+
+
     quantities = [
         quantity1, quantity2, quantity3, quantity4, quantity5,
         quantity6, quantity7, quantity8, quantity9, quantity10,
@@ -339,6 +498,11 @@ def seed_quantities():
         quantity31, quantity32, quantity33, quantity34, quantity35,
         quantity36, quantity37, quantity38, quantity39, quantity40,
         quantity41, quantity42, quantity43, quantity44, quantity45,
+        quantity46, quantity47, quantity48, quantity49, quantity50,
+        quantity51, quantity52, quantity53, quantity54, quantity55,
+        quantity56, quantity57, quantity58, quantity59, quantity60,
+        quantity61, quantity62, quantity63, quantity64, quantity65,
+        quantity66, quantity67, quantity68, quantity69, quantity70
     ]
 
 

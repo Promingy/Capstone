@@ -191,10 +191,71 @@ def seed_recipes():
         created_at=datetime(2023, 8, 10, 8, 30)
     )
 
+    recipe16 = Recipe(
+        owner_id=1,
+        category_id=1,
+        title="Spinach Artichoke Dip",
+        description="Creamy and cheesy dip with spinach and artichokes, perfect for sharing.",
+        servings=6,
+        prep_time=20,
+        cook_time=25,
+        preview_image="https://www.onceuponachef.com/images/2022/11/spinach-artichoke-dip-1-2.jpg",
+        created_at=datetime(2023, 8, 11, 14, 30)
+    )
+
+    recipe17 = Recipe(
+        owner_id=2,
+        category_id=2,
+        title="Chicken Alfredo",
+        description="Delicious creamy Alfredo sauce with grilled chicken served over pasta.",
+        servings=4,
+        prep_time=15,
+        cook_time=30,
+        preview_image="https://www.budgetbytes.com/wp-content/uploads/2022/07/Chicken-Alfredo-above.jpg",
+        created_at=datetime(2023, 8, 12, 18, 45)
+    )
+
+    recipe18 = Recipe(
+        owner_id=3,
+        category_id=3,
+        title="Chocolate Mousse",
+        description="Silky and indulgent chocolate mousse, a delightful dessert for chocolate lovers.",
+        servings=4,
+        prep_time=20,
+        cook_time=0,
+        preview_image="https://bakerbynature.com/wp-content/uploads/2023/08/Easy-Chocolate-Mousse-Baker-by-Nature-12636.jpg",
+        created_at=datetime(2023, 8, 13, 12, 15)
+    )
+
+    recipe19 = Recipe(
+        owner_id=4,
+        category_id=4,
+        title="Caesar Salad",
+        description="Classic Caesar salad with crisp romaine lettuce, croutons, and Caesar dressing.",
+        servings=2,
+        prep_time=10,
+        cook_time=0,
+        preview_image="https://www.spendwithpennies.com/wp-content/uploads/2023/06/1200-Caesar-Salad-Recipe-SpendWithPennies.jpg",
+        created_at=datetime(2023, 8, 14, 9, 30)
+    )
+
+    recipe20 = Recipe(
+        owner_id=5,
+        category_id=5,
+        title="Tomato Basil Soup",
+        description="Comforting tomato basil soup with a hint of garlic and herbs.",
+        servings=4,
+        prep_time=15,
+        cook_time=25,
+        preview_image="https://carlsbadcravings.com/wp-content/uploads/2014/02/Parmesan-Tomato-Basil-Soup-7.jpg",
+        created_at=datetime(2023, 8, 15, 15, 0)
+    )
+
     recipes = [
         Recipe1, Recipe2, Recipe3, Recipe4, Recipe5,
         recipe6, recipe7, recipe8, recipe9, recipe10,
-        recipe11, recipe12, recipe13, recipe14, recipe15
+        recipe11, recipe12, recipe13, recipe14, recipe15,
+        recipe16, recipe17, recipe18, recipe19, recipe20
         ]
 
     [db.session.add(recipe) for recipe in recipes]

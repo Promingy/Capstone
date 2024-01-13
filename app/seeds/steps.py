@@ -373,6 +373,141 @@ def seed_steps():
         step_number=3,
         description="In a bowl, assemble the burrito bowl with black beans, rice, tomatoes, and your favorite toppings."
     )
+    # Steps for Recipe 16
+    step60 = Step(
+        recipe_id=16,
+        step_number=1,
+        description="Preheat the oven to 375°F."
+    )
+    step61 = Step(
+        recipe_id=16,
+        step_number=2,
+        description="In a mixing bowl, combine cream cheese, mayonnaise, and sour cream."
+    )
+    step62 = Step(
+        recipe_id=16,
+        step_number=3,
+        description="Add parmesan cheese and artichoke hearts, mix well."
+    )
+    step63 = Step(
+        recipe_id=16,
+        step_number=4,
+        description="Transfer the mixture to a baking dish."
+    )
+    step64 = Step(
+        recipe_id=16,
+        step_number=5,
+        description="Bake for 25 minutes or until the top is golden brown."
+    )
+
+    # Steps for Recipe 17
+    step65 = Step(
+        recipe_id=17,
+        step_number=1,
+        description="Cook fettuccine pasta according to package instructions."
+    )
+    step66 = Step(
+        recipe_id=17,
+        step_number=2,
+        description="In a pan, cook chicken breasts in butter until fully cooked."
+    )
+    step67 = Step(
+        recipe_id=17,
+        step_number=3,
+        description="Slice cooked chicken."
+    )
+    step68 = Step(
+        recipe_id=17,
+        step_number=4,
+        description="In the same pan, add heavy cream, parmesan cheese, and cooked fettuccine."
+    )
+    step69 = Step(
+        recipe_id=17,
+        step_number=5,
+        description="Stir until the sauce thickens and coats the pasta. Serve hot."
+    )
+
+    # Steps for Recipe 18
+    step70 = Step(
+        recipe_id=18,
+        step_number=1,
+        description="In a saucepan, heat heavy cream until it simmers."
+    )
+    step71 = Step(
+        recipe_id=18,
+        step_number=2,
+        description="Add semi-sweet chocolate and stir until melted."
+    )
+    step72 = Step(
+        recipe_id=18,
+        step_number=3,
+        description="In a separate bowl, whisk together egg yolks and granulated sugar."
+    )
+    step73 = Step(
+        recipe_id=18,
+        step_number=4,
+        description="Gradually whisk the chocolate mixture into the egg yolk mixture."
+    )
+    step74 = Step(
+        recipe_id=18,
+        step_number=5,
+        description="Stir in vanilla extract and pour the mixture into serving glasses. Chill before serving."
+    )
+
+    # Steps for Recipe 19
+    step75 = Step(
+        recipe_id=19,
+        step_number=1,
+        description="Place chopped romaine lettuce in a large salad bowl."
+    )
+    step76 = Step(
+        recipe_id=19,
+        step_number=2,
+        description="Add croutons, grated parmesan cheese, and caesar dressing."
+    )
+    step77 = Step(
+        recipe_id=19,
+        step_number=3,
+        description="Toss the salad until well coated with dressing."
+    )
+    step78 = Step(
+        recipe_id=19,
+        step_number=4,
+        description="Serve the salad on individual plates, garnished with black pepper."
+    )
+    step79 = Step(
+        recipe_id=19,
+        step_number=5,
+        description="Enjoy the classic Caesar salad!"
+    )
+
+    # Steps for Recipe 20
+    step80 = Step(
+        recipe_id=20,
+        step_number=1,
+        description="In a large pot, sauté chopped onion and minced garlic until fragrant."
+    )
+    step81 = Step(
+        recipe_id=20,
+        step_number=2,
+        description="Add chopped carrots and celery, cook until vegetables are tender."
+    )
+    step82 = Step(
+        recipe_id=20,
+        step_number=3,
+        description="Pour in canned crushed tomatoes and stir to combine."
+    )
+    step83 = Step(
+        recipe_id=20,
+        step_number=4,
+        description="Simmer the soup for 25 minutes, allowing flavors to meld."
+    )
+    step84 = Step(
+        recipe_id=20,
+        step_number=5,
+        description="Serve the tomato basil soup hot, garnished with your favorite herbs."
+    )
+
 
 
     steps = [
@@ -387,7 +522,12 @@ def seed_steps():
         step41, step42, step43, step44, step45,
         step46, step47, step48, step49, step50,
         step51, step52, step53, step54, step55,
-        step56, step57, step58, step59,
+        step56, step57, step58, step59, step60,
+        step61, step62, step63, step64, step65,
+        step66, step67, step68, step69, step70,
+        step71, step72, step73, step74, step75,
+        step76, step77, step78, step79, step80,
+        step81, step82, step83, step84
     ]
 
 
