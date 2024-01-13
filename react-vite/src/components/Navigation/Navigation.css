@@ -49,6 +49,14 @@
   border: 1px solid lightgray;
 }
 
+.login_button:hover {
+  background-color: lightgray;
+}
+
+.login_button:active {
+  background-color: darkgray;
+}
+
 .openModalMenuItem {
   padding: 11px 19px;
   border-radius: 20px;
@@ -58,8 +66,15 @@
 }
 
 .sign_up_button {
-  background-color: #CF1A00;
+  background-color: #E33D26;
   color: white;
+}
+
+.sign_up_button:hover{
+  background-color: #D02E1E;
+}
+.sign_up_button:active{
+  background-color: #BB1F17;
 }
 
 .header_bottom_container {
