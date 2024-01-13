@@ -1,6 +1,6 @@
 .user_recipes_container {
     background-color: #F2F3EF;
-    height: 100vh;
+    min-height: 100vh;
     padding-bottom: 50px;
 }
 .user_recipes_container > * {
