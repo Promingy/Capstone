@@ -21,6 +21,9 @@ function PreferencesModal({ close }) {
             <div className='create_recipe' id='create_recipe'>
                 Create a Recipe
             </div>
+            <div className='your_recipes' id='your_recipes'>
+                Your Recipes
+            </div>
 
             <div className='logout_button'>
                 <p id='logout_button' className='logout_button'>Logout</p>

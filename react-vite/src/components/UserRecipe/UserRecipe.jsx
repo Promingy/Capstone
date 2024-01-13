@@ -10,7 +10,7 @@ export default function UserRecipe() {
     let { userId } = useParams()
     userId = +userId.split(' ')[0]
     let recipes = useSelector(state => state.session)
-    const [recipeOwner, setRecipeOwner] = useState(null)
+    const owner = recipes?.[+userId]?.owner
     recipes = recipes?.[+userId]
 
     useEffect(() => {
@@ -28,27 +28,26 @@ export default function UserRecipe() {
 
     useEffect(() => {}, [])
 
-    if (!recipes) return
+    if (!recipes || !owner) return
 
     return (
         <div className='user_recipes_container'>
             <header className='user_profile_container'>
                 <div className='header_left'>
                     <h2>
-                        {capFirstLeter(recipeOwner?.first_name)} {capFirstLeter(recipeOwner?.last_name)}
+                        {capFirstLeter(owner?.first_name)} {capFirstLeter(owner?.last_name)}
                     </h2>
-                    <img className='user_page_profile_pic' src={recipeOwner?.profile_pic}/>
+                    <img className='user_page_profile_pic' src={owner?.profile_pic}/>
                 </div>
                 <div className='header_right'>
-                    <p>{recipeOwner?.bio}</p>
+                    <p>{owner?.bio}</p>
                 </div>
             </header>
             <div className='user_recipes_content_container'>
-                <p>{Object.values(recipes).length} results</p>
+                <p>{Object.values(recipes).length - 1} results</p>
                 <div className='user_recipe_tile_container'>
                     {Object.values(recipes).map(recipe => {
-                        if (!recipeOwner) return setRecipeOwner(recipe.owner)
-
+                        if (recipe == owner) return
                         return (
                             <RecipeTile recipe={recipe} />
                         )

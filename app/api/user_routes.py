@@ -30,5 +30,6 @@ def get_user_routes(userId):
     Query for all recipes from a specific user
     """
     recipes = Recipe.query.filter(Recipe.owner_id == userId).all()
+    owner = User.query.get(userId)
 
-    return {recipe.to_dict()['id']: recipe.to_dict() for recipe in recipes}
+    return {"owner": owner.to_dict(), "recipes":{recipe.to_dict()['id']: recipe.to_dict() for recipe in recipes}}

@@ -72,12 +72,14 @@ function ProfileButton() {
     const prefModal = document.getElementById('preference_modal_container')
     const background = document.getElementById('background_color_pref')
     const createRecipe = document.getElementById('create_recipe')
+    const yourRecipes = document.getElementById('your_recipes')
     const logout_button = document.getElementById('logout_button')
     const conditions = [xBtn, background]
     let node = e.target
 
     // iterate over the e.target to verify if we're clicking off the modal or on the exit button
     for (let i = 0; i < 4; i++){
+      console.log(e.target)
       // if clicking off modal, or on exit button, close modal
       if (conditions.some(ele => ele === node)) closePref()
 
@@ -90,6 +92,11 @@ function ProfileButton() {
       else if (node === createRecipe) {
         closePref()
         navigate('/new-recipe')
+      }
+
+      else if (node === yourRecipes) {
+        closePref
+        navigate(`/${user.id} ${user.first_name} ${user.last_name}/recipes`)
       }
 
       // check if e.target is our preference modal, if so, do nothing

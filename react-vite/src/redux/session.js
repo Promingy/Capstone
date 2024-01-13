@@ -12,11 +12,11 @@ const removeUser = () => ({
   type: REMOVE_USER
 });
 
-const actionGetUserRecipes = (recipes, ownerId) => {
+const actionGetUserRecipes = (recipes, owner) => {
   return {
       type: GET_USER_RECIPES,
       recipes,
-      ownerId
+      owner
   }
 }
 
@@ -79,7 +79,7 @@ export const thunkGetUserRecipes = (userId) => async (dispatch) => {
   const data = await res.json()
   console.log('data', data)
   if (res.ok) {
-      dispatch(actionGetUserRecipes(data, userId))
+      dispatch(actionGetUserRecipes(data.recipes, data.owner))
       return data
   }
   return data
@@ -94,10 +94,9 @@ function sessionReducer(state = initialState, action) {
     case REMOVE_USER:
       return { ...state, user: null };
     case GET_USER_RECIPES: {
-      const newState = { ...state, [action.ownerId]: {} }
-
+      const newState = { ...state, [action.owner.id]: {"owner": action.owner} }
         for (let recipe of Object.values(action.recipes)) {
-            newState[action.ownerId][recipe.id] = recipe
+            newState[action.owner.id][recipe.id] = recipe
         }
 
         return newState
