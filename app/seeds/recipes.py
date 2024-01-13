@@ -129,7 +129,6 @@ def seed_recipes():
         created_at=datetime(2023, 8, 5, 9, 15)
     )
 
-    # Recipe 11
     recipe11 = Recipe(
         owner_id=3,
         category_id=6,
@@ -154,7 +153,6 @@ def seed_recipes():
         created_at=datetime(2023, 8, 7, 14, 20)
     )
 
-    # Recipe 13
     recipe13 = Recipe(
         owner_id=2,
         category_id=1,
@@ -251,11 +249,194 @@ def seed_recipes():
         created_at=datetime(2023, 8, 15, 15, 0)
     )
 
+    recipe21 = Recipe(
+        owner_id=6,
+        category_id=7,
+        title="Mushroom Risotto",
+        description="Creamy and flavorful risotto with sautéed mushrooms and Parmesan cheese.",
+        servings=4,
+        prep_time=15,
+        cook_time=30,
+        preview_image="https://cdn77-s3.lazycatkitchen.com/wp-content/uploads/2019/11/vegan-mushroom-risotto-close-1000x1500.jpg",
+        created_at=datetime(2023, 8, 16, 11, 45)
+    )
+
+    recipe22 = Recipe(
+        owner_id=7,
+        category_id=7,
+        title="Vegetarian Pizza",
+        description="Delicious pizza topped with a variety of fresh vegetables and melted cheese.",
+        servings=3,
+        prep_time=20,
+        cook_time=15,
+        preview_image="https://www.eatingwell.com/thmb/PhRj8Sp6g5m-Cn9AJL2zeLi1LM4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/easy-vegan-pizza-1x1-002-a224f13696b3483d8099b7ae5b494250.jpg",
+        created_at=datetime(2023, 8, 17, 14, 20)
+    )
+
+    recipe23 = Recipe(
+        owner_id=10,
+        category_id=7,
+        title="Stuffed Zucchini Boats",
+        description="Zucchini halves filled with a savory mixture of quinoa, black beans, corn, tomatoes, and spices.",
+        servings=4,
+        prep_time=20,
+        cook_time=25,
+        preview_image="https://www.tasteandtellblog.com/wp-content/uploads/2023/07/Stuffed-Zucchini-Boats-6.jpg",
+        created_at=datetime(2023, 8, 20, 10, 15)
+    )
+
+    recipe24 = Recipe(
+        owner_id=9,
+        category_id=7,
+        title="Stuffed Bell Peppers",
+        description="Bell peppers stuffed with a mixture of rice, black beans, corn, and spices.",
+        servings=5,
+        prep_time=25,
+        cook_time=35,
+        preview_image="https://www.vindulge.com/wp-content/uploads/2020/04/Stuffed-Peppers-with-Ground-Beef-Cooked-on-the-Grill.jpg",
+        created_at=datetime(2023, 8, 19, 16, 30)
+    )
+
+    recipe25 = Recipe(
+        owner_id=10,
+        category_id=2,
+        title="Pesto Chicken Pasta",
+        description="Grilled chicken breast tossed with al dente pasta and a flavorful basil pesto sauce.",
+        servings=2,
+        prep_time=20,
+        cook_time=15,
+        preview_image="https://www.sipandfeast.com/wp-content/uploads/2022/05/chicken-pesto-pasta-salad-recipe-snippet.jpg",
+        created_at=datetime(2023, 8, 20, 18, 30)
+    )
+    
+    recipe26 = Recipe(
+        owner_id=1,
+        category_id=1,
+        title="Caprese Skewers",
+        description="Fresh mozzarella, cherry tomatoes, and basil leaves skewered and drizzled with balsamic glaze.",
+        servings=4,
+        prep_time=15,
+        cook_time=1,
+        preview_image="https://www.mashed.com/img/gallery/easy-caprese-skewers-recipe/l-intro-1626782645.jpg",
+        created_at=datetime(2023, 8, 21, 12, 30)
+    )
+
+    recipe27 = Recipe(
+        owner_id=2,
+        category_id=1,
+        title="Stuffed Mushrooms",
+        description="Mushroom caps stuffed with a savory mixture of breadcrumbs, garlic, herbs, and cream cheese.",
+        servings=5,
+        prep_time=20,
+        cook_time=20,
+        preview_image="https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2021/11/Stuffed-Mushrooms-main-1-1.jpg",
+        created_at=datetime(2023, 8, 22, 9, 15)
+    )
+
+    recipe28 = Recipe(
+        owner_id=3,
+        category_id=1,
+        title="Bacon-Wrapped Jalapeño Poppers",
+        description="Spicy jalapeño peppers filled with cream cheese, wrapped in bacon, and baked until crispy.",
+        servings=6,
+        prep_time=15,
+        cook_time=25,
+        preview_image="https://www.jerkyholic.com/wp-content/uploads/2023/05/finaljalapenopoppers.jpg",
+        created_at=datetime(2023, 8, 23, 15, 45)
+    )
+
+    recipe29 = Recipe(
+        owner_id=4,
+        category_id=3,
+        title="Chocolate Lava Cake",
+        description="Decadent chocolate cake with a gooey molten chocolate center. Served with a scoop of vanilla ice cream.",
+        servings=2,
+        prep_time=15,
+        cook_time=12,
+        preview_image="https://nomnompaleo.com/wp-content/uploads/2021/02/800-LavaCakes-aaDSC_9507.jpg",
+        created_at=datetime(2023, 8, 24, 20, 0)
+    )
+
+    recipe30 = Recipe(
+        owner_id=5,
+        category_id=3,
+        title="Strawberry Shortcake",
+        description="Layers of sweet sponge cake, fresh strawberries, and whipped cream. A classic dessert for summer.",
+        servings=8,
+        prep_time=25,
+        cook_time=15,
+        preview_image="https://iambaker.net/wp-content/uploads/2023/05/strawberry-shortcake-cake-1.jpg",
+        created_at=datetime(2023, 8, 25, 17, 30)
+    )
+
+    recipe31 = Recipe(
+        owner_id=6,
+        category_id=5,
+        title="Minestrone Soup",
+        description="A hearty Italian soup with a variety of vegetables, beans, and pasta.",
+        servings=6,
+        prep_time=15,
+        cook_time=40,
+        preview_image="https://www.aberdeenskitchen.com/wp-content/uploads/2019/10/Easy-Classic-Minestrone-Soup-1-FI-Thumbnail-1200X1200.jpg",
+        created_at=datetime(2023, 8, 26, 11, 0)
+    )
+
+    recipe32 = Recipe(
+        owner_id=7,
+        category_id=5,
+        title="Chicken Noodle Soup",
+        description="Classic comfort soup with chicken, vegetables, and egg noodles.",
+        servings=4,
+        prep_time=20,
+        cook_time=30,
+        preview_image="https://www.bigbearswife.com/wp-content/uploads/2020/05/30-Minute-Pantry-Chicken-Noodle-Soup-3-735x1029.png",
+        created_at=datetime(2023, 8, 27, 14, 45)
+    )
+
+    recipe33 = Recipe(
+        owner_id=8,
+        category_id=5,
+        title="Potato Leek Soup",
+        description="Creamy soup made with potatoes, leeks, onions, and a touch of cream.",
+        servings=5,
+        prep_time=20,
+        cook_time=35,
+        preview_image="https://www.feastingathome.com/wp-content/uploads/2014/10/best-potato-leek-soup-recipe-7.jpg",
+        created_at=datetime(2023, 8, 28, 9, 30)
+    )
+
+    recipe34 = Recipe(
+        owner_id=9,
+        category_id=10,
+        title="Homemade Trail Mix",
+        description="A mix of nuts, dried fruits, and chocolate for a quick and energy-boosting snack.",
+        servings=10,
+        prep_time=5,
+        cook_time=1,
+        preview_image="https://www.freshoffthegrid.com/wp-content/uploads/sriracha-trail-mix-spicy-gluten-free.jpg",
+        created_at=datetime(2023, 8, 29, 16, 15)
+    )
+
+    recipe35 = Recipe(
+        owner_id=10,
+        category_id=10,
+        title="Cucumber Slices with Hummus",
+        description="Sliced cucumbers served with creamy hummus. A light and refreshing snack.",
+        servings=4,
+        prep_time=10,
+        cook_time=1,
+        preview_image="https://blog.fatfreevegan.com/wp-content/uploads/2010/08/cucumber-hummus-fb.jpg",
+        created_at=datetime(2023, 8, 30, 12, 0)
+    )
+
     recipes = [
-        Recipe1, Recipe2, Recipe3, Recipe4, Recipe5,
-        recipe6, recipe7, recipe8, recipe9, recipe10,
-        recipe11, recipe12, recipe13, recipe14, recipe15,
-        recipe16, recipe17, recipe18, recipe19, recipe20
+            Recipe1, Recipe2, Recipe3, Recipe4, Recipe5,
+            recipe6, recipe7, recipe8, recipe9, recipe10,
+            recipe11, recipe12, recipe13, recipe14, recipe15,
+            recipe16, recipe17, recipe18, recipe19, recipe20,
+            recipe21, recipe22, recipe23, recipe24, recipe25,
+            recipe26, recipe27, recipe28, recipe29, recipe30,
+            recipe31, recipe32, recipe33, recipe34, recipe35
         ]
 
     [db.session.add(recipe) for recipe in recipes]

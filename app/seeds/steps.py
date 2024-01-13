@@ -95,7 +95,7 @@ def seed_steps():
         step_number=3,
         description="Mix cooked pasta with tomatoes and fresh basil. Serve warm."
     )
-    # Recipe 1
+    
     step16 = Step(
         recipe_id=1,
         step_number=1,
@@ -114,7 +114,6 @@ def seed_steps():
         description="Add tomato sauce to the cooked ground beef and simmer for 10 minutes."
     )
 
-    # Recipe 2
     step19 = Step(
         recipe_id=2,
         step_number=1,
@@ -133,7 +132,6 @@ def seed_steps():
         description="Combine grilled chicken, lettuce, and cherry tomatoes in a large bowl."
     )
 
-    # Recipe 3
     step22 = Step(
         recipe_id=3,
         step_number=1,
@@ -152,7 +150,6 @@ def seed_steps():
         description="Continue cooking until vegetables are tender."
     )
 
-    # Recipe 4
     step25 = Step(
         recipe_id=4,
         step_number=1,
@@ -171,7 +168,6 @@ def seed_steps():
         description="In a separate bowl, combine flour, baking soda, and salt. Gradually add to the wet mixture."
     )
 
-    # Recipe 5
     step28 = Step(
         recipe_id=5,
         step_number=1,
@@ -190,7 +186,6 @@ def seed_steps():
         description="Mix cooked pasta with tomatoes and fresh basil. Serve warm."
     )
 
-    # Recipe 6
     step31 = Step(
         recipe_id=6,
         step_number=1,
@@ -209,7 +204,6 @@ def seed_steps():
         description="In another bowl, cream together butter and sugar until light and fluffy. Add eggs and vanilla; mix well."
     )
 
-    # Recipe 7
     step34 = Step(
         recipe_id=7,
         step_number=1,
@@ -228,7 +222,6 @@ def seed_steps():
         description="Drizzle balsamic glaze over the salad. Season with salt and pepper to taste."
     )
 
-    # Recipe 8
     step37 = Step(
         recipe_id=8,
         step_number=1,
@@ -247,7 +240,6 @@ def seed_steps():
         description="Blend the soup until smooth using an immersion blender. Season with salt and pepper."
     )
 
-    # Recipe 9
     step40 = Step(
         recipe_id=9,
         step_number=1,
@@ -266,7 +258,6 @@ def seed_steps():
         description="Sprinkle freshly chopped dill over grilled salmon before serving."
     )
 
-    # Recipe 10
     step43 = Step(
         recipe_id=10,
         step_number=1,
@@ -285,7 +276,6 @@ def seed_steps():
         description="Toss the salad gently and serve chilled."
     )
 
-    # Recipe 11
     step46 = Step(
         recipe_id=11,
         step_number=1,
@@ -298,7 +288,6 @@ def seed_steps():
         description="Pour the smoothie into a glass and enjoy immediately."
     )
 
-    # Recipe 12
     step48 = Step(
         recipe_id=12,
         step_number=1,
@@ -317,7 +306,6 @@ def seed_steps():
         description="In a large bowl, combine cooked quinoa, roasted vegetables, and a drizzle of olive oil. Toss to mix."
     )
 
-    # Recipe 13
     step51 = Step(
         recipe_id=13,
         step_number=1,
@@ -336,7 +324,6 @@ def seed_steps():
         description="Serve the guacamole with crispy tortilla chips."
     )
 
-    # Recipe 14
     step54 = Step(
         recipe_id=14,
         step_number=1,
@@ -355,7 +342,6 @@ def seed_steps():
         description="Bake the crust in the preheated oven for 15 minutes, or until lightly golden."
     )
 
-    # Recipe 15
     step57 = Step(
         recipe_id=15,
         step_number=1,
@@ -373,142 +359,594 @@ def seed_steps():
         step_number=3,
         description="In a bowl, assemble the burrito bowl with black beans, rice, tomatoes, and your favorite toppings."
     )
-    # Steps for Recipe 16
+
     step60 = Step(
         recipe_id=16,
         step_number=1,
         description="Preheat the oven to 375°F."
     )
+
     step61 = Step(
         recipe_id=16,
         step_number=2,
         description="In a mixing bowl, combine cream cheese, mayonnaise, and sour cream."
     )
+
     step62 = Step(
         recipe_id=16,
         step_number=3,
         description="Add parmesan cheese and artichoke hearts, mix well."
     )
+
     step63 = Step(
         recipe_id=16,
         step_number=4,
         description="Transfer the mixture to a baking dish."
     )
+
     step64 = Step(
         recipe_id=16,
         step_number=5,
         description="Bake for 25 minutes or until the top is golden brown."
     )
 
-    # Steps for Recipe 17
     step65 = Step(
         recipe_id=17,
         step_number=1,
         description="Cook fettuccine pasta according to package instructions."
     )
+
     step66 = Step(
         recipe_id=17,
         step_number=2,
         description="In a pan, cook chicken breasts in butter until fully cooked."
     )
+
     step67 = Step(
         recipe_id=17,
         step_number=3,
         description="Slice cooked chicken."
     )
+
     step68 = Step(
         recipe_id=17,
         step_number=4,
         description="In the same pan, add heavy cream, parmesan cheese, and cooked fettuccine."
     )
+
     step69 = Step(
         recipe_id=17,
         step_number=5,
         description="Stir until the sauce thickens and coats the pasta. Serve hot."
     )
 
-    # Steps for Recipe 18
     step70 = Step(
         recipe_id=18,
         step_number=1,
         description="In a saucepan, heat heavy cream until it simmers."
     )
+
     step71 = Step(
         recipe_id=18,
         step_number=2,
         description="Add semi-sweet chocolate and stir until melted."
     )
+
     step72 = Step(
         recipe_id=18,
         step_number=3,
         description="In a separate bowl, whisk together egg yolks and granulated sugar."
     )
+
     step73 = Step(
         recipe_id=18,
         step_number=4,
         description="Gradually whisk the chocolate mixture into the egg yolk mixture."
     )
+
     step74 = Step(
         recipe_id=18,
         step_number=5,
         description="Stir in vanilla extract and pour the mixture into serving glasses. Chill before serving."
     )
 
-    # Steps for Recipe 19
     step75 = Step(
         recipe_id=19,
         step_number=1,
         description="Place chopped romaine lettuce in a large salad bowl."
     )
+
     step76 = Step(
         recipe_id=19,
         step_number=2,
         description="Add croutons, grated parmesan cheese, and caesar dressing."
     )
+
     step77 = Step(
         recipe_id=19,
         step_number=3,
         description="Toss the salad until well coated with dressing."
     )
+
     step78 = Step(
         recipe_id=19,
         step_number=4,
         description="Serve the salad on individual plates, garnished with black pepper."
     )
+
     step79 = Step(
         recipe_id=19,
         step_number=5,
         description="Enjoy the classic Caesar salad!"
     )
 
-    # Steps for Recipe 20
     step80 = Step(
         recipe_id=20,
         step_number=1,
         description="In a large pot, sauté chopped onion and minced garlic until fragrant."
     )
+
     step81 = Step(
         recipe_id=20,
         step_number=2,
         description="Add chopped carrots and celery, cook until vegetables are tender."
     )
+
     step82 = Step(
         recipe_id=20,
         step_number=3,
         description="Pour in canned crushed tomatoes and stir to combine."
     )
+
     step83 = Step(
         recipe_id=20,
         step_number=4,
         description="Simmer the soup for 25 minutes, allowing flavors to meld."
     )
+
     step84 = Step(
         recipe_id=20,
         step_number=5,
         description="Serve the tomato basil soup hot, garnished with your favorite herbs."
     )
 
+    step60 = Step(
+        recipe_id=21,
+        step_number=1,
+        description="In a large pan, sauté onions and garlic until softened."
+    )
 
+    step61 = Step(
+        recipe_id=21,
+        step_number=2,
+        description="Add sliced mushrooms and cook until they release their moisture."
+    )
+
+    step62 = Step(
+        recipe_id=21,
+        step_number=3,
+        description="Stir in arborio rice and cook for 1-2 minutes until translucent."
+    )
+
+    step63 = Step(
+        recipe_id=21,
+        step_number=4,
+        description="Pour in vegetable broth gradually, stirring constantly until absorbed."
+    )
+
+    step64 = Step(
+        recipe_id=21,
+        step_number=5,
+        description="Continue cooking and stirring until the rice is creamy and cooked to al dente."
+    )
+
+    step65 = Step(
+        recipe_id=22,
+        step_number=1,
+        description="Preheat the oven to 475°F (245°C). Roll out pizza dough on a floured surface."
+    )
+
+    step66 = Step(
+        recipe_id=22,
+        step_number=2,
+        description="Spread tomato sauce over the dough and sprinkle with shredded mozzarella cheese."
+    )
+
+    step67 = Step(
+        recipe_id=22,
+        step_number=3,
+        description="Top with sliced bell peppers and black olives."
+    )
+
+    step68 = Step(
+        recipe_id=22,
+        step_number=4,
+        description="Bake in the preheated oven for 12-15 minutes or until the crust is golden and cheese is melted."
+    )
+
+    step69 = Step(
+        recipe_id=22,
+        step_number=5,
+        description="Remove from the oven, slice, and serve hot."
+    )
+
+    step70 = Step(
+        recipe_id=23,
+        step_number=1,
+        description="Preheat the oven to 375°F (190°C)."
+    )
+
+    step71 = Step(
+        recipe_id=23,
+        step_number=2,
+        description="Cut zucchinis in half lengthwise, and scoop out the seeds to create a hollow 'boat' shape."
+    )
+
+    step72 = Step(
+        recipe_id=23,
+        step_number=3,
+        description="In a bowl, mix cooked quinoa, black beans, corn, diced tomatoes, and cumin powder."
+    )
+
+    step73 = Step(
+        recipe_id=23,
+        step_number=4,
+        description="Stuff the zucchini halves with the quinoa mixture."
+    )
+
+    step74 = Step(
+        recipe_id=23,
+        step_number=5,
+        description="Bake in the preheated oven for 20-25 minutes or until zucchinis are tender."
+    )
+
+    step75 = Step(
+        recipe_id=24,
+        step_number=1,
+        description="In a large bowl, combine drained chickpeas, diced cucumbers, halved cherry tomatoes, kalamata olives, and crumbled feta cheese."
+    )
+
+    step76 = Step(
+        recipe_id=24,
+        step_number=2,
+        description="Toss the ingredients together until well combined."
+    )
+
+    step77 = Step(
+        recipe_id=24,
+        step_number=3,
+        description="Serve the Greek Chickpea Salad chilled, and enjoy!"
+    )
+
+    step78 = Step(
+        recipe_id=24,
+        step_number=4,
+        description="Feel free to add a drizzle of olive oil and a sprinkle of oregano before serving."
+    )
+
+    step79 = Step(
+        recipe_id=24,
+        step_number=5,
+        description="Optional: Serve with pita bread or as a side dish to your favorite main course."
+    )
+
+    step80 = Step(
+        recipe_id=25,
+        step_number=1,
+        description="Cook fettuccine pasta according to package instructions."
+    )
+
+    step81 = Step(
+        recipe_id=25,
+        step_number=2,
+        description="Season chicken breast with salt and pepper. Grill until cooked through."
+    )
+
+    step82 = Step(
+        recipe_id=25,
+        step_number=3,
+        description="Slice grilled chicken into thin strips."
+    )
+
+    step83 = Step(
+        recipe_id=25,
+        step_number=4,
+        description="Toss cooked pasta with grilled chicken and basil pesto sauce."
+    )
+
+    step84 = Step(
+        recipe_id=25,
+        step_number=5,
+        description="Serve hot and enjoy!"
+    )
+
+    step85 = Step(
+        recipe_id=26,
+        step_number=1,
+        description="Thread cherry tomatoes, fresh mozzarella, and basil leaves onto skewers."
+    )
+
+    step86 = Step(
+        recipe_id=26,
+        step_number=2,
+        description="Drizzle balsamic glaze over the skewers."
+    )
+
+    step87 = Step(
+        recipe_id=26,
+        step_number=3,
+        description="Serve immediately for a delightful appetizer."
+    )
+
+    step88 = Step(
+        recipe_id=27,
+        step_number=1,
+        description="Preheat the oven to 375°F (190°C)."
+    )
+
+    step89 = Step(
+        recipe_id=27,
+        step_number=2,
+        description="Clean and remove stems from mushrooms. Place caps on a baking sheet."
+    )
+
+    step90 = Step(
+        recipe_id=27,
+        step_number=3,
+        description="In a bowl, mix cream cheese, breadcrumbs, garlic, and herbs."
+    )
+
+    step91 = Step(
+        recipe_id=27,
+        step_number=4,
+        description="Spoon the cream cheese mixture into mushroom caps."
+    )
+
+    step92 = Step(
+        recipe_id=27,
+        step_number=5,
+        description="Bake for 20 minutes or until mushrooms are tender."
+    )
+
+    step93 = Step(
+        recipe_id=28,
+        step_number=1,
+        description="Preheat the oven to 375°F (190°C)."
+    )
+
+    step94 = Step(
+        recipe_id=28,
+        step_number=2,
+        description="Slice jalapeños in half lengthwise, remove seeds and membranes."
+    )
+
+    step95 = Step(
+        recipe_id=28,
+        step_number=3,
+        description="Fill jalapeño halves with cream cheese."
+    )
+
+    step96 = Step(
+        recipe_id=28,
+        step_number=4,
+        description="Wrap each jalapeño with a half-slice of bacon and secure with a toothpick."
+    )
+
+    step97 = Step(
+        recipe_id=28,
+        step_number=5,
+        description="Bake until bacon is crispy, about 25 minutes."
+    )
+
+    step98 = Step(
+        recipe_id=29,
+        step_number=1,
+        description="Preheat the oven to 425°F (220°C). Grease and flour ramekins."
+    )
+
+    step99 = Step(
+        recipe_id=29,
+        step_number=2,
+        description="Melt dark chocolate and butter in a double boiler."
+    )
+
+    step100 = Step(
+        recipe_id=29,
+        step_number=3,
+        description="Whisk in sugar, eggs, and vanilla until well combined."
+    )
+
+    step101 = Step(
+        recipe_id=29,
+        step_number=4,
+        description="Fold in flour until just combined."
+    )
+
+    step102 = Step(
+        recipe_id=29,
+        step_number=5,
+        description="Pour batter into prepared ramekins and bake for 12 minutes."
+    )
+
+    step103 = Step(
+        recipe_id=30,
+        step_number=1,
+        description="Prepare sponge cake according to package instructions."
+    )
+
+    step104 = Step(
+        recipe_id=30,
+        step_number=2,
+        description="Slice strawberries and whip the cream."
+    )
+
+    step105 = Step(
+        recipe_id=30,
+        step_number=3,
+        description="Layer sponge cake, strawberries, and whipped cream."
+    )
+
+    step106 = Step(
+        recipe_id=30,
+        step_number=4,
+        description="Repeat layers until all ingredients are used."
+    )
+
+    step107 = Step(
+        recipe_id=30,
+        step_number=5,
+        description="Chill in the refrigerator before serving."
+    )
+
+    step108 = Step(
+        recipe_id=31,
+        step_number=1,
+        description="In a large pot, sauté onions and garlic until softened."
+    )
+
+    step109 = Step(
+        recipe_id=31,
+        step_number=2,
+        description="Add diced tomatoes, broth, and Italian seasoning."
+    )
+
+    step110 = Step(
+        recipe_id=31,
+        step_number=3,
+        description="Bring to a boil, then reduce heat and simmer for 30 minutes."
+    )
+
+    step111 = Step(
+        recipe_id=31,
+        step_number=4,
+        description="Add beans, pasta, and spinach. Cook until pasta is tender."
+    )
+
+    step112 = Step(
+        recipe_id=31,
+        step_number=5,
+        description="Serve hot with a sprinkle of Parmesan cheese."
+    )
+
+    step113 = Step(
+        recipe_id=32,
+        step_number=1,
+        description="In a large pot, bring chicken broth to a simmer."
+    )
+
+    step114 = Step(
+        recipe_id=32,
+        step_number=2,
+        description="Add diced chicken, vegetables, and egg noodles."
+    )
+
+    step115 = Step(
+        recipe_id=32,
+        step_number=3,
+        description="Simmer until chicken is cooked and noodles are tender."
+    )
+
+    step116 = Step(
+        recipe_id=32,
+        step_number=4,
+        description="Season with salt, pepper, and fresh herbs."
+    )
+
+    step117 = Step(
+        recipe_id=32,
+        step_number=5,
+        description="Serve hot and comforting."
+    )
+
+    step118 = Step(
+        recipe_id=33,
+        step_number=1,
+        description="Sauté leeks and onions in butter until softened."
+    )
+
+    step119 = Step(
+        recipe_id=33,
+        step_number=2,
+        description="Add diced potatoes and chicken broth. Simmer until potatoes are tender."
+    )
+
+    step120 = Step(
+        recipe_id=33,
+        step_number=3,
+        description="Puree the soup until smooth. Add cream and season with salt and pepper."
+    )
+
+    step121 = Step(
+        recipe_id=33,
+        step_number=4,
+        description="Simmer for an additional 10 minutes."
+    )
+
+    step122 = Step(
+        recipe_id=33,
+        step_number=5,
+        description="Garnish with fresh chives and serve."
+    )
+
+    step123 = Step(
+        recipe_id=34,
+        step_number=1,
+        description="Mix nuts, dried fruits, and chocolate in a large bowl."
+    )
+
+    step124 = Step(
+        recipe_id=34,
+        step_number=2,
+        description="Store the trail mix in an airtight container."
+    )
+
+    step125 = Step(
+        recipe_id=34,
+        step_number=3,
+        description="Portion into small bags for a convenient snack."
+    )
+
+    step126 = Step(
+        recipe_id=34,
+        step_number=4,
+        description="Enjoy on the go or as a midday pick-me-up."
+    )
+
+    step127 = Step(
+        recipe_id=34,
+        step_number=5,
+        description="Share with friends for a healthy party snack."
+    )
+
+    step128 = Step(
+        recipe_id=35,
+        step_number=1,
+        description="Slice cucumbers into rounds or sticks."
+    )
+
+    step129 = Step(
+        recipe_id=35,
+        step_number=2,
+        description="Serve with a bowl of hummus for dipping."
+    )
+
+    step130 = Step(
+        recipe_id=35,
+        step_number=3,
+        description="A refreshing and low-calorie snack option."
+    )
+
+    step131 = Step(
+        recipe_id=35,
+        step_number=4,
+        description="Ideal for parties or afternoon munching."
+    )
+
+    step132 = Step(
+        recipe_id=35,
+        step_number=5,
+        description="Enjoy the crispness of the cucumber with the creaminess of hummus."
+    )
 
     steps = [
         step1, step2, step3, step4, step5,
@@ -527,9 +965,23 @@ def seed_steps():
         step66, step67, step68, step69, step70,
         step71, step72, step73, step74, step75,
         step76, step77, step78, step79, step80,
-        step81, step82, step83, step84
+        step81, step82, step83, step84, step60,
+        step61, step62, step63, step64, step65,
+        step66, step67, step68, step69, step70,
+        step71, step72, step73, step74, step75,
+        step76, step77, step78, step79, step80,
+        step81, step82, step83, step84, step85,
+        step86, step87, step88, step89, step90,
+        step91, step92, step93, step94, step95,
+        step96, step97, step98, step99, step100,
+        step101, step102, step103, step104, step105,
+        step106, step107, step108, step109, step110,
+        step111, step112, step113, step114, step115,
+        step116, step117, step118, step119, step120,
+        step121, step122, step123, step124, step125,
+        step126, step127, step128, step129, step130,
+        step131, step132
     ]
-
 
     [db.session.add(step) for step in steps]
     db.session.commit()
