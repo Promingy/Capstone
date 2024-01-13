@@ -583,6 +583,7 @@ def seed_reviews() :
         updated_at=datetime(2023, 10, 26, 15, 0),
         review_likes=[user1, user7, user11],
     )
+
     review58 = Review(
         user_id=7,
         recipe_id=19,
@@ -743,7 +744,425 @@ def seed_reviews() :
         review_likes=[user4, user8, user12],
     )
 
+    review74 = Review(
+        user_id=10,
+        recipe_id=23,
+        body="A delightful twist on a classic recipe. The addition of unique ingredients makes it stand out.",
+        edited=False,
+        created_at=datetime(2023, 11, 13, 18, 30),
+        updated_at=datetime(2023, 11, 13, 18, 30),
+        review_likes=[user1, user6, user9],
+    )
 
+    review75 = Review(
+        user_id=11,
+        recipe_id=23,
+        body="I wasn't sure about this recipe at first, but it turned out to be a pleasant surprise. A great choice!",
+        edited=True,
+        created_at=datetime(2023, 11, 14, 15, 45),
+        updated_at=datetime(2023, 11, 14, 16, 15),
+        review_likes=[user2, user7, user10],
+    )
+
+    review76 = Review(
+        user_id=12,
+        recipe_id=23,
+        body="This recipe has become a regular in our household. It's simple, delicious, and quick to make.",
+        edited=False,
+        created_at=datetime(2023, 11, 15, 10, 15),
+        updated_at=datetime(2023, 11, 15, 10, 15),
+        review_likes=[user3, user8, user11],
+    )
+
+    review77 = Review(
+        user_id=13,
+        recipe_id=23,
+        body="I'm a fan of easy-to-follow recipes, and this one hits the mark. The flavors are fantastic!",
+        edited=True,
+        created_at=datetime(2023, 11, 16, 14, 0),
+        updated_at=datetime(2023, 11, 16, 15, 0),
+        review_likes=[user4, user9, user12],
+    )
+
+    review78 = Review(
+        user_id=1,
+        recipe_id=24,
+        body="This recipe is perfect for a quick and satisfying meal. The combination of ingredients is well-balanced.",
+        edited=False,
+        created_at=datetime(2023, 11, 17, 18, 30),
+        updated_at=datetime(2023, 11, 17, 18, 30),
+        review_likes=[user2, user5, user8],
+    )
+
+    review79 = Review(
+        user_id=2,
+        recipe_id=24,
+        body="I love how easy it is to prepare this dish without compromising on flavor. A go-to recipe for busy days.",
+        edited=True,
+        created_at=datetime(2023, 11, 18, 15, 45),
+        updated_at=datetime(2023, 11, 18, 16, 15),
+        review_likes=[user3, user6, user9],
+    )
+
+    review80 = Review(
+        user_id=3,
+        recipe_id=24,
+        body="The flavors in this recipe complement each other perfectly. It's a hit with my family!",
+        edited=False,
+        created_at=datetime(2023, 11, 19, 10, 15),
+        updated_at=datetime(2023, 11, 19, 10, 15),
+        review_likes=[user4, user7, user10],
+    )
+
+    review81 = Review(
+        user_id=4,
+        recipe_id=24,
+        body="I appreciate the simplicity of this recipe, and it's a great option for a quick and delicious meal.",
+        edited=True,
+        created_at=datetime(2023, 11, 20, 14, 0),
+        updated_at=datetime(2023, 11, 20, 15, 0),
+        review_likes=[user5, user8, user11],
+    )
+
+    review82 = Review(
+        user_id=5,
+        recipe_id=25,
+        body="The combination of pesto and chicken in this pasta dish is simply delightful. It's now a family favorite!",
+        edited=False,
+        created_at=datetime(2023, 11, 21, 18, 30),
+        updated_at=datetime(2023, 11, 21, 18, 30),
+        review_likes=[user1, user6, user9, user13],
+    )
+
+    review83 = Review(
+        user_id=6,
+        recipe_id=25,
+        body="I tried this recipe on a whim, and it exceeded my expectations. The flavors are well-balanced.",
+        edited=True,
+        created_at=datetime(2023, 11, 22, 15, 45),
+        updated_at=datetime(2023, 11, 22, 16, 15),
+        review_likes=[user2, user7, user10],
+    )
+
+    review84 = Review(
+        user_id=7,
+        recipe_id=25,
+        body="As someone who loves pasta, this recipe quickly became one of my go-to choices. Highly recommend!",
+        edited=False,
+        created_at=datetime(2023, 11, 23, 10, 15),
+        updated_at=datetime(2023, 11, 23, 10, 15),
+        review_likes=[user3, user8, user11, user12],
+    )
+
+    review85 = Review(
+        user_id=8,
+        recipe_id=25,
+        body="The pesto sauce is the star of this dish. It adds a burst of flavor that makes every bite enjoyable.",
+        edited=True,
+        created_at=datetime(2023, 11, 24, 14, 0),
+        updated_at=datetime(2023, 11, 24, 15, 0),
+        review_likes=[user4, user5, user9],
+    )
+
+    review86 = Review(
+        user_id=9,
+        recipe_id=26,
+        body="These Caprese Skewers are perfect for gatherings. The presentation is lovely, and they're easy to eat!",
+        edited=False,
+        created_at=datetime(2023, 11, 25, 18, 30),
+        updated_at=datetime(2023, 11, 25, 18, 30),
+        review_likes=[user1, user6, user8],
+    )
+
+    review87 = Review(
+        user_id=10,
+        recipe_id=26,
+        body="I enjoy these Caprese Skewers as a light appetizer. The balsamic glaze adds a nice touch.",
+        edited=True,
+        created_at=datetime(2023, 11, 26, 15, 45),
+        updated_at=datetime(2023, 11, 26, 16, 15),
+        review_likes=[user2, user7, user9],
+    )
+
+    review88 = Review(
+        user_id=11,
+        recipe_id=26,
+        body="This appetizer is not only visually appealing but also delicious. A great choice for social events.",
+        edited=False,
+        created_at=datetime(2023, 11, 27, 10, 15),
+        updated_at=datetime(2023, 11, 27, 10, 15),
+        review_likes=[user3, user6, user10, user12],
+    )
+
+    review89 = Review(
+        user_id=12,
+        recipe_id=26,
+        body="Caprese Skewers are a hit in my household. They're easy to make and always impress guests.",
+        edited=True,
+        created_at=datetime(2023, 11, 28, 14, 0),
+        updated_at=datetime(2023, 11, 28, 15, 0),
+        review_likes=[user4, user8, user11],
+    )
+
+    review90 = Review(
+        user_id=13,
+        recipe_id=27,
+        body="Stuffed Mushrooms are a crowd-pleaser! The savory filling complements the mushrooms perfectly.",
+        edited=False,
+        created_at=datetime(2023, 11, 29, 16, 15),
+        updated_at=datetime(2023, 11, 29, 16, 15),
+        review_likes=[user1, user7, user10],
+    )
+
+    review91 = Review(
+        user_id=1,
+        recipe_id=27,
+        body="These Stuffed Mushrooms are a hit at parties. The combination of flavors is simply delightful.",
+        edited=True,
+        created_at=datetime(2023, 11, 30, 12, 0),
+        updated_at=datetime(2023, 11, 30, 13, 0),
+        review_likes=[user2, user6, user8, user11],
+    )
+
+    review92 = Review(
+        user_id=2,
+        recipe_id=27,
+        body="I love making these Stuffed Mushrooms for family gatherings. They're always gone in no time!",
+        edited=False,
+        created_at=datetime(2023, 12, 1, 11, 0),
+        updated_at=datetime(2023, 12, 1, 11, 0),
+        review_likes=[user3, user9, user12],
+    )
+
+    review93 = Review(
+        user_id=3,
+        recipe_id=27,
+        body="Bacon-Wrapped Jalapeño Poppers are the perfect blend of spicy and savory. A definite crowd-pleaser!",
+        edited=True,
+        created_at=datetime(2023, 12, 2, 14, 45),
+        updated_at=datetime(2023, 12, 2, 15, 15),
+        review_likes=[user4, user7, user10],
+    )
+
+    review94 = Review(
+        user_id=4,
+        recipe_id=28,
+        body="Bacon-Wrapped Jalapeño Poppers are a game-changer! The crispy bacon adds the perfect touch.",
+        edited=False,
+        created_at=datetime(2023, 12, 3, 10, 15),
+        updated_at=datetime(2023, 12, 3, 10, 15),
+        review_likes=[user5, user8, user11, user13],
+    )
+
+    review95 = Review(
+        user_id=5,
+        recipe_id=28,
+        body="This appetizer is a hit at my parties. The combination of bacon and jalapeño is irresistible!",
+        edited=True,
+        created_at=datetime(2023, 12, 4, 14, 0),
+        updated_at=datetime(2023, 12, 4, 15, 0),
+        review_likes=[user6, user9, user12],
+    )
+
+    review96 = Review(
+        user_id=6,
+        recipe_id=28,
+        body="Bacon-Wrapped Jalapeño Poppers are a must-try. They're easy to make and incredibly flavorful.",
+        edited=False,
+        created_at=datetime(2023, 12, 5, 18, 30),
+        updated_at=datetime(2023, 12, 5, 18, 30),
+        review_likes=[user7, user10, user11],
+    )
+
+    review97 = Review(
+        user_id=7,
+        recipe_id=29,
+        body="Chocolate Lava Cake is pure indulgence. The gooey center makes every bite a heavenly experience.",
+        edited=True,
+        created_at=datetime(2023, 12, 6, 15, 45),
+        updated_at=datetime(2023, 12, 6, 16, 15),
+        review_likes=[user8, user9, user12],
+    )
+
+    review98 = Review(
+        user_id=8,
+        recipe_id=29,
+        body="Chocolate Lava Cake is a divine treat. The combination of rich chocolate and vanilla ice cream is perfection.",
+        edited=False,
+        created_at=datetime(2023, 12, 7, 12, 0),
+        updated_at=datetime(2023, 12, 7, 12, 0),
+        review_likes=[user1, user10, user11, user13],
+    )
+
+    review99 = Review(
+        user_id=9,
+        recipe_id=29,
+        body="I made this for a special occasion, and it was a showstopper! Everyone loved the Chocolate Lava Cake.",
+        edited=True,
+        created_at=datetime(2023, 12, 8, 10, 30),
+        updated_at=datetime(2023, 12, 8, 11, 0),
+        review_likes=[user2, user6, user8],
+    )
+
+    review100 = Review(
+        user_id=10,
+        recipe_id=30,
+        body="Strawberry Shortcake is a classic dessert that never disappoints. The fresh strawberries make it extra special.",
+        edited=False,
+        created_at=datetime(2023, 12, 9, 15, 15),
+        updated_at=datetime(2023, 12, 9, 15, 15),
+        review_likes=[user3, user7, user9],
+    )
+
+    review101 = Review(
+        user_id=11,
+        recipe_id=30,
+        body="This Strawberry Shortcake recipe is easy to follow, and the end result is a delicious and visually appealing dessert.",
+        edited=True,
+        created_at=datetime(2023, 12, 10, 18, 45),
+        updated_at=datetime(2023, 12, 10, 19, 15),
+        review_likes=[user4, user8, user12],
+    )
+
+    review102 = Review(
+        user_id=12,
+        recipe_id=30,
+        body="Strawberry Shortcake is my go-to dessert for summer gatherings. It's a crowd-pleaser every time.",
+        edited=False,
+        created_at=datetime(2023, 12, 11, 11, 30),
+        updated_at=datetime(2023, 12, 11, 11, 30),
+        review_likes=[user5, user9, user10, user11],
+    )
+
+    review103 = Review(
+        user_id=13,
+        recipe_id=31,
+        body="Minestrone Soup is a comforting and hearty dish. Perfect for a cozy night in!",
+        edited=True,
+        created_at=datetime(2023, 12, 12, 16, 0),
+        updated_at=datetime(2023, 12, 12, 16, 30),
+        review_likes=[user1, user6, user8],
+    )
+
+    review104 = Review(
+        user_id=1,
+        recipe_id=31,
+        body="I love the combination of vegetables and pasta in Minestrone Soup. It's a complete and satisfying meal.",
+        edited=False,
+        created_at=datetime(2023, 12, 13, 12, 15),
+        updated_at=datetime(2023, 12, 13, 12, 15),
+        review_likes=[user2, user7, user11, user13],
+    )
+
+    review105 = Review(
+        user_id=2,
+        recipe_id=31,
+        body="Minestrone Soup is a family favorite. The flavors blend so well, and it's a great way to get veggies in.",
+        edited=True,
+        created_at=datetime(2023, 12, 14, 10, 45),
+        updated_at=datetime(2023, 12, 14, 11, 15),
+        review_likes=[user3, user6, user9],
+    )
+
+    review106 = Review(
+        user_id=3,
+        recipe_id=32,
+        body="Chicken Noodle Soup brings back childhood memories. The homemade version is so much better than store-bought.",
+        edited=False,
+        created_at=datetime(2023, 12, 15, 14, 30),
+        updated_at=datetime(2023, 12, 15, 14, 30),
+        review_likes=[user4, user8, user10],
+    )
+
+    review107 = Review(
+        user_id=4,
+        recipe_id=32,
+        body="The aroma of Chicken Noodle Soup fills the house as it simmers on the stove. Comfort in every spoonful.",
+        edited=True,
+        created_at=datetime(2023, 12, 16, 18, 0),
+        updated_at=datetime(2023, 12, 16, 18, 30),
+        review_likes=[user5, user7, user11],
+    )
+
+    review108 = Review(
+        user_id=5,
+        recipe_id=32,
+        body="This Chicken Noodle Soup recipe is a lifesaver during cold and flu season. It's like a warm hug in a bowl.",
+        edited=False,
+        created_at=datetime(2023, 12, 17, 12, 45),
+        updated_at=datetime(2023, 12, 17, 12, 45),
+        review_likes=[user6, user9, user13],
+    )
+
+    review109 = Review(
+        user_id=6,
+        recipe_id=33,
+        body="Potato Leek Soup is a creamy and delicious choice for a cozy dinner. The leeks add a unique flavor.",
+        edited=True,
+        created_at=datetime(2023, 12, 18, 10, 15),
+        updated_at=datetime(2023, 12, 18, 10, 45),
+        review_likes=[user1, user8, user10],
+    )
+
+    review110 = Review(
+        user_id=7,
+        recipe_id=33,
+        body="I always make extra Potato Leek Soup for leftovers. It reheats well, and the flavors deepen overnight.",
+        edited=False,
+        created_at=datetime(2023, 12, 19, 15, 45),
+        updated_at=datetime(2023, 12, 19, 15, 45),
+        review_likes=[user2, user6, user11, user13],
+    )
+
+    review111 = Review(
+        user_id=8,
+        recipe_id=33,
+        body="Potato Leek Soup is a staple in our home during the colder months. Comforting and filling!",
+        edited=True,
+        created_at=datetime(2023, 12, 20, 11, 30),
+        updated_at=datetime(2023, 12, 20, 12, 0),
+        review_likes=[user3, user7, user9],
+    )
+
+    review112 = Review(
+        user_id=9,
+        recipe_id=34,
+        body="Homemade Trail Mix is my go-to snack for hiking trips. It's a perfect blend of sweet and salty.",
+        edited=False,
+        created_at=datetime(2023, 12, 21, 16, 15),
+        updated_at=datetime(2023, 12, 21, 16, 15),
+        review_likes=[user4, user8, user10],
+    )
+
+    review113 = Review(
+        user_id=10,
+        recipe_id=34,
+        body="I love making my own Trail Mix with this recipe. It's a healthier alternative to store-bought snacks.",
+        edited=True,
+        created_at=datetime(2023, 12, 22, 12, 45),
+        updated_at=datetime(2023, 12, 22, 13, 15),
+        review_likes=[user5, user6, user11, user13],
+    )
+
+    review114 = Review(
+        user_id=11,
+        recipe_id=35,
+        body="Cucumber Slices with Hummus is a refreshing and guilt-free snack. Great for hot summer days!",
+        edited=False,
+        created_at=datetime(2023, 12, 23, 10, 30),
+        updated_at=datetime(2023, 12, 23, 10, 30),
+        review_likes=[user7, user8, user10],
+    )
+
+    review115 = Review(
+        user_id=12,
+        recipe_id=35,
+        body="These Cucumber Slices are a hit at parties. The combination with hummus is always a crowd-pleaser.",
+        edited=True,
+        created_at=datetime(2023, 12, 24, 15, 0),
+        updated_at=datetime(2023, 12, 24, 15, 30),
+        review_likes=[user2, user6, user9, user11, user13],
+    )
 
     reviews = [
         review1, review2, review3, review4, review5,
@@ -760,14 +1179,15 @@ def seed_reviews() :
         review56, review57, review58, review59, review60,
         review61, review62, review63, review64, review65,
         review66, review67, review68, review69, review70,
-        review71, review72, review73, review74, reivew75,
-        review76, review77, reivew78, review79, review80,
+        review71, review72, review73, review74, review75,
+        review76, review77, review78, review79, review80,
         review81, review82, review83, review84, review85,
         review86, review87, review88, review89, review90,
         review91, review92, review93, review94, review95,
         review96, review97, review98, review99, review100,
-        
-
+        review101, review102, review103, review104, review105,
+        review106, review107, review108, review109, review110,
+        review111, review112, review113, review114, review115,
         ]
     [db.session.add(review) for review in reviews]
     db.session.commit()
