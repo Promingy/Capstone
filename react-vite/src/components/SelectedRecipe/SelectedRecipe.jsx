@@ -39,6 +39,10 @@ export default function SelectedRecipe() {
         setModalContent(<LoginFormModal />)
     }, [sessionUser])
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     recipeId = recipeId.split('-')[0]
     const recipes = useSelector(state => state.recipes)
     const recipe = recipes[recipeId]
@@ -81,6 +85,7 @@ export default function SelectedRecipe() {
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
 
+
     return (
         <div className='selected_recipe'>
             <div className='header_image_title'>
@@ -102,7 +107,12 @@ export default function SelectedRecipe() {
                         }
                     </div>
                     <div>
-                        <h4 >By <span className='single_owner'>{ownerFirstName} {ownerLastName}</span></h4>
+                        <h4 >
+                            By &nbsp;
+                            <span className='single_owner' onClick={() => navigate(`/${recipe.owner_id} ${ownerFirstName} ${ownerLastName}/recipes`)}>
+                                {ownerFirstName} {ownerLastName}
+                            </span>
+                        </h4>
                         <p>Posted {months[postDate.getMonth() + 1]} {postDate.getDay()}, {postDate.getFullYear()}</p>
 
                     </div>

@@ -7,15 +7,14 @@ import RecipeTile from '../MainPage/RecipeTile'
 
 export default function UserRecipe() {
     const dispatch = useDispatch()
-    const { userId } = useParams()
+    let { userId } = useParams()
+    userId = +userId.split(' ')[0]
     let recipes = useSelector(state => state.session)
     const [recipeOwner, setRecipeOwner] = useState(null)
-    recipes = recipes?.[userId]
-
-    console.log('recipes', recipeOwner)
+    recipes = recipes?.[+userId]
 
     useEffect(() => {
-        dispatch(thunkGetUserRecipes(+userId))
+        dispatch(thunkGetUserRecipes(userId))
     }, [dispatch])
 
     function capFirstLeter(str) {

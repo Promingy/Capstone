@@ -59,6 +59,15 @@
 
 .single_owner {
     text-decoration: underline;
+    cursor: pointer;
+}
+
+.single_owner:hover {
+    color: #666666
+}
+
+.single_owner:active {
+    color: #BB1F17
 }
 
 .body_prep_time_bio {
