@@ -25,7 +25,87 @@ users = [
         email='bobbie@aa.io',
         password='password',
         profile_pic = "https://avatars.githubusercontent.com/u/5268568?v=4"
-        )
+        ),
+    User(
+        first_name="John",
+        last_name="Doe",
+        bio="Food lover and enthusiast",
+        email="john.doe@email.com",
+        password="password",
+        profile_pic=""
+    ),
+    User(
+        first_name="Jane",
+        last_name="Smith",
+        bio="Passionate about cooking and baking",
+        email="jane.smith@email.com",
+        password="password",
+        profile_pic=""
+    ),
+    User(
+        first_name="David",
+        last_name="Williams",
+        bio="Exploring the world of flavors",
+        email="david.williams@email.com",
+        password="password",
+        profile_pic=""
+    ),
+    User(
+        first_name="Emma",
+        last_name="Johnson",
+        bio="Foodie on a culinary journey",
+        email="emma.johnson@email.com",
+        password="password",
+        profile_pic=""
+    ),
+    User(
+        first_name="Michael",
+        last_name="Brown",
+        bio="Adventurous eater and chef",
+        email="michael.brown@email.com",
+        password="password",
+        profile_pic=""
+    ),
+    User(
+        first_name="Emily",
+        last_name="Taylor",
+        bio="Cooking is my therapy",
+        email="emily.taylor@email.com",
+        password="password",
+        profile_pic=""
+    ),
+    User(
+        first_name="Dylan",
+        last_name="Miller",
+        bio="Creating culinary masterpieces",
+        email="dylan.miller@email.com",
+        password="password",
+        profile_pic=""
+    ),
+    User(
+        first_name="Sophia",
+        last_name="Davis",
+        bio="Food brings people together",
+        email="sophia.davis@email.com",
+        password="password",
+        profile_pic=""
+    ),
+    User(
+        first_name="Mason",
+        last_name="Wilson",
+        bio="Food explorer and creator",
+        email="mason.wilson@email.com",
+        password="password",
+        profile_pic=""
+    ),
+    User(
+        first_name="Ava",
+        last_name="Jones",
+        bio="Passionate about healthy living",
+        email="ava.jones@email.com",
+        password="password",
+        profile_pic=""
+    )
 ]
 # Adds a demo user, you can add other users here if you want
 def seed_users():
