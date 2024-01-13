@@ -18,18 +18,18 @@ export default function MainPage() {
     recipes = recipes.categories
 
     useEffect(() => {
-
         dispatch(thunkGetAllRecipes())
         dispatch(thunkGetDropdowns())
+    }, [dispatch])
 
-        // set css styling back to normal if logged out and navigating from selected recipe page
+    useEffect(() => {
         if (!sessionUser) {
             const body = document.getElementsByTagName('body')
             body[0].classList.remove('no_scroll')
         }
 
-        closeModal()
-    }, [dispatch, sessionUser])
+        closeModal
+    }, [sessionUser])
 
     useEffect(() => {
         // if the recipe associated with the picture was removed, reset the picture link to null

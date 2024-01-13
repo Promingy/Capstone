@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetUserRecipes } from '../../redux/session'
 import { useParams } from 'react-router-dom'
 import RecipeTile from '../MainPage/RecipeTile'
+import { useModal } from '../../context/Modal'
 
 export default function UserRecipe() {
     const dispatch = useDispatch()
     let { userId } = useParams()
+    const { closeModal } = useModal()
+    const sessionUser = useSelector(state => state.session.user)
     userId = +userId.split(' ')[0]
     let recipes = useSelector(state => state.session)
     const owner = recipes?.[+userId]?.owner
@@ -16,6 +19,10 @@ export default function UserRecipe() {
     useEffect(() => {
         dispatch(thunkGetUserRecipes(userId))
     }, [dispatch])
+
+    useEffect(() => {
+        closeModal()
+    }, [sessionUser])
 
     function capFirstLeter(str) {
         if (typeof str != 'string') return ''

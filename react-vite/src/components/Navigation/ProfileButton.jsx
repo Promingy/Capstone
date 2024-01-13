@@ -95,7 +95,7 @@ function ProfileButton() {
       }
 
       else if (node === yourRecipes) {
-        closePref
+        closePref()
         navigate(`/${user.id} ${user.first_name} ${user.last_name}/recipes`)
       }
 
