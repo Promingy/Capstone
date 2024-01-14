@@ -1,7 +1,7 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 const GET_USER_RECIPES = 'recipe/getUserRecipes';
-
+const REMOVE_USER_RECIPE = 'session/removeUserRecipe'
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -17,6 +17,13 @@ const actionGetUserRecipes = (recipes, owner) => {
       type: GET_USER_RECIPES,
       recipes,
       owner
+  }
+}
+
+export const actionRemoveUserRecipe = (recipe) => {
+  return {
+    type: REMOVE_USER_RECIPE,
+    recipe
   }
 }
 
@@ -100,6 +107,13 @@ function sessionReducer(state = initialState, action) {
         }
 
         return newState
+    }
+    case REMOVE_USER_RECIPE: {
+      const newState = { ...state }
+
+      delete newState[action.recipe.owner_id][action.recipe.id]
+
+      return newState
     }
     default:
       return state;

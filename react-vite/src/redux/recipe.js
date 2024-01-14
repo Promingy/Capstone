@@ -240,7 +240,11 @@ function recipeReducer(state=initialState, action){
         case DELETE_RECIPE: {
             const newState = { ...state }
             delete newState[action.recipe.id]
-            delete newState.categories[action.recipe.category_id][action.recipe.id]
+
+            if (newState.categories) {
+                delete newState.categories[+action.recipe.category_id][action.recipe.id]
+            }
+            
             return newState
         }
         case ADD_RATING: {

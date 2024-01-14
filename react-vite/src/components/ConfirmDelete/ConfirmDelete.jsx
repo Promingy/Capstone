@@ -2,6 +2,7 @@ import "./ConfirmDelete.css"
 import { useModal } from "../../context/Modal"
 import { useDispatch } from "react-redux";
 import { thunkDeleteImage, thunkDeleteRecipe } from "../../redux/recipe";
+import { actionRemoveUserRecipe } from '../../redux/session'
 import { thunkDeleteReview } from "../../redux/review";
 import { useNavigate, useParams } from "react-router-dom";
 export default function ConfirmDelete({ recipe, review }) {
@@ -17,7 +18,13 @@ export default function ConfirmDelete({ recipe, review }) {
 
         await dispatch(thunkDeleteRecipe(recipe))
         .then(() => navigate(userId ? `${urlParts[0]} ${urlParts[1]} ${urlParts[2]}/recipes` : '/', {state: recipe.preview_image}))
+        .then(async () => {
+            if (userId){
+                await dispatch(actionRemoveUserRecipe(recipe))
+            }
+        })
         .then(closeModal)
+
     }
 
     async function handleDeleteReview(e) {
