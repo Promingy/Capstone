@@ -4,9 +4,11 @@ import ConfirmDelete from "../ConfirmDelete"
 import OpenModalButton from "../OpenModalButton/OpenModalButton"
 import TextareaAutosize from "react-textarea-autosize"
 import { thunkLikeReview, thunkUpdateReview } from "../../redux/review"
+import { useNavigate } from "react-router-dom"
 
 export default function ReviewTile({ review }) {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const sessionUser = useSelector(state => state.session.user)
     const [bounceLike, setBounceLike] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
@@ -54,7 +56,11 @@ export default function ReviewTile({ review }) {
 
     return (
         <div className="review" onMouseOver={() => setBounceLike(true)} onMouseLeave={() => setBounceLike(false)}>
-            <h3>{review.user_id == sessionUser?.id ? sessionUserName  : review.name}</h3>
+            <h3
+                className="review_poster"
+                onClick={() => navigate(`/${review.user_id == sessionUser?.id ? `${sessionUser.id} ${sessionUserName}` : `${review.user_id} ${review.name}`}/recipes`)}>
+                    {review.user_id == sessionUser?.id ? sessionUserName  : review.name}
+            </h3>
             <div className="review_body_container">
                 {!isEditing &&
                 <div className="edited_body">

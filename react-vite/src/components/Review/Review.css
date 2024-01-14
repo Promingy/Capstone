@@ -331,3 +331,13 @@
 .privacy_selector_main > * {
     margin: 5px;
 }
+
+.review_poster:hover {
+    cursor: pointer;
+    color: gray;
+    text-decoration: underline;
+}
+
+.review_poster:active {
+    color: #BB1F17;
+}

@@ -130,7 +130,7 @@ export default function SelectedRecipe() {
                         <p>
                             {!!totalCookTimeHours &&
                             <span>
-                                    {totalCookTimeHours && !totalCookTimeMinutes ? "About" : ""}
+                                    {totalCookTimeHours && !totalCookTimeMinutes ? "About " : ""}
                                     {totalCookTimeHours} {totalCookTimeHours > 1 ? "hours" : "hour"}
                             </span>}
                             &nbsp;
@@ -177,7 +177,7 @@ export default function SelectedRecipe() {
                         <div>
                             {recipe?.avg_rating > 0 &&
                                 <p className='ratings_box'>
-                                    {recipe?.avg_rating.toFixed(2)} {starCreator(recipe)} ({recipe?.all_ratings})
+                                    {recipe?.avg_rating.toFixed(1)} {starCreator(recipe)} ({recipe?.all_ratings})
                                 </p>
                             }
                             {!recipe.avg_rating &&

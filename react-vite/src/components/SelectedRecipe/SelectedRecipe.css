@@ -116,6 +116,7 @@ span > h3,
 .notes {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .notes:hover {

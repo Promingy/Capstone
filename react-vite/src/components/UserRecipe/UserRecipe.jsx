@@ -19,7 +19,7 @@ export default function UserRecipe() {
     useEffect(() => {
         dispatch(thunkGetUserRecipes(userId))
         window.scrollTo(0, 0)
-    }, [dispatch])
+    }, [dispatch, userId])
 
     useEffect(() => {
         closeModal()
