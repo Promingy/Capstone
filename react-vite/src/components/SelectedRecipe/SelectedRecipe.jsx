@@ -85,7 +85,6 @@ export default function SelectedRecipe() {
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
 
-
     return (
         <div className='selected_recipe'>
             <div className='header_image_title'>
@@ -113,7 +112,7 @@ export default function SelectedRecipe() {
                                 {ownerFirstName} {ownerLastName}
                             </span>
                         </h4>
-                        <p>Posted {months[postDate.getMonth() + 1]} {postDate.getDay()}, {postDate.getFullYear()}</p>
+                        <p>Posted {months[postDate.getMonth() + 1]} {postDate.getDate()}, {postDate.getFullYear()}</p>
 
                     </div>
                 </div>
@@ -178,7 +177,7 @@ export default function SelectedRecipe() {
                         <div>
                             {recipe?.avg_rating > 0 &&
                                 <p className='ratings_box'>
-                                    &nbsp;&nbsp;{recipe?.avg_rating} {starCreator(recipe)} ({recipe?.all_ratings})
+                                    {recipe?.avg_rating.toFixed(2)} {starCreator(recipe)} ({recipe?.all_ratings})
                                 </p>
                             }
                             {!recipe.avg_rating &&
@@ -191,7 +190,7 @@ export default function SelectedRecipe() {
                         <h3>Notes</h3>
                         <p onClick={() => document.getElementById('public_comments').scrollIntoView({behavior: "smooth"})}>
                             <span className='notes'>
-                                {recipe?.all_ratings ? `Read ${totalPublicComments} community notes` : 'Be the first to leave a note!'}
+                                {totalPublicComments ? `Read ${totalPublicComments} community notes` : 'Be the first to leave a note!'}
                             </span>
                             <span>
                                 &nbsp;&nbsp;<i className='fa-solid fa-turn-down fa-xs' />
