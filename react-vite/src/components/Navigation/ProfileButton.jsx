@@ -79,7 +79,6 @@ function ProfileButton() {
 
     // iterate over the e.target to verify if we're clicking off the modal or on the exit button
     for (let i = 0; i < 4; i++){
-      console.log(e.target)
       // if clicking off modal, or on exit button, close modal
       if (conditions.some(ele => ele === node)) closePref()
 

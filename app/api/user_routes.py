@@ -32,4 +32,4 @@ def get_user_routes(userId):
     recipes = Recipe.query.filter(Recipe.owner_id == userId).all()
     owner = User.query.get(userId)
 
-    return {"owner": owner.to_dict(), "recipes":{recipe.to_dict()['id']: recipe.to_dict() for recipe in recipes}}
+    return {"owner": owner.to_dict(), "recipes":{recipe.to_dict()['id']: recipe.to_dict(rating=True) for recipe in recipes}}

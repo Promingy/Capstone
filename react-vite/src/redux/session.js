@@ -84,7 +84,7 @@ export const thunkGetUserRecipes = (userId) => async (dispatch) => {
   const res = await fetch(`/api/users/${userId}/recipes`)
 
   const data = await res.json()
-  console.log('data', data)
+  
   if (res.ok) {
       dispatch(actionGetUserRecipes(data.recipes, data.owner))
       return data
