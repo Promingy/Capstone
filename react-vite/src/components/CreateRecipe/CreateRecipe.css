@@ -107,15 +107,23 @@
     width: fit-content;
     padding: 3px;
     cursor: pointer;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    background-color: lightgray;
 }
 
 .add_ingredient:hover {
-    background-color: lightgray;
-    border-radius: 5px;
+    background-color: darkgray;
 }
 
 .add_ingredient:active {
     background-color: #CF1A00;
+    border-radius: 5px;
+}
+
+.add_ingredient_icon  {
+    border: 1px solid lightgray;
+    padding: 7px;
     border-radius: 5px;
 }
 
@@ -241,6 +249,7 @@
     box-shadow: 0 0 10px red;
     border: red;
     border-radius: 5px;
+    background-color: transparent;
 }
 
 .ingredient_error{
@@ -251,6 +260,8 @@
 .custom_input_arrows_container {
     display: flex;
     align-items: center;
+    border: none;
+    background-color: transparent;
     justify-content: center;
     cursor: pointer;
     padding: 3px 5px;
@@ -259,6 +270,10 @@
 .custom_input_arrows_container:hover {
     background-color: lightgrey;
     border-radius: 5px;;
+}
+
+.custom_input_arrows_container:active{
+    background-color: #BB1F17;
 }
 
 .custom_input_arrows {
@@ -310,4 +325,14 @@
 
 .loading_text {
     width: 10%;
+}
+
+.custom_w_title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recipe_servings_container {
+    justify-content: space-around;
 }
