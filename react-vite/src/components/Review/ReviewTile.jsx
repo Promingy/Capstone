@@ -4,9 +4,11 @@ import ConfirmDelete from "../ConfirmDelete"
 import OpenModalButton from "../OpenModalButton/OpenModalButton"
 import TextareaAutosize from "react-textarea-autosize"
 import { thunkLikeReview, thunkUpdateReview } from "../../redux/review"
+import { useNavigate } from "react-router-dom"
 
 export default function ReviewTile({ review }) {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const sessionUser = useSelector(state => state.session.user)
     const [bounceLike, setBounceLike] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
@@ -20,6 +22,53 @@ export default function ReviewTile({ review }) {
                             sessionUser.last_name.slice(1)
     const [closeEditTimeout, setCloseEditTimeout] = useState(null)
     const [submitted, setSubmitted] = useState(false)
+
+
+    function getHowLongAgo() {
+        //Calculates how long ago a review was posted
+
+        // .getTime()/1000 converts the milliseconds into seconds
+        // the next /60 converts seconds into minutes
+        // the next 60 converts minutes into hours
+        // the next 60 converts hours into days
+        const postedDate = new Date(review?.created_at)
+        const todaysDate = new Date()
+        const postedDays = postedDate.getTime()/1000/60/60/24
+        const todaysDay = todaysDate.getTime()/1000/60/60/24
+
+        const daysAgo = Math.floor(todaysDay - postedDays)
+
+        let returnTime;
+
+        if (daysAgo < 1) {
+            const fullTime = postedDate.toLocaleTimeString()
+            const timeNoSeconds = fullTime.slice(0, fullTime.length - 6)
+            const amPm = fullTime.slice(fullTime.length - 2)
+            returnTime = `Today at  ${timeNoSeconds} ${amPm}`
+        }
+
+        else if (daysAgo > 364) {
+            const yearsAgo = Math.floor(yearsAgo/365)
+
+            returnTime `${yearsAgo} ${yearsAgo > 1 ? "years ago" : "year ago"}`
+        }
+
+        else if (daysAgo > 29) {
+            const months = Math.floor(daysAgo / 30)
+            returnTime = `${months} ${months > 1 ? "months ago" : "month ago"}`
+        }
+
+        else if (daysAgo > 6) {
+            const weeks = Math.floor(daysAgo / 7)
+            returnTime = `${weeks} ${weeks > 1 ? 'weeks ago' : 'week ago'}`
+        }
+
+        else if (daysAgo > 0) {
+            returnTime = `${daysAgo} ${daysAgo > 1 ? "days ago" : "day ago"}`
+        }
+
+        return returnTime
+    }
 
     function handleReviewUpdate(e) {
         e.preventDefault()
@@ -54,7 +103,14 @@ export default function ReviewTile({ review }) {
 
     return (
         <div className="review" onMouseOver={() => setBounceLike(true)} onMouseLeave={() => setBounceLike(false)}>
-            <h3>{review.user_id == sessionUser?.id ? sessionUserName  : review.name}</h3>
+            <div className="review_poster_container">
+                <h3
+                    className="review_poster"
+                    onClick={() => navigate(`/${review.user_id == sessionUser?.id ? `${sessionUser.id} ${sessionUserName}` : `${review.user_id} ${review.name}`}/recipes`)}>
+                        {review.user_id == sessionUser?.id ? sessionUserName  : review.name}
+                </h3>
+                    <span className="review_posted_date"> {getHowLongAgo()}</span>
+            </div>
             <div className="review_body_container">
                 {!isEditing &&
                 <div className="edited_body">

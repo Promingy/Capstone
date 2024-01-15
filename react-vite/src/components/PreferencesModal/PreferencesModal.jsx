@@ -1,8 +1,11 @@
 import { useSelector } from 'react-redux'
 import './PreferencesModal.css'
+import { useState } from 'react'
 
 function PreferencesModal({ close }) {
     const user = useSelector(state => state.session.user)
+    const [iconGlow, setIconGlow] = useState(false)
+    const [iconGlow2, setIconGlow2] = useState(false)
 
     return (
         <>
@@ -18,8 +21,19 @@ function PreferencesModal({ close }) {
                 </div>
             </div>
 
-            <div className='create_recipe' id='create_recipe'>
+            <div className='create_recipe'
+                id='create_recipe'
+                onMouseOver={() => setIconGlow2(true)}
+                onMouseLeave={() => setIconGlow2(false)}>
                 Create a Recipe
+                <i className={`fa-solid fa-chevron-right no_glow ${iconGlow2 && 'enter_icons'}`}/>
+            </div>
+            <div className='your_recipes'
+                id='your_recipes'
+                onMouseOver={() => {setIconGlow(true)}}
+                onMouseLeave={() => {setIconGlow(false)}}>
+                Your Recipes
+                <i className={`fa-solid fa-chevron-right no_glow ${iconGlow && "enter_icons"}`}/>
             </div>
 
             <div className='logout_button'>

@@ -331,3 +331,30 @@
 .privacy_selector_main > * {
     margin: 5px;
 }
+
+.review_poster{
+    margin-bottom: 0;
+}
+
+.review_poster:hover {
+    cursor: pointer;
+    color: gray;
+    text-decoration: underline;
+}
+
+.review_poster:active {
+    color: #BB1F17;
+}
+
+.review_poster_container{
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.review_posted_date {
+    font-size: 14px;
+    font-weight: 400;
+    color: gray;
+}

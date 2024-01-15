@@ -9,15 +9,18 @@
 
 .selected_recipe {
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 50px auto;
 }
 
 .single_preview_image {
     width: 60%;
+    max-height: 500px;
 }
 
 .single_preview_image > * {
     width: 100%;
+    max-height: 450px;
+    object-fit: cover;
 }
 
 .single_title_owner {
@@ -59,6 +62,15 @@
 
 .single_owner {
     text-decoration: underline;
+    cursor: pointer;
+}
+
+.single_owner:hover {
+    color: #666666
+}
+
+.single_owner:active {
+    color: #BB1F17
 }
 
 .body_prep_time_bio {
@@ -104,6 +116,7 @@ span > h3,
 .notes {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .notes:hover {

@@ -118,8 +118,9 @@ export const thunkGetAllRecipes = () => async(dispatch) => {
     return await res.json()
 }
 
+
 export const thunkGetSelectedRecipe = (recipeId) => async (dispatch) => {
-    const res = await (fetch(`/api/recipes/${recipeId}`))
+    const res = await fetch(`/api/recipes/${recipeId}`)
 
     if (res.ok){
         const data = await res.json()
@@ -239,7 +240,11 @@ function recipeReducer(state=initialState, action){
         case DELETE_RECIPE: {
             const newState = { ...state }
             delete newState[action.recipe.id]
-            delete newState.categories[action.recipe.category_id][action.recipe.id]
+
+            if (newState.categories) {
+                delete newState.categories[+action.recipe.category_id][action.recipe.id]
+            }
+            
             return newState
         }
         case ADD_RATING: {

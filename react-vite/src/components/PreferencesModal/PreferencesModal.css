@@ -34,7 +34,7 @@
     width: 100vw;
     opacity: .5;
     animation: backgroundColor .2s;
-    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
 .background_color_pref2 {
     position: fixed;
@@ -44,7 +44,7 @@
     width: 100vw;
     opacity: .5;
     animation: backgroundColorClose .2s;
-    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
 
 .preferences_modal_container {
@@ -70,7 +70,7 @@
     padding: 0 15px;
     overflow: scroll;
     animation: slideOut .4s;
-    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
 
 .user_pref_header {
@@ -90,13 +90,25 @@
     background-color: #EEEEEE;
 }
 
-.create_recipe {
-    margin: 20px 0;
+.create_recipe,
+.your_recipes {
     padding: 20px 0;
-    border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
 }
+
+.no_glow{
+    margin-right: 5px;
+    padding: 3px 5px;
+}
+
+.enter_icons {
+    border-radius: 50px;
+    background-color: lightgrey;
+}
+
 
 .logout_button {
     text-decoration: underline;

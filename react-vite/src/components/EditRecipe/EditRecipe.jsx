@@ -11,6 +11,13 @@ export default function EditRecipe() {
     const recipes = useSelector(state => state.recipes)
     const recipe = recipes[recipeId]
 
+    const newIngredients = {}
+
+    for (let key in recipe?.ingredients) {
+        const ingredient = recipe.ingredients[key]
+        newIngredients[ingredient.ingredient] = ingredient
+    }
+
     const prevForm = {
         id: recipe?.id,
         owner_id: recipe?.owner_id,
@@ -21,13 +28,13 @@ export default function EditRecipe() {
         prepTime: recipe?.prep_time,
         cookTime: recipe?.cook_time,
         previewImage: recipe?.preview_image,
-        ingredients: recipe?.ingredients,
+        ingredients: newIngredients,
         steps: recipe?.steps
     }
 
     useEffect(() => {
         dispatch(thunkGetSelectedRecipe(recipeId))
-    }, [dispatch])
+    }, [dispatch, recipeId])
 
     if (!recipe || !prevForm.steps || !prevForm.ingredients) return
     return (

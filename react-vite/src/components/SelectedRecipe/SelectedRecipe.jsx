@@ -39,6 +39,10 @@ export default function SelectedRecipe() {
         setModalContent(<LoginFormModal />)
     }, [sessionUser])
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     recipeId = recipeId.split('-')[0]
     const recipes = useSelector(state => state.recipes)
     const recipe = recipes[recipeId]
@@ -102,8 +106,13 @@ export default function SelectedRecipe() {
                         }
                     </div>
                     <div>
-                        <h4 >By <span className='single_owner'>{ownerFirstName} {ownerLastName}</span></h4>
-                        <p>Posted {months[postDate.getMonth() + 1]} {postDate.getDay()}, {postDate.getFullYear()}</p>
+                        <h4 >
+                            By &nbsp;
+                            <span className='single_owner' onClick={() => navigate(`/${recipe.owner_id} ${ownerFirstName} ${ownerLastName}/recipes`)}>
+                                {ownerFirstName} {ownerLastName}
+                            </span>
+                        </h4>
+                        <p>Posted {months[postDate.getMonth() + 1]} {postDate.getDate()}, {postDate.getFullYear()}</p>
 
                     </div>
                 </div>
@@ -121,7 +130,7 @@ export default function SelectedRecipe() {
                         <p>
                             {!!totalCookTimeHours &&
                             <span>
-                                    {totalCookTimeHours && !totalCookTimeMinutes ? "About" : ""}
+                                    {totalCookTimeHours && !totalCookTimeMinutes ? "About " : ""}
                                     {totalCookTimeHours} {totalCookTimeHours > 1 ? "hours" : "hour"}
                             </span>}
                             &nbsp;
@@ -168,7 +177,7 @@ export default function SelectedRecipe() {
                         <div>
                             {recipe?.avg_rating > 0 &&
                                 <p className='ratings_box'>
-                                    &nbsp;&nbsp;{recipe?.avg_rating} {starCreator(recipe)} ({recipe?.all_ratings})
+                                    {recipe?.avg_rating.toFixed(1)} {starCreator(recipe)} ({recipe?.all_ratings})
                                 </p>
                             }
                             {!recipe.avg_rating &&
@@ -181,7 +190,7 @@ export default function SelectedRecipe() {
                         <h3>Notes</h3>
                         <p onClick={() => document.getElementById('public_comments').scrollIntoView({behavior: "smooth"})}>
                             <span className='notes'>
-                                {recipe?.all_ratings ? `Read ${totalPublicComments} community notes` : 'Be the first to leave a note!'}
+                                {totalPublicComments ? `Read ${totalPublicComments} community notes` : 'Be the first to leave a note!'}
                             </span>
                             <span>
                                 &nbsp;&nbsp;<i className='fa-solid fa-turn-down fa-xs' />

@@ -8,7 +8,21 @@
 .recipe_tile_category_container {
     margin: 0 auto;
     max-width: 1000px;
+    margin: 50px auto;
+    position: relative;
 }
+
+/* .recipe_tile_container::after {
+    box-shadow: inset -50px 0px 50px white;
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    pointer-events: none;
+} */
 
 .main_image {
     width: 100%;
