@@ -4,16 +4,28 @@ import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import PreferencesModal from "../PreferencesModal/PreferencesModal.jsx";
+import { useNavigate } from "react-router-dom";
+import { useModal } from "../../context/Modal.jsx";
 
 function ProfileButton() {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
+  const [togglePref, setTogglePref] = useState(false)
+  const [togglePref2, setTogglePref2] = useState(false)
+  const { closeModal, closeable } = useModal()
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-    setShowMenu(!showMenu);
+    // setShowMenu(!showMenu);
+    if (user){
+      setTogglePref(true)
+
+      window.addEventListener('mousedown', handleMouseClick)
+    }
   };
 
   useEffect(() => {
@@ -32,43 +44,98 @@ function ProfileButton() {
 
   const closeMenu = () => setShowMenu(false);
 
-  const logout = (e) => {
-    e.preventDefault();
+  function logout () {
     dispatch(thunkLogout());
     closeMenu();
-  };
+    closeModal()
+  }
+
+  useEffect(() => {
+    // if the url has changed, and the prefModal is open, close the modal
+    if (togglePref) closePref()
+  }, [window.location.href])
+
+  // handle closing the preference slide out bar
+  function closePref() {
+      setTogglePref(false)
+      setTogglePref2(true)
+      setTimeout(() => setTogglePref2(false), 350)
+      return window.removeEventListener('mousedown', handleMouseClick)
+  }
+
+  function handleMouseClick (e) {
+    if (!e) return closePref()
+
+    e.preventDefault()
+    // get items that can and can't be clicked on
+    const xBtn = document.getElementById('xmark')
+    const prefModal = document.getElementById('preference_modal_container')
+    const background = document.getElementById('background_color_pref')
+    const createRecipe = document.getElementById('create_recipe')
+    const yourRecipes = document.getElementById('your_recipes')
+    const logout_button = document.getElementById('logout_button')
+    const conditions = [xBtn, background]
+    let node = e.target
+
+    // iterate over the e.target to verify if we're clicking off the modal or on the exit button
+    for (let i = 0; i < 4; i++){
+      // if clicking off modal, or on exit button, close modal
+      if (conditions.some(ele => ele === node)) closePref()
+
+      // if clicking logout, close modal AND logout
+      else if (node === logout_button) {
+        closePref()
+        logout()
+      }
+
+      else if (node === createRecipe) {
+        closePref()
+        navigate('/new-recipe')
+      }
+
+      else if (node === yourRecipes) {
+        closePref()
+        navigate(`/${user.id} ${user.first_name} ${user.last_name}/recipes`)
+      }
+
+      // check if e.target is our preference modal, if so, do nothing
+      else if (node === prefModal) return
+
+      // if none of the previous are true, set the node to the parent node of current e.target
+      else node = node.parentNode
+    }
+
+    window.removeEventListener('mousedown', handleMouseClick)
+  }
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
-      {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
-          {user ? (
-            <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
-                <button onClick={logout}>Log Out</button>
-              </li>
-            </>
-          ) : (
-            <>
-              <OpenModalMenuItem
-                itemText="Log In"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-              <OpenModalMenuItem
-                itemText="Sign Up"
-                onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-              />
-            </>
-          )}
-        </ul>
-      )}
+    {user &&
+      <i onClick={toggleMenu} className="fas fa-user user_profile" />
+    }
+
+    {!user &&
+
+    <div className='log_in_sign_up_buttons'>
+      <div className="login_button" onClick={() => closeable(true)}>
+        <OpenModalMenuItem
+          itemText='Login'
+          modalComponent={<LoginFormModal />}
+        />
+      </div>
+
+      <div className="sign_up_button" onClick={() => closeable(true)}>
+      <OpenModalMenuItem
+          itemText='Sign Up'
+          onItemClick={closeMenu}
+          modalComponent={<SignupFormModal />}
+        />
+      </div>
+    </div>
+    }
+
+      { togglePref && <PreferencesModal />}
+      { togglePref2 &&  <PreferencesModal close={true} />}
     </>
   );
 }

@@ -1,0 +1,129 @@
+.signup_form_container {
+    display: flex;
+    width: 35vw;
+    max-height: 85vh;
+}
+
+.signup_form_container > * {
+    margin: 0 ;
+}
+
+.signup_container_right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+}
+.signup_container_left {
+    display: flex;
+    width: 55%;
+    overflow: hidden;
+}
+
+.signup_container_left::after {
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 55%;
+    box-shadow: inset 0 75px 75px -7px black;
+    border-radius: 19px 0 0 20px;
+}
+
+.signup_image {
+    border-radius: 20px 0 0 20px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.signup_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 85%;
+    margin-bottom: 15px;
+}
+
+.signup_input {
+    width: 100%;
+}
+.signup_input > * {
+    width: 97%;
+    margin: 5px 0 ;
+}
+
+.bio_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid black;
+    padding: 5px;
+    width: 96%;
+    max-height: 120px;
+}
+
+.bio_container > span {
+    align-self: flex-end;
+}
+
+.bio_text {
+    resize: none;
+    outline: none;
+    border: none;
+}
+
+.signup_input > p {
+    height: 15px;
+    margin-bottom: 3px;
+}
+
+.signup_errors {
+    color: red;
+    font-weight: bolder;
+    padding: 0;
+    margin: 0;
+}
+
+.signup_error_inputs {
+    box-shadow: 0 0 10px red;
+    border-color: red;
+    outline-color: red;
+}
+
+.login_button_submit:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.signup_errors_password {
+    padding-bottom: 17px;
+}
+
+.signup_image_container {
+    border: 1px solid lightgrey;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.temp_image_signup {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.file_input_container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.profile_pic_input {
+    max-width: 180px;
+}

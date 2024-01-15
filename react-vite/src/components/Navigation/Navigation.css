@@ -1,3 +1,175 @@
+.nav_bar {
+  height: 114px;
+  border-bottom: 1px solid lightgrey;
+  padding-bottom: 0;
+  position: sticky;
+  top: 0px;
+  width: 100%;
+  background-color: white;
+  z-index: 1;
+}
+
+.header_top_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav_bar > * {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.header_top_right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 30px;
+  align-items: center;
+}
+
+.log_in_sign_up_buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.login_button,
+.sign_up_button {
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  font-weight: 550;
+  cursor: pointer;
+  font-family: nyt-franklin,Arial,Helvetica,sans-serif;
+  letter-spacing: .02em;
+  border: none;
+}
+
+.login_button {
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+.login_button:hover {
+  background-color: lightgray;
+}
+
+.login_button:active {
+  background-color: darkgray;
+}
+
+.openModalMenuItem {
+  padding: 11px 19px;
+  border-radius: 20px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.sign_up_button {
+  background-color: #E33D26;
+  color: white;
+}
+
+.sign_up_button:hover{
+  background-color: #D02E1E;
+}
+.sign_up_button:active{
+  background-color: #BB1F17;
+}
+
+.header_bottom_container {
+  display: flex;
+  gap: 25px;
+}
+
+.nav_links{
+  cursor: pointer;
+}
+
+
+.nav_links::after {
+  content: "";
+  display: block;
+  position: relative;
+  bottom: -5px;
+  width: 0%;
+  box-sizing: border-box;
+  height: 5px;
+  background-color: #CF1A00;
+  z-index: 0;
+}
+
+.nav_links:hover:after {
+  width: 100%;;
+}
+.user_profile:hover {
+  color: #777777;
+  cursor: pointer;
+}
+
+.user_profile:active {
+  color: #CF1A00;
+}
+
 .profile-dropdown {
   position: absolute;
+}
+
+.logo_image {
+  height: 35px;
+  cursor: pointer;
+}
+
+.your_recipe_box {
+  height: 20px;
+}
+
+.about_me_menu{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  position: absolute;
+  width: 150px;
+  height: 75px;
+  box-sizing: padding-box;
+  box-shadow: 0px 0px 10px black;
+  background-color: white;
+  top: 125px;
+  padding: 0 20px 10px;
+  cursor: default;
+  border-radius: 0px 0 7px 7px;
+}
+
+.about_me_menu > * {
+  margin: 0;
+  font-weight: normal;
+  font-size: medium;
+  cursor: pointer;
+}
+
+.about_me_menu:before {
+  content: "";
+  height: 10px;
+  width: 100%;
+  position: absolute;
+  top: -10px;
+  left: 0px; /* keeps psuedo element locked to the left of the element */
+  background: inherit;
+  z-index: 2;
+}
+
+.about_me_links {
+  display: flex;
+  gap: 5px;
+  color: black;
+  text-decoration: none;
+}
+
+.about_me_links:hover {
+  color: gray;
+}
+
+.about_me_links:active {
+  color: #BB1F17;
 }

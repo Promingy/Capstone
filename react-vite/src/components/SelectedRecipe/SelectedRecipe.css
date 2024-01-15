@@ -1,0 +1,162 @@
+.header_image_title,
+.body_prep_time_bio {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+    gap: 50px;
+}
+
+.selected_recipe {
+    max-width: 1000px;
+    margin: 50px auto;
+}
+
+.single_preview_image {
+    width: 60%;
+    max-height: 500px;
+}
+
+.single_preview_image > * {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+}
+
+.single_title_owner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-bottom: 2px solid black;
+    width: 40%;
+}
+
+.title_icon_container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title_icon_container > * {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.title_icon_container > *:hover {
+    background-color: gray;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.delete_recipe_icon_title > * {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+.title_icons {
+    font-size: 20px;
+}
+
+.single_owner {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.single_owner:hover {
+    color: #666666
+}
+
+.single_owner:active {
+    color: #BB1F17
+}
+
+.body_prep_time_bio {
+    margin-top: 50px;
+}
+
+.prep_time_bio_left {
+    display: flex;
+    width: 40%
+}
+
+.prep_time_bio_right {
+    width: 60%;
+}
+
+.cook_times {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cook_times > * > *,
+span > h3,
+.cook_times > * {
+    margin: 0;
+}
+
+.title_and_info {
+    display: grid;
+    grid-template-columns: 114px 200px;
+}
+.title_and_info > * {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+}
+
+.time_margin {
+    margin: 5px 0 ;
+}
+
+.notes {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.notes:hover {
+    text-decoration: underline;
+}
+
+.ingredients_and_steps_container {
+    margin-top: 50px;
+    display: flex;
+    gap: 50px;
+}
+
+.ingredients_and_steps_left {
+    display: flex;
+    flex-direction: column;
+    border-top: 5px solid black;
+    width: 40%
+}
+
+.yield_container {
+    display: flex;
+    align-items: center;
+}
+
+.ingredients_and_steps_left > h2,
+.ingredients_and_steps_right > h2 {
+    margin-top: 5px;
+}
+
+.ingredients_and_steps_right {
+    width: 60%;
+    border-top: 5px solid black;
+}
+
+.selected_recipe_steps_container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.no_scroll {
+    overflow: hidden ;
+}
