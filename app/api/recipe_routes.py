@@ -38,8 +38,17 @@ def create_new_recipe():
     """
     Route to handle the creation of new recipes
     """
-    ingredients = request.get_json()['ingredients']
-    steps = request.get_json()['steps']
+    ingredients = {}
+    steps = {}
+
+    try:
+        ingredients = request.get_json()['ingredients']
+    except:
+        ingredients = {}
+    try:
+        steps = request.get_json()['steps']
+    except:
+        steps = {}
 
     form = RecipeForm()
     form2 = QuantityForm()
