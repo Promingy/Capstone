@@ -215,6 +215,7 @@
 .privacy_unselected {
     color: gray;
     cursor: pointer;
+    padding: 6px
 }
 
 .privacy_unselected:hover {
