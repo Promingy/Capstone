@@ -3,11 +3,24 @@
     flex-direction: column;
     align-items: center;
     border: 1px solid lightgrey;
-    width: 13vw;
+    /* width: 13vw; */
+    width: 220px;
     margin: 10px;
     cursor: pointer;
     transition: .4s;
     background-color: white;;
+}
+
+@media screen and (max-width: 1024px) {
+    .recipeTile {
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .recipeTile {
+        width: 250px;
+    }
 }
 
 .recipeTile:hover {
