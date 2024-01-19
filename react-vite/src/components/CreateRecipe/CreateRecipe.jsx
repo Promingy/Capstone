@@ -491,7 +491,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                         <p className="form_question_description">Choose an image to showcase your delicious recipe!</p>
                     </div>
                     <div className="file_content_container">
-                        <div>
+                        <div className="preview_image_wrapper">
                             <input
                                 type='file'
                                 className={`preview_image ${errors.preview_image || errors.preview_image_size ? "error_container" : ""}`}

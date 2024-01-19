@@ -409,3 +409,18 @@
         width: 100%;
     }
 }
+
+@media screen and (max-width: 480px){
+
+    .file_content_container {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .preview_image_wrapper {
+        width: 90%;
+        text-align: center;
+        align-self: center;
+    }
+}
