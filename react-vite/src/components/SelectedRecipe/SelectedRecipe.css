@@ -162,9 +162,6 @@ span > h3,
 }
 
 @media screen and (max-width: 1023px){
-    .content {
-        margin: 0 25px;
-    }
     .selected_recipe {
         width: 100%;
     }

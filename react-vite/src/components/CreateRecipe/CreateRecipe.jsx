@@ -143,7 +143,7 @@ export default function CreateRecipe ({ prevForm, update }) {
     if (!measurements || !categories) return
 
     return(
-        <div>
+        <div className="new_recipe_form_container">
             <form className="new_recipe_form" onSubmit={handleSubmit} encType="multipart/form-data">
 
                 <div className="error_spacer top_error">
