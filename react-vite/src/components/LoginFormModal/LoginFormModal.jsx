@@ -72,6 +72,7 @@ function LoginFormModal() {
           </label>
           <button className="login_button_submit" type="submit">Log In</button>
           <button type='button' className="demo_button_submit" onClick={() => dispatch(thunkLogin(demoUser)).then(closeModal)}>Demo User</button>
+          <a target='_blank' href={`http://localhost:8000/api/auth/oauth_login`}><button type='button'>OAUTH</button></a>
           <span className="or_sign_up" onClick={() => setModalContent(<SignupFormModal />)}>Sign up</span>
         </form>
       </div>

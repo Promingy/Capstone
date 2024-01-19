@@ -224,7 +224,7 @@ export default function SelectedRecipe() {
                         })}
                 </div>
                 <div className='ingredients_and_steps_right'>
-                    <h2>PREPERATION</h2>
+                    <h2>PREPARATION</h2>
 
                     <div className='selected_recipe_steps_container'>
                         {Object.values(recipe.steps).map(step => {

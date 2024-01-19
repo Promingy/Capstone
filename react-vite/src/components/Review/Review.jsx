@@ -15,6 +15,7 @@ export default function Review ({ recipe }) {
     const [ratingSubmitted, setRatingSubmitted] = useState(false)
     const [isPrivate, setIsPrivate] = useState(false)
     const [viewPrivate, setViewPrivate] = useState(false)
+    const sortedReviews = Object.values(recipe.reviews).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
 
     useEffect(() => {
         setRating(sessionUser && recipe?.user_rating?.rating || 0)
@@ -153,8 +154,8 @@ export default function Review ({ recipe }) {
                         <h3 id='public_comments' className={viewPrivate ? "hidden_comments" : "visible_comments"} onClick={() => setViewPrivate(false)}>Public ({totalPublicComments})</h3>
                         <h3 className={viewPrivate ? "visible_comments" : "hidden_comments"} onClick={() => setViewPrivate(true)}>Private ({totalPrivateComments})</h3>
                     </div>
-                        {!Object.values(recipe.reviews).length && <h2>Be the first to post a note!</h2>}
-                        {Object.values(recipe.reviews).map(review => {
+                        {!sortedReviews.length && <h2>Be the first to post a note!</h2>}
+                        {sortedReviews.map(review => {
                             if (!review.private && !viewPrivate){
                                return <ReviewTile review={review} key={`review${review.id}`}/>
                             } else if (review.private && viewPrivate && sessionUser?.id == review.user_id) {
