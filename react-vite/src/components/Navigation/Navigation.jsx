@@ -45,6 +45,7 @@ function Navigation() {
           <h2 className="nav_links" onClick={() => navigate('/')}>Home</h2>
           <div>
           <h2 className='nav_links'
+            onClick={() => setShowMenu(true)}
             onMouseOver={() => {
               clearTimeout(timeout1)
               clearTimeout(timeout2)
