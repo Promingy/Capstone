@@ -2,12 +2,16 @@
     --nav-bar-height: 114px
 }
 
+.new_recipe_form_container {
+    padding: 50px;
+}
+
 .new_recipe_form {
     max-width: 1000px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 30px;
+    margin: 0 auto;
 }
 
 .new_recipe_form > * {
@@ -394,4 +398,14 @@
 
 .recipe_servings_container {
     justify-content: space-around;
+}
+
+@media screen and (max-width: 1023px) {
+    .new_recipe_form {
+        width: 100%;
+    }
+
+    .new_recipe_form > * {
+        width: 100%;
+    }
 }

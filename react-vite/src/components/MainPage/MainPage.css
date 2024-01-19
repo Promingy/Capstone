@@ -150,12 +150,19 @@
 
     .header_image_container{
         margin: 0 auto;
-        width: 100vw;
+        width: 100%;
     }
 
     .main_image {
         /* height: 300px; */
-        width: 100vw;
+        width: 100%;
+    }
+
+    .main_image_text {
+        min-width: 25vw;
+        max-width: 60vw;
+        top: 15px;
+        left: 15px;
     }
 
     .main_image_text > h2 {

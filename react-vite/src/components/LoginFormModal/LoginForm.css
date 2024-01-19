@@ -67,7 +67,8 @@
 }
 
 .login_button_submit,
-.demo_button_submit {
+.demo_button_submit,
+.oAuth > * {
     margin-top: 20px;
     background-color: #E33D26;
     border-radius: 3px;
@@ -75,16 +76,18 @@
     color: white;
     padding: 8px;
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 15px;
     width: 100%;
     cursor: pointer;
 }
 
-.login_button_submit:hover {
+.login_button_submit:hover,
+.oAuth > *:hover {
     background-color: #D02E1E;
 }
 
-.login_button_submit:active {
+.login_button_submit:active,
+.oAuth > *:active {
     background-color: #BB1F17;
 }
 
@@ -112,6 +115,7 @@
     text-decoration: underline;
     cursor: pointer;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .or_sign_up:hover {
@@ -120,4 +124,8 @@
 
 .or_sign_up:active {
     color: #BB1F17
+}
+
+.fa-google {
+    color: yellow;
 }

@@ -4,7 +4,7 @@
 
 .footer_container {
     background-color: black;
-    height: 200px;
+    padding: 50px 0;
     width: 100%;
     overflow: hidden;
     display: flex;
@@ -49,4 +49,56 @@
 
 .about_me {
     max-width: 50%;
+}
+
+@media (max-width: 768px) {
+    .footer_container {
+        flex-direction: column;
+        padding-top: 20px;
+        gap: 50px;
+    }
+
+    .footer_container > * {
+        width: 100%;
+    }
+
+    .footer_right_content {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .footer_right_content > * {
+        margin: 0;
+    }
+
+    .about_me {
+        max-width: 80%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .footer_container {
+        padding-top: 20px;
+        gap: 50px;
+    }
+
+    .footer_container > * {
+        width: 100%;
+    }
+
+    .footer_right_content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .footer_right_content > * {
+        margin: 0;
+    }
+
+    .about_me {
+        max-width: 80%;
+    }
 }

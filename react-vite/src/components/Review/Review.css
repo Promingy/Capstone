@@ -93,7 +93,7 @@
 
 .post_review {
     resize: none;
-    width: 97%;
+    max-width: 97%;
     min-height: 150px;
     padding: 10px;
     border: 0;
@@ -358,4 +358,20 @@
     font-size: 14px;
     font-weight: 400;
     color: gray;
+}
+
+@media screen and (max-width: 1023px){
+    .reviews_container {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .review_left {
+        width: 100%;
+        padding-bottom: 50px;
+    }
+
+    .review_right {
+        width: 100%;
+    }
 }
