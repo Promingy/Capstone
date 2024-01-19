@@ -161,7 +161,7 @@ export default function CreateRecipe ({ prevForm, update }) {
 
                 <label className="recipe_title_container">
                     <div className="form_question_container">
-                        <h2 className="form_question">What's the title of your recipe?</h2>
+                        <h2 className="form_question">What&apos;s the title of your recipe?</h2>
                         <p className="form_question_description">A short, descriptive name to quickly catch people attention.</p>
                     </div>
                     {/* <span>Title:</span> */}
@@ -487,8 +487,8 @@ export default function CreateRecipe ({ prevForm, update }) {
                 <div className="preview_image_container">
                     {/* <span>Image:</span> */}
                     <div className="form_question_container">
-                        <h2 className="form_question">How long does this dish take to cook?</h2>
-                        <p className="form_question_description">Choose how long it takes to cook this dish. (Hours OR minutes required.)</p>
+                        <h2 className="form_question">Select a cover image for your recipe.</h2>
+                        <p className="form_question_description">Choose an image to showcase your delicious recipe!</p>
                     </div>
                     <div className="file_content_container">
                         <div>

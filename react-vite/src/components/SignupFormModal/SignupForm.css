@@ -96,6 +96,10 @@
     cursor: not-allowed;
 }
 
+.oAuth {
+    width: 100%;
+}
+
 .signup_errors_password {
     padding-bottom: 17px;
 }
@@ -122,6 +126,7 @@
 .file_input_container {
     display: flex;
     align-items: center;
+    justify-content: space-around;
     gap: 10px;
 }
 .profile_pic_input {
