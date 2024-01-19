@@ -395,3 +395,13 @@
 .recipe_servings_container {
     justify-content: space-around;
 }
+
+@media screen and (max-width: 1023px) {
+    .new_recipe_form {
+        width: 100%;
+    }
+
+    .new_recipe_form > * {
+        width: 100%;
+    }
+}
