@@ -135,11 +135,11 @@
         margin: 15px auto;
     }
     .recipe_tile_category_container{
-        margin: 10px auto;
+        margin: auto;
         width: 100%;
     }
     .recipe_tile_category_container_inner{
-        margin: 0;
+        margin: 15px;
         margin-right: 15px;
         max-width: 100%;
     }
