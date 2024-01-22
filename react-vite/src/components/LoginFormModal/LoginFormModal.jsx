@@ -71,7 +71,13 @@ function LoginFormModal() {
             />
           </label>
           <button className="login_button_submit" type="submit">Log In</button>
-          <a className="oAuth" href={`http://localhost:8000/api/auth/oauth_login`}><button type='button'><i className="fa-brands fa-google"/>&nbsp; Continue with Google</button></a>
+          <a className="oAuth" href={`http://https://recipe-rendezvous.onrender.com/api/auth/oauth_login`}>
+            <button type='button'>
+              {/* <i className="fa-brands fa-google"/> */}
+              <img className="google_icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" />
+              &nbsp; Continue with Google
+            </button>
+          </a>
           <button type='button' className="demo_button_submit" onClick={() => dispatch(thunkLogin(demoUser)).then(closeModal)}>Demo User</button>
           <span className="or_sign_up" onClick={() => setModalContent(<SignupFormModal />)}>Sign up</span>
         </form>

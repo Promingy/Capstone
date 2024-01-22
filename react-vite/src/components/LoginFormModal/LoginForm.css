@@ -81,26 +81,27 @@
     cursor: pointer;
 }
 
-.login_button_submit:hover,
-.oAuth > *:hover {
+.login_button_submit:hover {
     background-color: #D02E1E;
 }
 
-.login_button_submit:active,
-.oAuth > *:active {
+.login_button_submit:active {
     background-color: #BB1F17;
 }
 
-.demo_button_submit {
+.demo_button_submit,
+.oAuth > * {
     background-color: lightgrey;
     color: black;
 }
 
-.demo_button_submit:hover {
+.demo_button_submit:hover,
+.oAuth > *:hover {
     background-color: #c1bbbb;
 }
 
-.demo_button_submit:active {
+.demo_button_submit:active,
+.oAuth > *:active {
     background-color: #afafaf;
 }
 
@@ -126,6 +127,17 @@
     color: #BB1F17
 }
 
-.fa-google {
-    color: yellow;
+.oAuth {
+    text-decoration: none;
+}
+
+.oAuth > *{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    justify-content: center;
+}
+
+.google_icon {
+    height: 20px;
 }
