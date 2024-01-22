@@ -178,7 +178,13 @@ function SignupFormModal() {
             />
           </label>
           <button className="login_button_submit" disabled={bio.length > 1000} type="submit">Sign Up</button>
-          <a className="oAuth" href={`http://localhost:8000/api/auth/oauth_login`}><button type='button'><i className="fa-brands fa-google"/>&nbsp; Continue with Google</button></a>
+          <a className="oAuth" href={`http://https://recipe-rendezvous.onrender.com/api/auth/oauth_login`}>
+            <button type='button'>
+              {/* <i className="fa-brands fa-google"/> */}
+              <img className="google_icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" />
+              &nbsp; Continue with Google
+            </button>
+          </a>
           <span className="or_sign_up" onClick={() => setModalContent(<LoginFormModal />)}>Log in</span>
         </form>
       </div>
