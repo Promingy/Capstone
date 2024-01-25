@@ -428,4 +428,13 @@
         text-align: center;
         align-self: center;
     }
+
+    .step_and_add {
+        gap: 10px;
+    }
+
+    .preview_image {
+        max-width: 100%;
+
+    }
 }
