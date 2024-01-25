@@ -1,6 +1,6 @@
 .signup_form_container {
     display: flex;
-    width: 35vw;
+    max-width: 35vw;
     max-height: 85vh;
 }
 
@@ -131,4 +131,66 @@
 }
 .profile_pic_input {
     max-width: 180px;
+}
+
+@media screen and (max-height: 725px) {
+    .signup_form_container {
+        max-height: 100vh;
+    }
+
+    .signup_container_right {
+        overflow: scroll;
+    }
+}
+
+@media screen and (max-width: 1919px){
+    .signup_form_container {
+        max-width: 45vw;
+    }
+}
+
+@media screen and (max-width: 1535px){
+    .signup_form_container {
+        max-width: 50vw;
+    }
+}
+
+@media screen and (max-width: 1279px){
+    .signup_form_container {
+        max-width: 60vw;
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .signup_form_container {
+        width: 60vw;
+    }
+}
+
+@media screen and (max-width: 900px){
+    .signup_form_container {
+        max-width: 90vw;
+    }
+
+    .signup_container_right {
+        width: 100%;
+    }
+
+    .signup_container_left {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .signup_form_container {
+        width: 100vw;
+    }
+
+    .signup_container_right {
+        width: 100%;
+    }
+
+    .signup_container_left {
+        display: none;
+    }
 }

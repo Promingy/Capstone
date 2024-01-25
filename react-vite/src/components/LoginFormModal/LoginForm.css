@@ -141,3 +141,58 @@
 .google_icon {
     height: 20px;
 }
+
+@media screen and (max-width: 1023px) {
+    .login_form_container {
+        width: 50vw;
+        height: 60vh;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .login_form_container {
+        width: 80vw;
+        height: 70vh;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .login_form_container {
+        width: 90vw;
+        height: 55vh;
+    }
+
+    .login_modal_right {
+        width: 100%;
+    }
+
+    .login_modal_left {
+        display: none;
+    }
+}
+
+@media screen and (max-height: 700px) {
+    .login_form_container {
+        height: 70vh;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .login_form_container {
+        height: 80vh;
+    }
+}
+
+@media screen and (max-height: 500px) {
+    .login_form_container {
+        height: 90vh;
+    }
+
+}
+
+@media screen and (max-height: 440px) {
+    .login_form_container {
+        height: 95vh;
+    }
+
+}
