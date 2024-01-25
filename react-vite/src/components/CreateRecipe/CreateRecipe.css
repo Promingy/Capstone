@@ -412,6 +412,11 @@
 
 @media screen and (max-width: 480px){
 
+    .new_recipe_form_container {
+        padding: 0;
+        margin: 20px;
+    }
+
     .file_content_container {
         flex-direction: column;
         gap: 10px;
