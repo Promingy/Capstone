@@ -180,3 +180,11 @@
 .about_me_links:active {
   color: #BB1F17;
 }
+
+@media  screen and (max-width: 480px) {
+  .login_button,
+  .sign_up_button {
+    font-size: 12px;
+  }
+
+}
