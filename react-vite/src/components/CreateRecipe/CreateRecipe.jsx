@@ -17,11 +17,13 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [ingredient, setIngredient] = useState('')
     const [quantity, setQuantity] = useState(1)
     const [ingredients, setIngredients] = useState(prevForm?.ingredients || {})
+    const [delIngredients, setDelIngredients] = useState({})
     const [title, setTitle] = useState(prevForm?.title || '')
     const [description, setDescription] = useState( prevForm?.description || '')
     const [servings, setServings] = useState(prevForm?.servings || 1)
     const [step, setStep] = useState('')
     const [steps, setSteps] = useState(prevForm?.steps || {})
+    const [delSteps, setDelSteps] = useState({})
     const [stepNumber, setStepNumber] = useState( prevForm?.steps && (Object.values(prevForm?.steps).length + 1).toFixed(1) || 1.0)
     const [prepTimeHours, setPrepTimeHours] = useState(Math.floor(prevForm?.prepTime / 60)|| 0)
     const [prepTimeMinutes, setPrepTimeMinutes] = useState(prevForm?.prepTime % 60|| 0)
@@ -111,7 +113,9 @@ export default function CreateRecipe ({ prevForm, update }) {
             cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
             preview_image: update? returnImage?.url || prevForm?.previewImage : returnImage.url,
             ingredients,
-            steps
+            steps,
+            ingredientsToDelete: delIngredients,
+            stepsToDelete: delSteps
         };
 
         updateStepNums();
@@ -244,6 +248,11 @@ export default function CreateRecipe ({ prevForm, update }) {
                                     </div>
                                      <div className="remove_ingredient" onClick={() => {
                                              const newIngredient = {...ingredients}
+
+                                             if (update) {
+                                                    setDelIngredients({...delIngredients, [ingredient.id]: ingredient})
+                                             }
+
                                              delete newIngredient[ingredient[update ? 'id' : 'ingredient']]
                                              delete newIngredient?.[ingredient?.ingredient]
                                              setIngredients(newIngredient)
@@ -301,10 +310,11 @@ export default function CreateRecipe ({ prevForm, update }) {
                     <div className={`add_ingredient ${errors.ingredient && "error_container"}`} onClick={() => {
                             // add ingredient to ingredients obj
                             if (+quantity < 0) setQuantity(1)
-                            if (ingredient && quantity && measurement != 'Measurement'){
+                            if (ingredient && quantity && measurement != 'Measurement' && !ingredients[ingredient]){
                                 const newIngredient = { ingredient,
                                                         ingredient_quantity: +quantity,
-                                                        ingredient_measurement_id: measurements[measurement].id}
+                                                        ingredient_measurement_id: measurements[measurement].id
+                                                    }
 
                                 setIngredients({...ingredients, [ingredient]: newIngredient})
 
@@ -312,6 +322,21 @@ export default function CreateRecipe ({ prevForm, update }) {
                                 setIngredient('')
                                 setQuantity(1)
                             }
+
+                            else if (ingredients[ingredient]) {
+                                const newIngredient = {...ingredients[ingredient]}
+
+                                newIngredient.ingredient_quantity = +quantity
+                                newIngredient.ingredient_measurement_id = measurements[measurement].id
+                                newIngredient.ingredient = ingredient
+
+                                setIngredients({...ingredients, [ingredient]: newIngredient})
+
+                                // reset ingredient values
+                                setIngredient('')
+                                setQuantity(1)
+
+                                }
                         }}>
 
                         <div>
@@ -348,7 +373,10 @@ export default function CreateRecipe ({ prevForm, update }) {
                                             if (+stepNumber === lastStepNum + 1){
                                                 setStepNumber(+lastStepNum)
                                             }
-
+                                            if (step.id) {
+                                                setDelSteps({...delSteps, [step.id]: step})
+                                            }
+                                            
                                             setSteps(newSteps)
                                         }}>
                                         <i className="fa-solid fa-x fa-xs" />
