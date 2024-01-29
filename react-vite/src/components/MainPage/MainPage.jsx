@@ -53,7 +53,7 @@ export default function MainPage() {
                 if (!categoryRecipes.length || !category) return
 
                 return (
-                    <div key={`${category}`} className='recipe_tile_category_container'>
+                    <div key={`${category}`} className='recipe_tile_category_container_inner'>
                         <h2>{category}</h2>
                         <div className={`recipe_tile_container`}>
                             {categoryRecipes.map(recipe => {

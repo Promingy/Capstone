@@ -17,11 +17,13 @@ export default function CreateRecipe ({ prevForm, update }) {
     const [ingredient, setIngredient] = useState('')
     const [quantity, setQuantity] = useState(1)
     const [ingredients, setIngredients] = useState(prevForm?.ingredients || {})
+    const [delIngredients, setDelIngredients] = useState({})
     const [title, setTitle] = useState(prevForm?.title || '')
     const [description, setDescription] = useState( prevForm?.description || '')
     const [servings, setServings] = useState(prevForm?.servings || 1)
     const [step, setStep] = useState('')
     const [steps, setSteps] = useState(prevForm?.steps || {})
+    const [delSteps, setDelSteps] = useState({})
     const [stepNumber, setStepNumber] = useState( prevForm?.steps && (Object.values(prevForm?.steps).length + 1).toFixed(1) || 1.0)
     const [prepTimeHours, setPrepTimeHours] = useState(Math.floor(prevForm?.prepTime / 60)|| 0)
     const [prepTimeMinutes, setPrepTimeMinutes] = useState(prevForm?.prepTime % 60|| 0)
@@ -111,7 +113,9 @@ export default function CreateRecipe ({ prevForm, update }) {
             cook_time: +cookTimeHours * 60 + +cookTimeMinutes,
             preview_image: update? returnImage?.url || prevForm?.previewImage : returnImage.url,
             ingredients,
-            steps
+            steps,
+            ingredientsToDelete: delIngredients,
+            stepsToDelete: delSteps
         };
 
         updateStepNums();
@@ -143,7 +147,7 @@ export default function CreateRecipe ({ prevForm, update }) {
     if (!measurements || !categories) return
 
     return(
-        <div>
+        <div className="new_recipe_form_container">
             <form className="new_recipe_form" onSubmit={handleSubmit} encType="multipart/form-data">
 
                 <div className="error_spacer top_error">
@@ -160,7 +164,11 @@ export default function CreateRecipe ({ prevForm, update }) {
                 </div>
 
                 <label className="recipe_title_container">
-                    <span>Title:</span>
+                    <div className="form_question_container">
+                        <h2 className="form_question">What&apos;s the title of your recipe?</h2>
+                        <p className="form_question_description">A short, descriptive name to quickly catch people attention.</p>
+                    </div>
+                    {/* <span>Title:</span> */}
                     <input
                         type='text'
                         placeholder="Title"
@@ -171,7 +179,11 @@ export default function CreateRecipe ({ prevForm, update }) {
                 </label>
 
                 <label className="recipe_description_container">
-                    <span>Description:</span>
+                    <div className="form_question_container">
+                        <h2 className="form_question">A short description for your recipe.</h2>
+                        <p className="form_question_description">Share with others what you love about this recipe.</p>
+                    </div>
+                    {/* <span>Description:</span> */}
                     <div className={`description_container ${errors.description ? "error_container" : ""}`}>
                         <TextareaAutoSize
                         className='create_description'
@@ -184,32 +196,42 @@ export default function CreateRecipe ({ prevForm, update }) {
                 </label>
 
                 <label className="recipe_servings_container">
-                    <div className="custom_quantity custom_w_title">
-                            <span className="custom_title">Servings:</span>
-                            <div className="inner_input">
-                                <span className="custom_input_arrows_container" onClick={() => setServings(prevNum => prevNum + 1)}>
-                                    <i className="fa-solid fa-caret-up"/>
-                                </span>
-                                <p className={`custom_input_text ${errors.servings && "error_container"}`}>{servings}</p>
-                                <span className="custom_input_arrows_container" onClick={() => setServings(prevNum => prevNum - 1 >= 1 ? prevNum - 1 : prevNum)}>
-                                    <i className="fa-solid fa-caret-down"/>
-                                </span>
-
-                            </div>
-                        </div>
+                    <div className="form_question_container">
+                        <h2 className="form_question">What type of food and how many servings does this recipe make?</h2>
+                        <p className="form_question_description">Choose what time of food this is and how many servings this makes.</p>
+                    </div>
+                    <div className="servings_category_container">
                         <select
-                            value={categories[category]?.category || 'Category'}
-                            onChange={e => setCategory(e.target.selectedIndex)}
-                            className={errors.category_id ? "error_container" : ""}
-                            >
-                                <option disabled>Category</option>
-                                {Object.keys(categories).map(key => (
-                                    <option key={`dropdown_category${categories?.[key]?.id}`} id={`category_${categories?.[key]?.id}`}>
-                                            {categories[key].category}
-                                </option>
-                            ))}
-                     </select>
+                                value={categories[category]?.category || 'Category'}
+                                onChange={e => setCategory(e.target.selectedIndex)}
+                                className={errors.category_id ? "error_container" : ""}
+                                >
+                                    <option disabled>Category</option>
+                                    {Object.keys(categories).map(key => (
+                                        <option key={`dropdown_category${categories?.[key]?.id}`} id={`category_${categories?.[key]?.id}`}>
+                                                {categories[key].category}
+                                    </option>
+                                ))}
+                        </select>
+                        <div className="custom_quantity custom_w_title">
+                                <span className="custom_title">Servings:</span>
+                                <div className="inner_input">
+                                    <span className="custom_input_arrows_container" onClick={() => setServings(prevNum => prevNum + 1)}>
+                                        <i className="fa-solid fa-caret-up"/>
+                                    </span>
+                                    <p className={`custom_input_text ${errors.servings && "error_container"}`}>{servings}</p>
+                                    <span className="custom_input_arrows_container" onClick={() => setServings(prevNum => prevNum - 1 >= 1 ? prevNum - 1 : prevNum)}>
+                                        <i className="fa-solid fa-caret-down"/>
+                                    </span>
+
+                                </div>
+                            </div>
+                    </div>
                 </label>
+                    <div className="form_question_container">
+                        <h2 className="form_question">What ingredients are required to make this this recipe?</h2>
+                        <p className="form_question_description">List all of the different ingredients that are needed to make this recipe.</p>
+                    </div>
                     <div className="added_ingredients">
                         {Object.values(ingredients).map(ingredient => {
                             let measurement_name = measurements[ingredient.ingredient_measurement_id].measurement_name
@@ -226,6 +248,11 @@ export default function CreateRecipe ({ prevForm, update }) {
                                     </div>
                                      <div className="remove_ingredient" onClick={() => {
                                              const newIngredient = {...ingredients}
+
+                                             if (update) {
+                                                    setDelIngredients({...delIngredients, [ingredient.id]: ingredient})
+                                             }
+
                                              delete newIngredient[ingredient[update ? 'id' : 'ingredient']]
                                              delete newIngredient?.[ingredient?.ingredient]
                                              setIngredients(newIngredient)
@@ -283,10 +310,11 @@ export default function CreateRecipe ({ prevForm, update }) {
                     <div className={`add_ingredient ${errors.ingredient && "error_container"}`} onClick={() => {
                             // add ingredient to ingredients obj
                             if (+quantity < 0) setQuantity(1)
-                            if (ingredient && quantity && measurement != 'Measurement'){
+                            if (ingredient && quantity && measurement != 'Measurement' && !ingredients[ingredient]){
                                 const newIngredient = { ingredient,
                                                         ingredient_quantity: +quantity,
-                                                        ingredient_measurement_id: measurements[measurement].id}
+                                                        ingredient_measurement_id: measurements[measurement].id
+                                                    }
 
                                 setIngredients({...ingredients, [ingredient]: newIngredient})
 
@@ -294,6 +322,21 @@ export default function CreateRecipe ({ prevForm, update }) {
                                 setIngredient('')
                                 setQuantity(1)
                             }
+
+                            else if (ingredients[ingredient]) {
+                                const newIngredient = {...ingredients[ingredient]}
+
+                                newIngredient.ingredient_quantity = +quantity
+                                newIngredient.ingredient_measurement_id = measurements[measurement].id
+                                newIngredient.ingredient = ingredient
+
+                                setIngredients({...ingredients, [ingredient]: newIngredient})
+
+                                // reset ingredient values
+                                setIngredient('')
+                                setQuantity(1)
+
+                                }
                         }}>
 
                         <div>
@@ -304,6 +347,10 @@ export default function CreateRecipe ({ prevForm, update }) {
                 </label>
 
                 <label className="add_step_container">
+                    <div className="form_question_container">
+                        <h2 className="form_question">What steps are required to make this dish?</h2>
+                        <p className="form_question_description">List all of the different steps to follow in order to successfully create this recipe.</p>
+                    </div>
                     <div className="steps_container">
                         <div className="added_steps">
                             {Object.keys(steps).map(key => {
@@ -326,7 +373,10 @@ export default function CreateRecipe ({ prevForm, update }) {
                                             if (+stepNumber === lastStepNum + 1){
                                                 setStepNumber(+lastStepNum)
                                             }
-
+                                            if (step.id) {
+                                                setDelSteps({...delSteps, [step.id]: step})
+                                            }
+                                            
                                             setSteps(newSteps)
                                         }}>
                                         <i className="fa-solid fa-x fa-xs" />
@@ -340,8 +390,7 @@ export default function CreateRecipe ({ prevForm, update }) {
                     <div className="step_and_add">
                         <label>
                             {/* Create custom number input element */}
-                                <div>
-
+                                <div className="step_custom">
                                     <span className="custom_input_arrows_container"
                                     // onClick runs logic to make sure that the number can only be incremented to the next step
                                     // example. if the last step was 2 then our new step can only be up step 3
@@ -390,79 +439,100 @@ export default function CreateRecipe ({ prevForm, update }) {
                 </label>
 
                 <label className="recipe_prep_container">
-                        <span>Prep time:</span>
-                        <div className="custom_quantity custom_w_title">
-                            <span className="custom_title">Hours:</span>
-                            <div className="inner_input">
-                                <span className="custom_input_arrows_container" onClick={() => setPrepTimeHours(prevNum => prevNum + 1)}>
-                                    <i className="fa-solid fa-caret-up"/>
-                                </span>
-                                <p className={`custom_input_text ${errors.prep_time && "error_container"}`}>{prepTimeHours}</p>
-                                <span className="custom_input_arrows_container" onClick={() => setPrepTimeHours(prevNum => prevNum - 1 >= 0 ? prevNum - 1 : prevNum)}>
-                                    <i className="fa-solid fa-caret-down"/>
-                                </span>
+                    <div className="form_question_container">
+                        <h2 className="form_question">How long is the prep-work for this dish?</h2>
+                        <p className="form_question_description">Choose how long it the prep work for this dish is. (Hours OR minutes required.)</p>
+                    </div>
+                        {/* <span>Prep time:</span> */}
+                        <div className="hours_minutes_container">
+                            <div className="custom_quantity custom_w_title">
+                                <span className="custom_title">Hours:</span>
+                                <div className="inner_input">
+                                    <span className="custom_input_arrows_container" onClick={() => setPrepTimeHours(prevNum => prevNum + 1)}>
+                                        <i className="fa-solid fa-caret-up"/>
+                                    </span>
+                                    <p className={`custom_input_text ${errors.prep_time && "error_container"}`}>{prepTimeHours}</p>
+                                    <span className="custom_input_arrows_container" onClick={() => setPrepTimeHours(prevNum => prevNum - 1 >= 0 ? prevNum - 1 : prevNum)}>
+                                        <i className="fa-solid fa-caret-down"/>
+                                    </span>
 
+                                </div>
                             </div>
-                        </div>
-                        <div className="custom_quantity custom_w_title">
-                            <span className="custom_title">Minutes:</span>
-                            <div className="inner_input">
-                                <span className="custom_input_arrows_container" onClick={() => setPrepTimeMinutes(prevNum => prevNum + 1)}>
-                                    <i className="fa-solid fa-caret-up"/>
-                                </span>
-                                <p className={`custom_input_text ${errors.prep_time && "error_container"}`}>{prepTimeMinutes}</p>
-                                <span className="custom_input_arrows_container" onClick={() => setPrepTimeMinutes(prevNum => prevNum - 1 >= 0 ? prevNum - 1 : prevNum)}>
-                                    <i className="fa-solid fa-caret-down"/>
-                                </span>
+                            <div className="custom_quantity custom_w_title">
+                                <span className="custom_title">Minutes:</span>
+                                <div className="inner_input">
+                                    <span className="custom_input_arrows_container" onClick={() => setPrepTimeMinutes(prevNum => prevNum + 1)}>
+                                        <i className="fa-solid fa-caret-up"/>
+                                    </span>
+                                    <p className={`custom_input_text ${errors.prep_time && "error_container"}`}>{prepTimeMinutes}</p>
+                                    <span className="custom_input_arrows_container" onClick={() => setPrepTimeMinutes(prevNum => prevNum - 1 >= 0 ? prevNum - 1 : prevNum)}>
+                                        <i className="fa-solid fa-caret-down"/>
+                                    </span>
 
+                                </div>
                             </div>
+
                         </div>
                 </label>
 
                 <label className="recipe_prep_container">
-                         <span>Cook time:</span>
-                        <div className="custom_quantity custom_w_title">
-                            <span className="custom_title">Hours:</span>
-                            <div className="inner_input">
-                                <span className="custom_input_arrows_container" onClick={() => setCookTimeHours(prevNum => prevNum + 1)}>
-                                    <i className="fa-solid fa-caret-up"/>
-                                </span>
-                                <p className={`custom_input_text ${errors.cook_time && "error_container"}`}>{cookTimeHours}</p>
-                                <span className="custom_input_arrows_container" onClick={() => setCookTimeHours(prevNum => prevNum - 1 >= 0 ? prevNum - 1 : prevNum)}>
-                                    <i className="fa-solid fa-caret-down"/>
-                                </span>
+                    <div className="form_question_container">
+                        <h2 className="form_question">How long does this dish take to cook?</h2>
+                        <p className="form_question_description">Choose how long it takes to cook this dish. (Hours OR minutes required.)</p>
+                    </div>
+                         {/* <span>Cook time:</span> */}
+                         <div className="hours_minutes_container">
+                            <div className="custom_quantity custom_w_title">
+                                <span className="custom_title">Hours:</span>
+                                <div className="inner_input">
+                                    <span className="custom_input_arrows_container" onClick={() => setCookTimeHours(prevNum => prevNum + 1)}>
+                                        <i className="fa-solid fa-caret-up"/>
+                                    </span>
+                                    <p className={`custom_input_text ${errors.cook_time && "error_container"}`}>{cookTimeHours}</p>
+                                    <span className="custom_input_arrows_container" onClick={() => setCookTimeHours(prevNum => prevNum - 1 >= 0 ? prevNum - 1 : prevNum)}>
+                                        <i className="fa-solid fa-caret-down"/>
+                                    </span>
 
+                                </div>
                             </div>
-                        </div>
-                        <div className="custom_quantity custom_w_title">
-                            <span className="custom_title">Minutes:</span>
-                            <div className="inner_input">
-                                <span className="custom_input_arrows_container" onClick={() => setCookTimeMinutes(prevNum => prevNum + 1)}>
-                                    <i className="fa-solid fa-caret-up"/>
-                                </span>
-                                <p className={`custom_input_text ${errors.cook_time && "error_container"}`}>{cookTimeMinutes}</p>
-                                <span className="custom_input_arrows_container" onClick={() => setCookTimeMinutes(prevNum => prevNum - 1 >= 0 ? prevNum - 1 : prevNum)}>
-                                    <i className="fa-solid fa-caret-down"/>
-                                </span>
+                            <div className="custom_quantity custom_w_title">
+                                <span className="custom_title">Minutes:</span>
+                                <div className="inner_input">
+                                    <span className="custom_input_arrows_container" onClick={() => setCookTimeMinutes(prevNum => prevNum + 1)}>
+                                        <i className="fa-solid fa-caret-up"/>
+                                    </span>
+                                    <p className={`custom_input_text ${errors.cook_time && "error_container"}`}>{cookTimeMinutes}</p>
+                                    <span className="custom_input_arrows_container" onClick={() => setCookTimeMinutes(prevNum => prevNum - 1 >= 0 ? prevNum - 1 : prevNum)}>
+                                        <i className="fa-solid fa-caret-down"/>
+                                    </span>
 
+                                </div>
                             </div>
-                        </div>
+
+                         </div>
                 </label>
 
                 <div className="preview_image_container">
-                    <span>Image:</span>
-                    <div>
-                        <input
-                            type='file'
-                            className={`preview_image ${errors.preview_image || errors.preview_image_size ? "error_container" : ""}`}
-                            accept='image/*'
-                            onChange={previewImageSetter}
-                        />
+                    {/* <span>Image:</span> */}
+                    <div className="form_question_container">
+                        <h2 className="form_question">Select a cover image for your recipe.</h2>
+                        <p className="form_question_description">Choose an image to showcase your delicious recipe!</p>
                     </div>
-                    <p className="loading_text">{imageLoading && "Loading..."}</p>
-                    <div className="temp_image_container">
-                        <i className="fa-regular fa-plus fa-xl temp_image_icon"/>
-                        {tempImage && <img className="temp_image" src={tempImage} />}
+                    <div className="file_content_container">
+                        <div className="preview_image_wrapper">
+                            <input
+                                type='file'
+                                className={`preview_image ${errors.preview_image || errors.preview_image_size ? "error_container" : ""}`}
+                                accept='image/*'
+                                onChange={previewImageSetter}
+                            />
+                        </div>
+                        <p className="loading_text">{imageLoading && "Loading..."}</p>
+                        <div className="temp_image_container">
+                            <i className="fa-regular fa-plus fa-xl temp_image_icon"/>
+                            {tempImage && <img className="temp_image" src={tempImage} />}
+                        </div>
+
                     </div>
                 </div>
 

@@ -38,8 +38,17 @@ def create_new_recipe():
     """
     Route to handle the creation of new recipes
     """
-    ingredients = request.get_json()['ingredients']
-    steps = request.get_json()['steps']
+    ingredients = {}
+    steps = {}
+
+    try:
+        ingredients = request.get_json()['ingredients']
+    except:
+        ingredients = {}
+    try:
+        steps = request.get_json()['steps']
+    except:
+        steps = {}
 
     form = RecipeForm()
     form2 = QuantityForm()
@@ -163,6 +172,8 @@ def update_recipe(recipeId):
 
     ingredients = request.get_json()['ingredients']
     steps = request.get_json()['steps']
+    delIngredients = request.get_json()['ingredientsToDelete']
+    delSteps = request.get_json()['stepsToDelete']
 
     form = RecipeForm()
     form2 = QuantityForm()
@@ -206,8 +217,6 @@ def update_recipe(recipeId):
     # if all forms pass the validation, run the update logic
     if form.validate_on_submit() and form2.validate_on_submit() and form3.validate_on_submit():
         data = form.data
-        db_ingredients = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
-        db_steps = Step.query.filter(Step.recipe_id == recipeId).all()
 
         recipe.category_id = data['category_id']
         recipe.title = data['title']
@@ -217,15 +226,19 @@ def update_recipe(recipeId):
         recipe.cook_time = data['cook_time']
         recipe.preview_image = data['preview_image']
 
-        # check if the user given ingredients list is longer than what's in our database
-        # if so, add the ingredient to the database
-        # it already passed the validation check if we're right here
-        #/ if statement removed - was preventing new ingredients being added if some were removed
-        #/ ex. 1 ingredient removed, 1 ingredient added - length would be the same.
+        # iterate over ingredients and check if they have an id
+        # if they do, update the ingredient in the database
+        # if they don't, create a new ingredient in the database
         for ingredient in ingredients:
             reqIngredient = ingredients[ingredient]
             try:
                 reqIngredient['id']
+
+                db_ingredient = Quantity.query.get(reqIngredient['id'])
+
+                db_ingredient.ingredient = reqIngredient['ingredient']
+                db_ingredient.ingredient_quantity = reqIngredient['ingredient_quantity']
+                db_ingredient.ingredient_measurement_id = reqIngredient['ingredient_measurement_id']
             except:
                 newIngredient = Quantity(
                     recipe_id = recipeId,
@@ -235,31 +248,25 @@ def update_recipe(recipeId):
                 )
                 db.session.add(newIngredient)
                 db.session.commit()
-                print(ingredients[ingredient], ingredients)
                 ingredients[ingredient]['id'] = newIngredient.to_dict()['id']
-        # if a new ingredients list is less than what the db has, remove the ingredients
-        if len(db_ingredients) > len(ingredients):
-            for ingredient in db_ingredients:
-                try:
-                    ingredients[str(ingredient.to_dict()['id'])]
-                except:
-                    db.session.delete(ingredient)
 
-        for key in ingredients:
-            new_ingredient = ingredients[key]
-            db_ingredient = Quantity.query.get(new_ingredient['id'])
+        # Iterate over the ingredientsToDelete object and delete them from the database
+        for ingredient in delIngredients:
+            ingredient = delIngredients[ingredient]
+            delIngredient = Quantity.query.get(ingredient['id'])
+            db.session.delete(delIngredient)
 
-            db_ingredient.ingredient = new_ingredient['ingredient']
-            db_ingredient.ingredient_quantity = new_ingredient['ingredient_quantity']
-            db_ingredient.measurement_id = new_ingredient['ingredient_measurement_id']
-
-        # if the user give steps is greater than the db steps, add new steps to the database
-        #/ if statement removed for the same reason as above
-        # if len(db_steps) < len(steps):
+        # iterate over steps and check if they have an id
+        # if they do, update the step in the database
+        # if they don't, create a new step in the database
         for step in steps:
             reqStep = steps[step]
             try:
                 reqStep['id']
+                db_step = Step.query.get(reqStep['id'])
+
+                db_step.step_number = reqStep['step_number']
+                db_step.description = reqStep['description']
             except:
                 newStep = Step(
                     recipe_id = recipeId,
@@ -269,21 +276,12 @@ def update_recipe(recipeId):
                 db.session.add(newStep)
                 db.session.commit()
                 steps[step]['id'] = newStep.to_dict()['id']
-        # else if, user give steps is less than the database, remove steps from the db
-        if len(db_steps) > len(steps):
-            for step in db_steps:
-                try:
-                    steps[str(step.to_dict()['step_number'])]
-                except:
-                    db.session.delete(step)
 
-        for key in steps:
-            new_step = steps[key]
-            db_step = Step.query.get(new_step['id'])
-
-            db_step.step_number = new_step['step_number']
-            db_step.description = new_step['description']
-
+        # Iterate over steps that are in delsteps and delete them from the database
+        for step in delSteps:
+            step = delSteps[step]
+            delStep = Step.query.get(step['id'])
+            db.session.delete(delStep)
 
         db.session.commit()
         return recipe.to_dict()

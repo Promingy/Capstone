@@ -140,8 +140,8 @@ export default function SelectedRecipe() {
                             </span>}
                         </p>
 
-                        <h4 className='time_margin'>Prep Time</h4>
-                        <p>
+                        <h4 className='time_margin time_margin_prep'>Prep Time</h4>
+                        <p className='time_margin_prep'>
                             <span>
                                 {!!prepTimeHours &&
                                     <span>
@@ -157,8 +157,8 @@ export default function SelectedRecipe() {
                             </span>
                         </p>
 
-                        <h4 className='time_margin'>Cook Time</h4>
-                        <p>
+                        <h4 className='time_margin time_margin_cook'>Cook Time</h4>
+                        <p className='time_margin_cook'>
                             <span>
                                 {!!cookTimeHours &&
                                     <span>
@@ -224,7 +224,7 @@ export default function SelectedRecipe() {
                         })}
                 </div>
                 <div className='ingredients_and_steps_right'>
-                    <h2>PREPERATION</h2>
+                    <h2>PREPARATION</h2>
 
                     <div className='selected_recipe_steps_container'>
                         {Object.values(recipe.steps).map(step => {

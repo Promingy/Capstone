@@ -67,7 +67,8 @@
 }
 
 .login_button_submit,
-.demo_button_submit {
+.demo_button_submit,
+.oAuth > * {
     margin-top: 20px;
     background-color: #E33D26;
     border-radius: 3px;
@@ -75,7 +76,7 @@
     color: white;
     padding: 8px;
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 15px;
     width: 100%;
     cursor: pointer;
 }
@@ -88,16 +89,19 @@
     background-color: #BB1F17;
 }
 
-.demo_button_submit {
+.demo_button_submit,
+.oAuth > * {
     background-color: lightgrey;
     color: black;
 }
 
-.demo_button_submit:hover {
+.demo_button_submit:hover,
+.oAuth > *:hover {
     background-color: #c1bbbb;
 }
 
-.demo_button_submit:active {
+.demo_button_submit:active,
+.oAuth > *:active {
     background-color: #afafaf;
 }
 
@@ -112,6 +116,7 @@
     text-decoration: underline;
     cursor: pointer;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .or_sign_up:hover {
@@ -120,4 +125,74 @@
 
 .or_sign_up:active {
     color: #BB1F17
+}
+
+.oAuth {
+    text-decoration: none;
+}
+
+.oAuth > *{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    justify-content: center;
+}
+
+.google_icon {
+    height: 20px;
+}
+
+@media screen and (max-width: 1023px) {
+    .login_form_container {
+        width: 50vw;
+        height: 60vh;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .login_form_container {
+        width: 80vw;
+        height: 70vh;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .login_form_container {
+        width: 90vw;
+        height: 55vh;
+    }
+
+    .login_modal_right {
+        width: 100%;
+    }
+
+    .login_modal_left {
+        display: none;
+    }
+}
+
+@media screen and (max-height: 700px) {
+    .login_form_container {
+        height: 70vh;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .login_form_container {
+        height: 80vh;
+    }
+}
+
+@media screen and (max-height: 500px) {
+    .login_form_container {
+        height: 90vh;
+    }
+
+}
+
+@media screen and (max-height: 440px) {
+    .login_form_container {
+        height: 95vh;
+    }
+
 }
