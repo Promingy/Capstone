@@ -193,12 +193,14 @@
 }
 
 .email:hover,
-.linkedin:hover {
+.linkedin:hover,
+.github:hover {
     color: #D02E1E;
     text-decoration-color: #D02E1E;
 }
 
 .email:active,
-.linkedin:active {
+.linkedin:active,
+.github:active {
     color: #BB1F17;
 }

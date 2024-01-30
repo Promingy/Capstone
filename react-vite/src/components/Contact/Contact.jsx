@@ -60,6 +60,10 @@ export default function Contact() {
                                 <h3 className='fa-brands fa-linkedin'/>
                                 <a className="linkedin" href="https://www.linkedin.com/in/corbin-ainsworth-18a885232/" target="_blank" rel="noreferrer">LinkedIn</a>
                             </li>
+                            <li className="personal-info-item">
+                                <h3 className='fa-brands fa-github'/>
+                                <a className="github" href="https://github.com/Promingy" target="_blank" rel="noreferrer">GitHub</a>
+                            </li>
                         </ul>
                     </div>
             </div>
