@@ -45,7 +45,10 @@ function Navigation() {
           <h2 className="nav_links" onClick={() => navigate('/')}>Home</h2>
           <div>
           <h2 className='nav_links'
-            onClick={() => setShowMenu(true)}
+            onClick={() => {
+              setShowMenu(true)
+              navigate('/about-me')
+            }}
             onMouseOver={() => {
               clearTimeout(timeout1)
               clearTimeout(timeout2)
@@ -68,23 +71,52 @@ function Navigation() {
               About
               {showMenu &&
                 <div className="about_me_menu">
-                  <a
-                    className="about_me_links"
-                    target="_blank"
-                    rel='noreferrer'
-                    href="https://github.com/Promingy"
-                    >
-                      <i className="fa-brands fa-github"/>
-                      Corbin&apos;s Github
-                  </a>
-                  <a
-                    className="about_me_links"
-                    target="_blank"
-                    rel='noreferrer'
-                    href="https://github.com/Promingy/Capstone">
-                      <i className="fa-brands fa-git-alt"/>
-                      Project Repo
-                  </a>
+                  <p className="about_me_header">Quick Links</p>
+                  <div className="link-section-container">
+                    <div>
+                      <a className="about_me_links"
+                        onClick={(() => navigate('/about-me'))}
+                      >
+                        <i className="fa-solid fa-user-ninja"/>
+                        About Me
+                      </a>
+                      <a className="about_me_links"
+                        target="_blank"
+                        rel='noreferrer'
+                        href="https://promingy.github.io"
+                      >
+                        <i className="fa-solid fa-address-card"/>
+                        Portfolio
+                      </a>
+                      <a className="about_me_links"
+                        target="_blank"
+                        rel='noreferrer'
+                        href="https://www.linkedin.com/in/corbin-ainsworth-18a885232/"
+                      >
+                        <i className="fa-brands fa-linkedin"/>
+                        LinkedIn
+                      </a>
+                    </div>
+                    <div>
+                      <a
+                        className="about_me_links"
+                        target="_blank"
+                        rel='noreferrer'
+                        href="https://github.com/Promingy"
+                        >
+                          <i className="fa-brands fa-github"/>
+                          Corbin&apos;s Github
+                      </a>
+                      <a
+                        className="about_me_links"
+                        target="_blank"
+                        rel='noreferrer'
+                        href="https://github.com/Promingy/Capstone">
+                          <i className="fa-brands fa-git-alt"/>
+                          Project Repo
+                      </a>
+                    </div>
+                  </div>
                 </div>
               }
           </h2>

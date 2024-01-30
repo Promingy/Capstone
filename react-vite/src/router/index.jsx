@@ -8,12 +8,15 @@ import SelectedRecipe from '../components/SelectedRecipe'
 import CreateRecipe from '../components/CreateRecipe'
 import EditRecipe from '../components/EditRecipe';
 import UserRecipe from '../components/UserRecipe/UserRecipe';
+import AboutMe from '../components/AboutMe';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Layout />} >
       <Route path='/' element={<MainPage />} />
       <Route path='/login' element={<LoginFormPage />} />
+      <Route path='/about-me' element={<AboutMe />} />
+      {/* <Route path='future-features' element={<FutureFeatures />} /> */}
       <Route path='/signup' element={<SignupFormPage />} />
       <Route path='/new-recipe' element={<CreateRecipe />} />
       <Route path='/recipes/:recipeId' element={<SelectedRecipe />} />

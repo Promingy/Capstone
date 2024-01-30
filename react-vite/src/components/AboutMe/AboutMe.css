@@ -1,0 +1,36 @@
+.about-me {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.about-me-body {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.body-separator {
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+}
+
+.see-more-less {
+    cursor: pointer;
+}
+
+.see-more-less:hover {
+    color: gray;
+    text-decoration: underline;
+}
+
+.see-more-less:active {
+    color: #BB1F17;
+}
