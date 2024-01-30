@@ -1,0 +1,206 @@
+.about-me {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.about-me-body {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.body-separator {
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+}
+
+.see-more-less {
+    cursor: pointer;
+}
+
+.see-more-less:hover {
+    color: gray;
+    text-decoration: underline;
+}
+
+.see-more-less:active {
+    color: #BB1F17;
+}
+
+.technologies {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    /* width: 100%; */
+    gap: 25px;
+}
+
+.technologies > * {
+    width: 7%
+}
+
+.message-success {
+    color: green;
+}
+
+.section-header {
+    margin-top: 100px;
+}
+
+.contact-me-subheader {
+    font-size: 20px;
+    color: gray;
+    margin-bottom: 50px;
+}
+
+.contact-me-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    max-width: 1000px;
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+.contact-me-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+
+}
+
+
+.formcarry-block > * {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: #F7F7F7;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.submit-contact {
+    cursor:pointer;
+    background-color: transparent;
+    width:35%;
+    border: 3px solid lightgray;
+    border-radius: 9px;
+    transition: border-color .2s, color .2s;
+    font-weight: bolder;
+    color: gray;
+}
+
+#message {
+    resize: vertical;
+}
+
+.input-container {
+    position: relative;
+}
+
+.input1 {
+    position: absolute;
+    pointer-events: none;
+    left: 20px;
+    top: 15px;
+    color: gray;
+    transition: 0.4s ease all;
+    background-color: transparent;
+    width: fit-content;
+    height: fit-content;
+    padding: 3px;
+    font-size: 15px;
+    border: 1px solid transparent
+}
+
+.input2 {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    opacity: 1;
+    border: 1px solid darkgray;
+    background-color: white;
+    font-size: 12px;
+    width: fit-content;
+    height: fit-content;
+    padding: 3px;
+    color: gray;
+}
+
+#email:focus ~ .input1,
+#message:focus ~ .input1,
+#name:focus ~ .input1 {
+    top: -10px;
+    left: 20px;
+    opacity: 1;
+    border: 1px solid darkgray;
+    background-color: white;
+    font-size: 12px;
+}
+
+.submit-contact:hover {
+    border-color: #D02E1E;
+    color: #D02E1E;
+}
+
+.submit-contact:active {
+    border-color: #BB1F17;
+    color: #BB1F17;
+}
+
+#message {
+    min-height: 150px;
+}
+
+.personal-info-container {
+    align-self: flex-start;
+}
+
+.personal-info-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.personal-info-item {
+    color: gray;
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.personal-info-item > * {
+    box-sizing: content-box;
+    height: 100%;
+    align-self: flex-start;
+    display: inherit;
+    margin: 0;
+    color: gray;
+    transition: 0.2s ease all;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+}
+
+.email:hover,
+.linkedin:hover,
+.github:hover {
+    color: #D02E1E;
+    text-decoration-color: #D02E1E;
+}
+
+.email:active,
+.linkedin:active,
+.github:active {
+    color: #BB1F17;
+}

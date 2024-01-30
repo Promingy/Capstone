@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     color: white;
     width: 50%;
 }
@@ -24,10 +24,9 @@
 .github_link {
     display: flex;
     gap: 10px;
-    padding-bottom: 5px;
     color: white;
     cursor: pointer;
-    margin: 0 0 10px;
+    justify-content: flexl-start;
 }
 
 .github_link:hover {
@@ -39,16 +38,26 @@
     color: #BB1F17;
 }
 
-.footer_left {
+.footer_left,
+.footer_right_content,
+.footer_center_content {
+    display: flex;
+    flex-direction: column;
     gap: 30px;
 }
 
-.footer_left > * {
+.footer_right {
+    height: 100%;
+}
+
+.footer_left > *,
+.footer_center_content > *,
+.footer_right_content > * {
     margin: 0;
 }
 
 .about_me {
-    max-width: 50%;
+    max-width: 75%;
 }
 
 @media (max-width: 768px) {
@@ -101,4 +110,20 @@
     .about_me {
         max-width: 80%;
     }
+}
+
+.footer-right-header,
+.footer_center_header {
+    text-align: center;
+}
+
+.links-container {
+    display: flex;
+    gap: 20px;
+}
+
+.links-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

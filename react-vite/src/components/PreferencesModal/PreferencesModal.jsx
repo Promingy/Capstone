@@ -1,11 +1,14 @@
 import { useSelector } from 'react-redux'
 import './PreferencesModal.css'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function PreferencesModal({ close }) {
     const user = useSelector(state => state.session.user)
     const [iconGlow, setIconGlow] = useState(false)
     const [iconGlow2, setIconGlow2] = useState(false)
+    const navigate = useNavigate()
+
 
     return (
         <>
@@ -38,6 +41,31 @@ function PreferencesModal({ close }) {
 
             <div className='logout_button'>
                 <p id='logout_button' className='logout_button'>Logout</p>
+            </div>
+            <div className='preference-links-wrapper'>
+                <h3 className='preference-links-header'>Links</h3>
+                <div className='preference-links'>
+                    <div className='links-left'>
+                        <a className='preference-link' href='https://promingy.github.io/'>
+                            <i className='fa-solid fa-address-card'/> Portfolio
+                        </a>
+                        <a className='preference-link' href='https://www.linkedin.com/in/corbin-ainsworth-18a885232/'>
+                            <i className='fa-brands fa-linkedin'/> LinkedIn
+                        </a>
+                        <a className='preference-link' href='https://github.com/Promingy'>
+                            <i className='fa-brands fa-github'/> Github
+                        </a>
+                    </div>
+                    <div className='links-right'>
+                        <a className='preference-link' onClick={() => navigate('/about-me')}>
+                            <i className='fa-solid fa-user'/> About
+                        </a>
+                        <a className='preference-link' onClick={() => navigate('/contact-me')}>
+                            <i className='fa-solid fa-envelope'/> Contact
+                        </a>
+
+                    </div>
+                </div>
             </div>
         </div>
         </>

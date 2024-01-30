@@ -43,6 +43,12 @@ function Navigation() {
 
         <div className="header_bottom_container">
           <h2 className="nav_links" onClick={() => navigate('/')}>Home</h2>
+          <h2 className="nav_links" onClick={() => navigate('/about-me')}>
+            About
+          </h2>
+          <h2 className="nav_links" onClick={(() => navigate('/contact-me'))}>
+            Contact
+          </h2>
           <div>
           <h2 className='nav_links'
             onClick={() => setShowMenu(true)}
@@ -65,30 +71,62 @@ function Navigation() {
               timeout2 = setTimeout(removeDelay, 250)
             }}
             >
-              About
+              Quick Links
               {showMenu &&
                 <div className="about_me_menu">
-                  <a
-                    className="about_me_links"
-                    target="_blank"
-                    rel='noreferrer'
-                    href="https://github.com/Promingy"
-                    >
-                      <i className="fa-brands fa-github"/>
-                      Corbin&apos;s Github
-                  </a>
-                  <a
-                    className="about_me_links"
-                    target="_blank"
-                    rel='noreferrer'
-                    href="https://github.com/Promingy/Capstone">
-                      <i className="fa-brands fa-git-alt"/>
-                      Project Repo
-                  </a>
+                  <p className="about_me_header">Quick Links</p>
+                  <div className="link-section-container">
+                    <div>
+                      <a className="about_me_links"
+                        onClick={(() => navigate('/about-me'))}
+                      >
+                        <i className="fa-solid fa-user-ninja"/>
+                        About Me
+                      </a>
+                      <a className="about_me_links"
+                        target="_blank"
+                        rel='noreferrer'
+                        href="https://promingy.github.io"
+                      >
+                        <i className="fa-solid fa-address-card"/>
+                        Portfolio
+                      </a>
+                      <a className="about_me_links"
+                        target="_blank"
+                        rel='noreferrer'
+                        href="https://www.linkedin.com/in/corbin-ainsworth-18a885232/"
+                      >
+                        <i className="fa-brands fa-linkedin"/>
+                        LinkedIn
+                      </a>
+                    </div>
+                    <div>
+                      <a
+                        className="about_me_links"
+                        target="_blank"
+                        rel='noreferrer'
+                        href="https://github.com/Promingy/Capstone">
+                          <i className="fa-brands fa-git-alt"/>
+                          Project Repo
+                      </a>
+                      <a
+                        className="about_me_links"
+                        target="_blank"
+                        rel='noreferrer'
+                        href="https://github.com/Promingy"
+                        >
+                          <i className="fa-brands fa-github"/>
+                          Github
+                      </a>
+                    </div>
+                  </div>
                 </div>
               }
           </h2>
           </div>
+          {/* <h2 className="nav_links">
+            Future Features
+          </h2> */}
         </div>
 
       </div>
