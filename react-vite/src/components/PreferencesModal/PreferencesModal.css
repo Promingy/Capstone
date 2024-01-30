@@ -180,21 +180,21 @@
 .preference-link:active {
     color: #BB1F17;
 }
+@media screen and (max-width: 1024px) {
+    .preference-links-wrapper {
+        width: 30vw;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .preference-links-wrapper {
+        width: 42vw;
+        border: 1px solid red;
+    }
+}
 
 @media screen and (max-width: 480px) {
     .preference-links-wrapper {
         width:80vw;
-    }
-}
-
-@media screen and (max-width: 765px) {
-    .preference-links-wrapper {
-        width: 45vw;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .preference-links-wrapper {
-        width: 30vw;
     }
 }
