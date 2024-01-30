@@ -102,18 +102,18 @@ function Navigation() {
                         className="about_me_links"
                         target="_blank"
                         rel='noreferrer'
-                        href="https://github.com/Promingy"
-                        >
-                          <i className="fa-brands fa-github"/>
-                          Corbin&apos;s Github
+                        href="https://github.com/Promingy/Capstone">
+                          <i className="fa-brands fa-git-alt"/>
+                          Project Repo
                       </a>
                       <a
                         className="about_me_links"
                         target="_blank"
                         rel='noreferrer'
-                        href="https://github.com/Promingy/Capstone">
-                          <i className="fa-brands fa-git-alt"/>
-                          Project Repo
+                        href="https://github.com/Promingy"
+                        >
+                          <i className="fa-brands fa-github"/>
+                          Github
                       </a>
                     </div>
                   </div>
@@ -121,6 +121,12 @@ function Navigation() {
               }
           </h2>
           </div>
+          <h2 className="nav_links" >
+            Contact
+          </h2>
+          {/* <h2 className="nav_links">
+            Future Features
+          </h2> */}
         </div>
 
       </div>

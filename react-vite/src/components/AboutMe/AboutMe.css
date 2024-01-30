@@ -34,3 +34,23 @@
 .see-more-less:active {
     color: #BB1F17;
 }
+
+.technologies {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    /* width: 100%; */
+    gap: 25px;
+}
+
+.technologies > * {
+    width: 7%
+}
+
+.message-success {
+    color: green;
+}
+
+.section-header {
+    margin-top: 50px;
+}
