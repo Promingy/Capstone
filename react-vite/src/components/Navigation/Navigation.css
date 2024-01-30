@@ -202,11 +202,28 @@
   color: #BB1F17;
 }
 
+@media screen and (max-width: 540px) {
+  .nav_links {
+    font-size: 20px;
+  }
+
+  .nav_links::after {
+    bottom: -12px;
+  }
+}
 
 @media  screen and (max-width: 480px) {
   .login_button,
   .sign_up_button {
     font-size: 12px;
+  }
+
+  .nav_links {
+    font-size: 16px;
+  }
+
+  .nav_links::after {
+    bottom: -20px;
   }
 
 }

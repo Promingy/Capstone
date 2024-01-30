@@ -46,6 +46,10 @@
     gap: 30px;
 }
 
+.footer_right {
+    height: 100%;
+}
+
 .footer_left > *,
 .footer_center_content > *,
 .footer_right_content > * {
@@ -116,4 +120,10 @@
 .links-container {
     display: flex;
     gap: 20px;
+}
+
+.links-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
