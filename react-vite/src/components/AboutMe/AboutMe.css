@@ -52,5 +52,149 @@
 }
 
 .section-header {
-    margin-top: 50px;
+    margin-top: 100px;
+}
+
+.contact-me-subheader {
+    font-size: 20px;
+    color: gray;
+    margin-bottom: 50px;
+}
+
+.contact-me-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    max-width: 1000px;
+    width: 100%;
+}
+
+.contact-me-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+
+}
+
+
+.formcarry-block > * {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: #F7F7F7;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.submit-contact {
+    cursor:pointer;
+    background-color: transparent;
+    width:35%;
+    border: 3px solid lightgray;
+    border-radius: 9px;
+    transition: border-color .2s, color .2s;
+    font-weight: bolder;
+    color: gray;
+}
+
+#message {
+    resize: vertical;
+}
+
+.input-container {
+    position: relative;
+}
+
+.input1 {
+    position: absolute;
+    pointer-events: none;
+    left: 20px;
+    top: 10px;
+    color: gray;
+    transition: 0.4s ease all;
+    background-color: transparent;
+    width: fit-content;
+    height: fit-content;
+    padding: 3px;
+    font-size: 15px;
+    border: 1px solid transparent
+}
+
+.input2 {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    opacity: 1;
+    border: 1px solid darkgray;
+    background-color: white;
+    font-size: 12px;
+    width: fit-content;
+    height: fit-content;
+    padding: 3px;
+    color: gray;
+}
+
+#email:focus ~ .input1,
+#message:focus ~ .input1,
+#name:focus ~ .input1 {
+    top: -10px;
+    left: 20px;
+    opacity: 1;
+    border: 1px solid darkgray;
+    background-color: white;
+    font-size: 12px;
+}
+
+.submit-contact:hover {
+    border-color: #D02E1E;
+    color: #D02E1E;
+}
+
+.submit-contact:active {
+    border-color: #BB1F17;
+    color: #BB1F17;
+}
+
+#message {
+    min-height: 150px;
+}
+
+.personal-info-container {
+    align-self: flex-start;
+}
+
+.personal-info-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.personal-info-item {
+    color: gray;
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.personal-info-item > * {
+    box-sizing: content-box;
+    height: 100%;
+    align-self: flex-start;
+    display: inherit;
+    margin: 0;
+    color: gray;
+    transition: 0.2s ease all;
+    text-decoration: none;
+}
+
+.email:hover {
+    color: #D02E1E;
+    border-bottom: dotted #D02E1E;
+}
+
+.email:active{
+    color: #BB1F17;
 }

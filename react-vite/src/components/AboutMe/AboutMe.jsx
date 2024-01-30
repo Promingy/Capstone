@@ -89,7 +89,7 @@ export default function AboutMe() {
             </div>
 
             <h2 className="section-header">My Skills</h2>
-            <div class="technologies">
+            <div className="technologies">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-plain-wordmark.svg" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-plain.svg" />
@@ -112,44 +112,47 @@ export default function AboutMe() {
             </div>
 
             <h2 className="section-header">Contact Me</h2>
+            <p className="contact-me-subheader">Have a question or interested in my work? Feel free to reach out through the form below. I look forward to connecting and discussing how my skills and experience align with your organization's goals.</p>
             <div className='contact-me-body'>
-                <form onSubmit={(e) => onSubmit(e)}>
+                <form className="contact-me-form" onSubmit={(e) => onSubmit(e)}>
 
-                    <div className="formcarry-block">
-                        <label htmlFor="name"/>
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" placeholder="Your first and last name" />
+                    <div className="formcarry-block input-container">
+                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" />
+                        <span className={name ? "input2" : "input1"}>Name</span>
+                    </div>
+
+                    <div className="formcarry-block input-container ">
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email"/>
+                        <span className={email ? 'input2' : 'input1'}>Email</span>
+                    </div>
+
+                    <div className="formcarry-block input-container">
+                        <textarea value={message} onChange={(e) => setMessage(e.target.value)} id="message"></textarea>
+                        <span className={message ? "input2" : "input1"}>Enter your message...</span>
                     </div>
 
                     <div className="formcarry-block">
-                        <label htmlFor="email"/>
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="john@doe.com" />
-                    </div>
-
-                    <div className="formcarry-block">
-                        <label htmlFor="message"/>
-                        <textarea value={message} onChange={(e) => setMessage(e.target.value)} id="message" placeholder="Enter your message..."></textarea>
-                    </div>
-
-                    <div className="formcarry-block">
-                        <button type="submit">Send</button>
+                        <button className="submit-contact" type="submit">Send</button>
                     </div>
                 </form>
 
-                <div>
-                    <ul>
-                        <li>
+                <div className="personal-info-container">
+                    <ul className="personal-info-list">
+                        <li className="personal-info-item">
                             <h3 className="fa-solid fa-home"/>
-                            8587 W Hampden Ave. <br />
-                            Denver, CO 80227 <br />
-                            United States
+                            <span>
+                                8587 W Hampden Ave. <br />
+                                Denver, CO 80227 <br />
+                                United States
+                            </span>
                         </li>
-                        <li>
+                        <li className="personal-info-item">
                             <h3 className="fa-solid fa-mobile-screen-button"/>
-                            (305)570-8392
+                            (305) 570-8392
                         </li>
-                        <li>
+                        <li className="personal-info-item">
                             <h3 className="fa-solid fa-envelope"/>
-                            <a href="mailto:ainsworthcorbin@gmail.com">ainsworthcorbin@gmail.com</a>
+                            <a className="email" href="mailto:ainsworthcorbin@gmail.com">ainsworthcorbin@gmail.com</a>
                         </li>
                     </ul>
                 </div>
