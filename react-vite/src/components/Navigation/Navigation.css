@@ -213,17 +213,31 @@
 }
 
 @media  screen and (max-width: 480px) {
+  .nav_bar {
+    max-width: 100vw;
+  }
+
   .login_button,
   .sign_up_button {
     font-size: 12px;
   }
+  .header_top_container {
+    margin: 0 20px;
+  }
+
+  .header_bottom_container {
+    margin: 0 20px;
+  }
 
   .nav_links {
-    font-size: 16px;
+    font-size: 14px;
+    width: fit-content;
   }
 
   .nav_links::after {
     bottom: -20px;
   }
+
+  
 
 }

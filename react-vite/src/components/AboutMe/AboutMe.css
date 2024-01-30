@@ -14,6 +14,7 @@
     font-size: 20px;
     display: flex;
     flex-direction: column;
+    margin: 0 20px;
 }
 
 .body-separator {
@@ -203,4 +204,31 @@
 .linkedin:active,
 .github:active {
     color: #BB1F17;
+}
+
+@media screen and (max-width: 480px) {
+    .contact-me-body {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .contact-me-subheader {
+        width: 80%;
+        margin: 50px !important;
+    }
+
+    .contact-me-form {
+        width: 90%;
+    }
+
+    .personal-info-container {
+        margin: 20px;
+        margin-bottom: none;
+    }
+
+    .personal-info-list {
+        font-size: 15px;
+    }
 }
