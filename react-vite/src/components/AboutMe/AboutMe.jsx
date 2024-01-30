@@ -112,27 +112,49 @@ export default function AboutMe() {
             </div>
 
             <h2 className="section-header">Contact Me</h2>
-            <form onSubmit={(e) => onSubmit(e)}>
+            <div className='contact-me-body'>
+                <form onSubmit={(e) => onSubmit(e)}>
 
-                <div className="formcarry-block">
-                    <label htmlFor="name"/>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" placeholder="Your first and last name" />
+                    <div className="formcarry-block">
+                        <label htmlFor="name"/>
+                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" placeholder="Your first and last name" />
+                    </div>
+
+                    <div className="formcarry-block">
+                        <label htmlFor="email"/>
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="john@doe.com" />
+                    </div>
+
+                    <div className="formcarry-block">
+                        <label htmlFor="message"/>
+                        <textarea value={message} onChange={(e) => setMessage(e.target.value)} id="message" placeholder="Enter your message..."></textarea>
+                    </div>
+
+                    <div className="formcarry-block">
+                        <button type="submit">Send</button>
+                    </div>
+                </form>
+
+                <div>
+                    <ul>
+                        <li>
+                            <h3 className="fa-solid fa-home"/>
+                            8587 W Hampden Ave. <br />
+                            Denver, CO 80227 <br />
+                            United States
+                        </li>
+                        <li>
+                            <h3 className="fa-solid fa-mobile-screen-button"/>
+                            (305)570-8392
+                        </li>
+                        <li>
+                            <h3 className="fa-solid fa-envelope"/>
+                            <a href="mailto:ainsworthcorbin@gmail.com">ainsworthcorbin@gmail.com</a>
+                        </li>
+                    </ul>
                 </div>
 
-                <div className="formcarry-block">
-                    <label htmlFor="email"/>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="john@doe.com" />
-                </div>
-
-                <div className="formcarry-block">
-                    <label htmlFor="message"/>
-                    <textarea value={message} onChange={(e) => setMessage(e.target.value)} id="message" placeholder="Enter your message..."></textarea>
-                </div>
-
-                <div className="formcarry-block">
-                    <button type="submit">Send</button>
-                </div>
-            </form>
+            </div>
         </div>
     )
 }
