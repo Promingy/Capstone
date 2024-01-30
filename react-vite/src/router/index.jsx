@@ -9,6 +9,7 @@ import CreateRecipe from '../components/CreateRecipe'
 import EditRecipe from '../components/EditRecipe';
 import UserRecipe from '../components/UserRecipe/UserRecipe';
 import AboutMe from '../components/AboutMe';
+import Contact from '../components/Contact';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,7 @@ export const router = createBrowserRouter(
       <Route path='/' element={<MainPage />} />
       <Route path='/login' element={<LoginFormPage />} />
       <Route path='/about-me' element={<AboutMe />} />
+      <Route path='/contact-me' element={<Contact />} />
       {/* <Route path='future-features' element={<FutureFeatures />} /> */}
       <Route path='/signup' element={<SignupFormPage />} />
       <Route path='/new-recipe' element={<CreateRecipe />} />

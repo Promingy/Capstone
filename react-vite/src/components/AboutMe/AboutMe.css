@@ -67,6 +67,7 @@
     justify-content: space-evenly;
     max-width: 1000px;
     width: 100%;
+    margin-bottom: 100px;
 }
 
 .contact-me-form {
@@ -83,7 +84,7 @@
     border: none;
     outline: none;
     background-color: #F7F7F7;
-    padding: 15px;
+    padding: 20px;
     box-sizing: border-box;
     border-radius: 10px;
 }
@@ -111,7 +112,7 @@
     position: absolute;
     pointer-events: none;
     left: 20px;
-    top: 10px;
+    top: 15px;
     color: gray;
     transition: 0.4s ease all;
     background-color: transparent;
@@ -187,14 +188,17 @@
     margin: 0;
     color: gray;
     transition: 0.2s ease all;
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: transparent;
 }
 
-.email:hover {
+.email:hover,
+.linkedin:hover {
     color: #D02E1E;
-    border-bottom: dotted #D02E1E;
+    text-decoration-color: #D02E1E;
 }
 
-.email:active{
+.email:active,
+.linkedin:active {
     color: #BB1F17;
 }

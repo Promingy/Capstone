@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./AboutMe.css"
 import { useNavigate } from "react-router-dom"
 
@@ -10,6 +10,10 @@ export default function AboutMe() {
     const [message, setMessage] = useState("")
     const [error, setError] = useState({})
     const [success, setSuccess] = useState(false)
+
+    useEffect(() => {
+        window.scrollTo(0,0)
+    }, [])
 
     function onSubmit(e){
         e.preventDefault();
@@ -88,7 +92,7 @@ export default function AboutMe() {
                 }
             </div>
 
-            <h2 className="section-header">My Skills</h2>
+            {/* <h2 className="section-header">My Skills</h2>
             <div className="technologies">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-plain-wordmark.svg" />
@@ -98,7 +102,6 @@ export default function AboutMe() {
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg" />
-                {/* <i style={{fontSize: "75px"}} className="devicon-flask-original-wordmark colored" /> */}
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original-wordmark.svg" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sequelize/sequelize-plain-wordmark.svg" />
@@ -109,7 +112,7 @@ export default function AboutMe() {
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain-wordmark.svg" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original-wordmark.svg" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original-wordmark.svg" />
-            </div>
+            </div> */}
 
             <h2 className="section-header">Contact Me</h2>
             <p className="contact-me-subheader">Have a question or interested in my work? Feel free to reach out through the form below. I look forward to connecting and discussing how my skills and experience align with your organization's goals.</p>
@@ -117,17 +120,17 @@ export default function AboutMe() {
                 <form className="contact-me-form" onSubmit={(e) => onSubmit(e)}>
 
                     <div className="formcarry-block input-container">
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" />
+                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" required/>
                         <span className={name ? "input2" : "input1"}>Name</span>
                     </div>
 
                     <div className="formcarry-block input-container ">
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email"/>
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" required/>
                         <span className={email ? 'input2' : 'input1'}>Email</span>
                     </div>
 
                     <div className="formcarry-block input-container">
-                        <textarea value={message} onChange={(e) => setMessage(e.target.value)} id="message"></textarea>
+                        <textarea value={message} onChange={(e) => setMessage(e.target.value)} id="message" required />
                         <span className={message ? "input2" : "input1"}>Enter your message...</span>
                     </div>
 
@@ -153,6 +156,10 @@ export default function AboutMe() {
                         <li className="personal-info-item">
                             <h3 className="fa-solid fa-envelope"/>
                             <a className="email" href="mailto:ainsworthcorbin@gmail.com">ainsworthcorbin@gmail.com</a>
+                        </li>
+                        <li className="personal-info-item">
+                            <h3 className='fa-brands fa-linkedin'/>
+                            <a className="linkedin" href="https://www.linkedin.com/in/corbin-ainsworth-18a885232/" target="_blank" rel="noreferrer">LinkedIn</a>
                         </li>
                     </ul>
                 </div>

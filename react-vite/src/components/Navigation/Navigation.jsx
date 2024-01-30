@@ -43,12 +43,15 @@ function Navigation() {
 
         <div className="header_bottom_container">
           <h2 className="nav_links" onClick={() => navigate('/')}>Home</h2>
+          <h2 className="nav_links" onClick={() => navigate('/about-me')}>
+            About
+          </h2>
+          <h2 className="nav_links" onClick={(() => navigate('/contact-me'))}>
+            Contact
+          </h2>
           <div>
           <h2 className='nav_links'
-            onClick={() => {
-              setShowMenu(true)
-              navigate('/about-me')
-            }}
+            onClick={() => setShowMenu(true)}
             onMouseOver={() => {
               clearTimeout(timeout1)
               clearTimeout(timeout2)
@@ -68,7 +71,7 @@ function Navigation() {
               timeout2 = setTimeout(removeDelay, 250)
             }}
             >
-              About
+              Quick Links
               {showMenu &&
                 <div className="about_me_menu">
                   <p className="about_me_header">Quick Links</p>
@@ -121,9 +124,6 @@ function Navigation() {
               }
           </h2>
           </div>
-          <h2 className="nav_links" >
-            Contact
-          </h2>
           {/* <h2 className="nav_links">
             Future Features
           </h2> */}
