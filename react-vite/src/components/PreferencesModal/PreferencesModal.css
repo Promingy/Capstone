@@ -189,7 +189,6 @@
 @media screen and (max-width: 768px) {
     .preference-links-wrapper {
         width: 42vw;
-        border: 1px solid red;
     }
 }
 
