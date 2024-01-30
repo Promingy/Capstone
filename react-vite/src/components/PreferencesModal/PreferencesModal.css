@@ -140,3 +140,43 @@
     object-fit: cover;
     border-radius: 5px;
 }
+
+.preference-links-wrapper {
+    position: fixed;
+    bottom: 20px;
+    margin: 0 auto;
+    width: 24vw;
+}
+
+.preference-links-header {
+    text-align: center;
+}
+
+.preference-links {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.links-left,
+.links-right {
+    display: inherit;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.preference-link {
+    display: flex;
+    gap: 10px;
+    color: black;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.preference-link:hover {
+    color: #D02E1E;
+}
+
+.preference-link:active {
+    color: #BB1F17;
+}
