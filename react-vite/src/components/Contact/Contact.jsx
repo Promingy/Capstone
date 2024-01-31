@@ -1,23 +1,66 @@
 import { useEffect, useState } from "react"
 import './Contact.css'
+import { useNavigate } from "react-router-dom";
 
 export default function Contact() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+    const [error, setError] = useState({});
+    const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.scrollTo(0,0)
     }, [])
 
+    function onSubmit(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        fetch("https://formcarry.com/s/pW8vrw_OPkn", {
+          method: 'POST',
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ name, email, message })
+        })
+        .then(response => response.json())
+        .then(response => {
+          if (response.code === 200) {
+            navigate('/contact-me')
+            setName("")
+            setEmail("")
+            setMessage("")
+            setSuccess(true)
+            window.scrollTo({top: 0, behavior: 'smooth'})
+          }
+          else if(response.code === 422){
+            // Field validation failed
+            setError(response.message)
+          }
+          else {
+            // other error from formcarry
+            setError(response.message)
+          }
+        })
+        .catch(error => {
+          // request related error.
+          setError(error.message ? error.message : error);
+        });
+      }
+
     return (
         <div className="contact-me-container">
+            {success && <p className="message-success">✅ Message successfully sent</p>}
+
             <h1 className="contact-me-header">Contact Me</h1>
             <p className="contact-me-subheader">
-            Have a question or interested in my work? Feel free to reach out through the form below. I look forward to connecting and discussing how my skills and experience align with your organization's goals.
+            Have a question or interested in my work? Feel free to reach out through the form below. I look forward to connecting and discussing how my skills and experience align with your organization&apos;s goals.
             </p>
             <div className="contact-me-wrapper">
-                <form className="contact-me-form contact-form" onSubmit={(e) => onSubmit(e)}>
+                <form className="contact-me-form contact-form" onSubmit={onSubmit}>
 
                     <div className="formcarry-block input-container">
                         <input type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" required/>
