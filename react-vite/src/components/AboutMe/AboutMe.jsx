@@ -13,7 +13,7 @@ export default function AboutMe() {
     return (
         <div className="about-me">
             <div className="about-me-left">
-                <img className="about-me-pic" src='/public/profile.png' />
+                <img className="about-me-pic" src='/profile.png' />
                 <button
                     type='button'
                     className="contact-me-btn"
