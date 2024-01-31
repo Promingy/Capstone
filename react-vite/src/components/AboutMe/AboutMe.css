@@ -1,13 +1,68 @@
 .about-me {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
     justify-content: center;
     padding: 2rem 0;
     background-color: var(--color-primary);
     color: var(--color-white);
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 20px auto 0;
+    gap: 50px;
+}
+
+.about-me-left {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    justify-self: center;
+    align-items: center;
+    width: 45%;
+    gap: 50px;
+    height: fit-content
+}
+
+.about-me-pic {
+    width: 450px;
+    height: 450px;
+    border-radius: 20px;
+    object-fit: cover;
+    object-position: center;
+    border: 5px solid var(--color-white);
+}
+
+.contact-me-btn {
+    cursor: pointer;
+    margin: 0 50px;
+    padding: 15px;
+    border: none;
+    background-color: #D3D3D3;
+    border-radius: 5px;
+    font-weight: bolder;
+    font-size: large;
+    transition: .2s ease all;
+    width: 75%;
+ }
+
+.contact-me-btn:hover {
+    background-color: #c1bbbb;
+}
+
+.contact-me-btn:active {
+    background-color: #afafaf;
+}
+
+.about-me-right {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    justify-content: center;
+    width: 55%;
+    gap: 50px;
+}
+
+.about-me-subheader {
+    color: #303134;
 }
 
 .about-me-body {
@@ -78,7 +133,6 @@
     width: 50%;
 
 }
-
 
 .formcarry-block > * {
     width: 100%;
@@ -206,6 +260,72 @@
     color: #BB1F17;
 }
 
+@media screen and (max-width: 1024px) {
+    .about-me-pic {
+        width: 350px;
+        height: 350px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .about-me-pic {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .about-me {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .about-me-left {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .about-me-right {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .about-me-body {
+        font-size: 15px;
+    }
+
+    .technologies {
+        width: 80%;
+    }
+
+    .technologies > * {
+        width: 10%;
+    }
+
+    .contact-me-body {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .contact-me-form {
+        width: 90%;
+    }
+
+    .personal-info-container {
+        margin: 20px;
+        margin-bottom: none;
+    }
+
+    .personal-info-list {
+        font-size: 15px;
+    }
+}
+
 @media screen and (max-width: 480px) {
     .contact-me-body {
         flex-direction: column;
@@ -213,6 +333,7 @@
         justify-content: center;
         margin: 0;
     }
+
 
     .contact-me-subheader {
         width: 80%;
