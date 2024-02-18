@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
 import ConfirmDelete from '../ConfirmDelete'
-import { thunkSaveRecipe } from '../../redux/recipe'
+import { thunkSaveRecipe, thunkUnsaveRecipe } from '../../redux/recipe'
 
 export function starCreator(recipe) {
     const stars = []
@@ -99,6 +99,7 @@ export default function RecipeTile({ recipe }) {
                                         dispatch(thunkSaveRecipe(recipe))
                                     } else {
                                         setBookmark("fa-regular fa-bookmark fa-lg")
+                                        dispatch(thunkUnsaveRecipe((recipe)))
                                     }
                                     setSaved(!saved)
                                 }}

@@ -396,3 +396,20 @@ def save_recipe(recipeId):
     db.session.commit()
 
     return user.to_dict()
+
+
+@recipe.route('/<int:recipeId>/unsave', methods=['DELETE'])
+def unsave_recipe(recipeId):
+    """
+    Route that removes a recipe from the user's saved recipes
+    """
+
+    userId = int(session['_user_id'])
+
+    user = User.query.get(userId)
+    recipe = Recipe.query.get(recipeId)
+
+    user.saved_recipes.remove(recipe)
+    db.session.commit()
+
+    return user.to_dict()

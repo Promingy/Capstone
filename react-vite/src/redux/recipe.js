@@ -13,6 +13,7 @@ const UPDATE_REVIEW = 'recipe/updateReview'
 const LIKE_REVIEW = 'recipe/likeReview'
 const DELETE_LIKE = 'recipe/deleteLike'
 const SAVE_RECIPE = 'recipe/saveRecipe'
+const UNSAVE_RECIPE = 'recipe/unsaveRecipe'
 
 const actionGetAllRecipes = (recipes) => {
     return {
@@ -42,10 +43,10 @@ const actionCreateRecipe = (recipe) => {
     }
 }
 
-const actionSaveRecipe = (recipe) => {
+const actionUnsaveRecipe = (recipeId) => {
     return {
-        type: SAVE_RECIPE,
-        recipe
+        type: UNSAVE_RECIPE,
+        recipeId
     }
 }
 
@@ -164,12 +165,26 @@ export const thunkSaveRecipe = (recipe) => async(dispatch) => {
 
     const data = await res.json()
 
-    if (res.ok){
-        dispatch(actionSaveRecipe(data))
-    }
+    // if (res.ok){
+    //     dispatch(actionSaveRecipe(data))
+    // }
 
     return data
 
+}
+
+export const thunkUnsaveRecipe = (recipe) => async(dispatch) => {
+    const res = await fetch(`/api/recipes/${recipe.id}/unsave`, {
+        method: "DELETE"
+    })
+
+    const data = await res.json()
+
+    if (res.ok){
+        dispatch(actionUnsaveRecipe(recipe.id))
+    }
+
+    return data
 }
 
 export const thunkCreateRecipe = (recipe) => async (dispatch) => {
@@ -266,6 +281,13 @@ function recipeReducer(state=initialState, action){
 
             return newState;
         }
+        case UNSAVE_RECIPE: {
+            const newState = { ...state }
+
+            delete newState.savedRecipes[action.recipeId]
+            
+            return newState
+        }
         case GET_SELECTED_RECIPE: {
             const newState = { ...state }
             newState[action.recipe.id] = action.recipe
@@ -287,7 +309,9 @@ function recipeReducer(state=initialState, action){
         }
         case UPDATE_RECIPE: {
             const newState = { ...state }
+
             newState[action.recipe.id] = action.recipe
+
             return newState
         }
         case DELETE_RECIPE: {
