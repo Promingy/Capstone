@@ -33,3 +33,17 @@ def get_user_routes(userId):
     owner = User.query.get(userId)
 
     return {"owner": owner.to_dict(), "recipes":{recipe.to_dict()['id']: recipe.to_dict(rating=True) for recipe in recipes}}
+
+@user_routes.route('/<int:userId>/saved-recipes')
+def get_user_saved_recipes(userId):
+    """
+    Query for all saved recipes from a specific user
+    """
+
+    user = User.query.get(userId)
+    saved_recipes = user.saved_recipes
+
+    return {
+            # "user": user.to_dict(),
+            "saved_recipes": {saved_recipe.to_dict()['id']: saved_recipe.to_dict(rating=True) for saved_recipe in saved_recipes}
+        }

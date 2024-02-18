@@ -1,5 +1,5 @@
 from flask import Blueprint, request, session
-from ..models import Recipe, Category, db, Quantity, Step, Rating, Review
+from ..models import Recipe, Category, db, Quantity, Step, Rating, Review, User
 from ..forms import RecipeForm, QuantityForm, StepForm, ReviewForm, RatingForm
 from flask_login import login_required
 from app.aws import (upload_file_to_s3, get_unique_filename)
@@ -379,3 +379,20 @@ def post_rating(recipeId):
 
     else:
         return {"errors": form.errors}, 400
+
+
+@recipe.route('/<int:recipeId>/save', methods=['POST'])
+def save_recipe(recipeId):
+    """
+    Route that saves a recipe to the user's saved recipes
+    """
+
+    userId = int(session['_user_id'])
+
+    user = User.query.get(userId)
+    recipe = Recipe.query.get(recipeId)
+
+    user.saved_recipes.append(recipe)
+    db.session.commit()
+
+    return user.to_dict()

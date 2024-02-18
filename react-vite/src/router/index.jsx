@@ -27,6 +27,7 @@ export const router = createBrowserRouter(
       <Route path='/:userId/recipes' element={<UserRecipe />} />
       <Route path='/recipe-box' element={<RecipeBox />}>
         <Route path='' element={<SavedRecipes />} />
+        <Route path='all' element={<SavedRecipes />} />
         <Route path='cooked-recipes' element={<CookedRecipes />} />
         <Route path='recently-viewed' element={<RecentlyViewed />} />
       </Route>

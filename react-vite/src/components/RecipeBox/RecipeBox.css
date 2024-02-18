@@ -46,3 +46,7 @@
     background-color: #F6F6F4;
     font-weight: bold;
 }
+
+.saved-recipes-container {
+    display: flex;
+}

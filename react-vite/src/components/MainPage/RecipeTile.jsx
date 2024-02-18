@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import './RecipeTile.css'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
 import ConfirmDelete from '../ConfirmDelete'
+import { thunkSaveRecipe } from '../../redux/recipe'
+
 export function starCreator(recipe) {
     const stars = []
 
@@ -19,6 +21,7 @@ export function starCreator(recipe) {
 }
 
 export default function RecipeTile({ recipe }) {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const sessionUser = useSelector(state => state.session.user)
     const cookTimeHours = Math.floor((recipe.cook_time + recipe.prep_time) / 60)
@@ -82,7 +85,8 @@ export default function RecipeTile({ recipe }) {
                                 className={bookmark}
                                 onMouseOver={() => {
                                     if (!saved){
-                                        setBookmark('fa-solid fa-bookmark fa-lg')}}
+                                        setBookmark('fa-solid fa-bookmark fa-lg')
+                                    }}
                                     }
                                 onMouseLeave={() =>{
                                     if (!saved){
@@ -92,6 +96,7 @@ export default function RecipeTile({ recipe }) {
                                 onClick={() => {
                                     if (!saved){
                                         setBookmark('fa-solid fa-bookmark fa-lg')
+                                        dispatch(thunkSaveRecipe(recipe))
                                     } else {
                                         setBookmark("fa-regular fa-bookmark fa-lg")
                                     }
