@@ -20,7 +20,7 @@ export function starCreator(recipe) {
     return stars
 }
 
-export default function RecipeTile({ recipe }) {
+export default function RecipeTile({ recipe, isSaved=true }) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const sessionUser = useSelector(state => state.session.user)
@@ -28,8 +28,8 @@ export default function RecipeTile({ recipe }) {
     const cookTimeMinutes = (recipe.cook_time + recipe.prep_time) % 60
     const ownerFirstName = recipe.owner.first_name[0].toUpperCase() + recipe.owner.first_name.slice(1)
     const ownerLastName = recipe.owner.last_name[0].toUpperCase() + recipe.owner.last_name.slice(1)
-    const [bookmark, setBookmark] = useState('fa-regular fa-bookmark fa-lg') /// future feature
-    const [saved, setSaved] = useState(false) /// future feature
+    const [bookmark, setBookmark] = useState(`fa-bookmark fa-lg ${isSaved ? 'fa-solid' : 'fa-regular'}`) /// future feature
+    const [saved, setSaved] = useState(isSaved) /// future feature
     const [confirmDelete, setConfirmDelete] = useState(false)
 
     function onClickHandle (e) {
@@ -42,6 +42,7 @@ export default function RecipeTile({ recipe }) {
             navigate(`/recipes/${recipe.id}-${recipe.title.toLowerCase().split(' ').join('-')}`, {state: recipe})
         }
     }
+
 
     return (
         <div className='recipeTile'

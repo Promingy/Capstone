@@ -24,7 +24,7 @@ export default function SavedRecipes() {
             <div className="saved-recipes-container">
                 {recipes && Object.values(recipes).map(recipe => {
                     return (
-                        <RecipeTile key={recipe.id} recipe={recipe} />
+                        <RecipeTile key={recipe.id} recipe={recipe}/>
                         )
                     })}
             </div>

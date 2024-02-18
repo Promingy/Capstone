@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './MainPage.css'
-import { thunkGetAllRecipes } from '../../redux/recipe'
+import { thunkGetAllRecipes, thunkGetSavedRecipes } from '../../redux/recipe'
 import RecipeTile from './RecipeTile'
 import { thunkGetDropdowns } from '../../redux/dropdown'
 import { useModal } from '../../context/Modal'
@@ -11,6 +11,7 @@ export default function MainPage() {
     const dispatch = useDispatch()
     const { closeModal } = useModal()
     const sessionUser = useSelector(state => state.session.user)
+    const savedRecipes = useSelector(state => state.recipes.savedRecipes)
     const dropdowns = useSelector(state => state.dropdowns.categories)
     let recipes = useSelector(state => state.recipes)
     const location = useLocation()
@@ -19,6 +20,7 @@ export default function MainPage() {
 
     useEffect(() => {
         dispatch(thunkGetAllRecipes())
+        dispatch(thunkGetSavedRecipes(sessionUser?.id))
         dispatch(thunkGetDropdowns())
     }, [dispatch])
 
@@ -59,7 +61,7 @@ export default function MainPage() {
                             {categoryRecipes.map(recipe => {
                                 if (!firstRecipe) {setFirstRecipe(recipe)}
 
-                                return <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} />
+                                return <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} isSaved={recipe.id in savedRecipes}/>
                             })}
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import { thunkGetUserRecipes } from '../../redux/session'
 import { useParams } from 'react-router-dom'
 import RecipeTile from '../MainPage/RecipeTile'
 import { useModal } from '../../context/Modal'
+import { thunkGetSavedRecipes } from '../../redux/recipe'
 
 export default function UserRecipe() {
     const dispatch = useDispatch()
@@ -13,11 +14,13 @@ export default function UserRecipe() {
     const sessionUser = useSelector(state => state.session.user)
     userId = +userId?.split(' ')?.[0]
     let recipes = useSelector(state => state.session)
+    const savedRecipes = useSelector(state => state.recipes.savedRecipes)
     const owner = recipes?.[+userId]?.owner
     recipes = recipes?.[+userId]
 
     useEffect(() => {
         dispatch(thunkGetUserRecipes(userId))
+        dispatch(thunkGetSavedRecipes(sessionUser?.id))
         window.scrollTo(0, 0)
     }, [dispatch, userId])
 
@@ -57,7 +60,7 @@ export default function UserRecipe() {
                     {Object.values(recipes).map(recipe => {
                         if (recipe == owner) return
                         return (
-                            <RecipeTile recipe={recipe} key={`recipe${recipe.id}`}/>
+                            <RecipeTile recipe={recipe} isSaved={recipe.id in savedRecipes} key={`recipe${recipe.id}`}/>
                         )
                     })}
                 </div>
