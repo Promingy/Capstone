@@ -1,4 +1,5 @@
 const GET_ALL_RECIPES = 'recipe/getAllRecipes'
+const GET_SAVED_RECIPES = 'recipe/getSavedRecipes'
 const GET_SELECTED_RECIPE = 'recipe/getSelectedRecipe'
 const CREATE_RECIPE = 'recipe/createRecipe'
 const UPDATE_RECIPE = 'recipe/updateRecipe'
@@ -11,10 +12,19 @@ const DELETE_REVIEW = 'recipe/deleteReview'
 const UPDATE_REVIEW = 'recipe/updateReview'
 const LIKE_REVIEW = 'recipe/likeReview'
 const DELETE_LIKE = 'recipe/deleteLike'
+const SAVE_RECIPE = 'recipe/saveRecipe'
+const UNSAVE_RECIPE = 'recipe/unsaveRecipe'
 
 const actionGetAllRecipes = (recipes) => {
     return {
         type: GET_ALL_RECIPES,
+        recipes
+    }
+}
+
+const actionGetSavedRecipes = (recipes) => {
+    return {
+        type: GET_SAVED_RECIPES,
         recipes
     }
 }
@@ -30,6 +40,13 @@ const actionCreateRecipe = (recipe) => {
     return {
         type: CREATE_RECIPE,
         recipe
+    }
+}
+
+const actionUnsaveRecipe = (recipeId) => {
+    return {
+        type: UNSAVE_RECIPE,
+        recipeId
     }
 }
 
@@ -118,6 +135,19 @@ export const thunkGetAllRecipes = () => async(dispatch) => {
     return await res.json()
 }
 
+export const thunkGetSavedRecipes = (userId) => async(dispatch) => {
+    const res = await fetch(`/api/users/${userId}/saved-recipes`)
+
+    console.log(res)
+    if (res.ok){
+        const data = await res.json()
+        dispatch(actionGetSavedRecipes(data.saved_recipes))
+        return data
+    }
+    return await res.json()
+
+}
+
 
 export const thunkGetSelectedRecipe = (recipeId) => async (dispatch) => {
     const res = await fetch(`/api/recipes/${recipeId}`)
@@ -126,6 +156,35 @@ export const thunkGetSelectedRecipe = (recipeId) => async (dispatch) => {
         const data = await res.json()
         dispatch(actionGetSelectedRecipe(data))
     }
+}
+
+export const thunkSaveRecipe = (recipe) => async(dispatch) => {
+    const res = await fetch(`/api/recipes/${recipe.id}/save`, {
+        method: "POST"
+    })
+
+    const data = await res.json()
+
+    // if (res.ok){
+    //     dispatch(actionSaveRecipe(data))
+    // }
+
+    return data
+
+}
+
+export const thunkUnsaveRecipe = (recipe) => async(dispatch) => {
+    const res = await fetch(`/api/recipes/${recipe.id}/unsave`, {
+        method: "DELETE"
+    })
+
+    const data = await res.json()
+
+    if (res.ok){
+        dispatch(actionUnsaveRecipe(recipe.id))
+    }
+
+    return data
 }
 
 export const thunkCreateRecipe = (recipe) => async (dispatch) => {
@@ -213,6 +272,22 @@ function recipeReducer(state=initialState, action){
 
             return newState
         }
+        case GET_SAVED_RECIPES: {
+            const newState = { ...state, savedRecipes: {}};
+
+            for (let recipe in action.recipes){
+                newState.savedRecipes[recipe] = action.recipes[recipe];
+            }
+
+            return newState;
+        }
+        case UNSAVE_RECIPE: {
+            const newState = { ...state }
+
+            delete newState.savedRecipes[action.recipeId]
+            
+            return newState
+        }
         case GET_SELECTED_RECIPE: {
             const newState = { ...state }
             newState[action.recipe.id] = action.recipe
@@ -234,7 +309,9 @@ function recipeReducer(state=initialState, action){
         }
         case UPDATE_RECIPE: {
             const newState = { ...state }
+
             newState[action.recipe.id] = action.recipe
+
             return newState
         }
         case DELETE_RECIPE: {
@@ -244,7 +321,7 @@ function recipeReducer(state=initialState, action){
             if (newState.categories) {
                 delete newState.categories[+action.recipe.category_id][action.recipe.id]
             }
-            
+
             return newState
         }
         case ADD_RATING: {

@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import './RecipeTile.css'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
 import ConfirmDelete from '../ConfirmDelete'
+import { thunkSaveRecipe, thunkUnsaveRecipe } from '../../redux/recipe'
+
 export function starCreator(recipe) {
     const stars = []
 
@@ -18,15 +20,16 @@ export function starCreator(recipe) {
     return stars
 }
 
-export default function RecipeTile({ recipe }) {
+export default function RecipeTile({ recipe, isSaved=true }) {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const sessionUser = useSelector(state => state.session.user)
     const cookTimeHours = Math.floor((recipe.cook_time + recipe.prep_time) / 60)
     const cookTimeMinutes = (recipe.cook_time + recipe.prep_time) % 60
     const ownerFirstName = recipe.owner.first_name[0].toUpperCase() + recipe.owner.first_name.slice(1)
     const ownerLastName = recipe.owner.last_name[0].toUpperCase() + recipe.owner.last_name.slice(1)
-    // const [bookmark, setBookmark] = useState('fa-regular fa-bookmark fa-lg') /// future feature
-    // const [saved, setSaved] = useState(false) /// future feature
+    const [bookmark, setBookmark] = useState(`fa-bookmark fa-lg ${isSaved ? 'fa-solid' : 'fa-regular'}`) /// future feature
+    const [saved, setSaved] = useState(isSaved) /// future feature
     const [confirmDelete, setConfirmDelete] = useState(false)
 
     function onClickHandle (e) {
@@ -39,6 +42,7 @@ export default function RecipeTile({ recipe }) {
             navigate(`/recipes/${recipe.id}-${recipe.title.toLowerCase().split(' ').join('-')}`, {state: recipe})
         }
     }
+
 
     return (
         <div className='recipeTile'
@@ -76,12 +80,14 @@ export default function RecipeTile({ recipe }) {
                             }
                         </p>
                         <div className='tile_icons_container'>
-                            {/* <span ///future feature
+                        {sessionUser &&
+                            <span ///future feature
                                 id='bookmark_icon_tile'
                                 className={bookmark}
                                 onMouseOver={() => {
                                     if (!saved){
-                                        setBookmark('fa-solid fa-bookmark fa-lg')}}
+                                        setBookmark('fa-solid fa-bookmark fa-lg')
+                                    }}
                                     }
                                 onMouseLeave={() =>{
                                     if (!saved){
@@ -91,12 +97,15 @@ export default function RecipeTile({ recipe }) {
                                 onClick={() => {
                                     if (!saved){
                                         setBookmark('fa-solid fa-bookmark fa-lg')
+                                        dispatch(thunkSaveRecipe(recipe))
                                     } else {
                                         setBookmark("fa-regular fa-bookmark fa-lg")
+                                        dispatch(thunkUnsaveRecipe((recipe)))
                                     }
                                     setSaved(!saved)
                                 }}
-                                /> */}
+                                />
+                        }
 
                                 {sessionUser?.id == recipe.owner_id &&
                                 <>

@@ -44,7 +44,5 @@ def delete_rating(ratingId):
 
         return {"message": "successfully deleted"}
 
-@rating.route('/<int:ratingId>', methods=['POST'])
-@login_required
-def like_review(ratingId):
-    pass
+    else:
+        return {"errors": "Unauthorized"}, 401
