@@ -11,7 +11,7 @@ import UserRecipe from '../components/UserRecipe/UserRecipe';
 import AboutMe from '../components/AboutMe';
 import Contact from '../components/Contact';
 import RecipeBox from '../components/RecipeBox';
-import {CookedRecipes, SavedRecipes} from '../components/RecipeBox';
+import {CookedRecipes, SavedRecipes, RecentlyViewed} from '../components/RecipeBox';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +28,7 @@ export const router = createBrowserRouter(
       <Route path='/recipe-box' element={<RecipeBox />}>
         <Route path='' element={<SavedRecipes />} />
         <Route path='cooked-recipes' element={<CookedRecipes />} />
+        <Route path='recently-viewed' element={<RecentlyViewed />} />
       </Route>
       <Route path='*' element={<Redirect />} />
     </Route>

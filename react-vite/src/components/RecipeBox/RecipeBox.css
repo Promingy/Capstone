@@ -41,3 +41,8 @@
 .saved-recipes-nav-link:hover {
     background-color: #F6F6F4;
 }
+
+.active {
+    background-color: #F6F6F4;
+    font-weight: bold;
+}
