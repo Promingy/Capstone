@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import "./SavedRecipes.css";
+import "./RecipeBox.css";
+import { Outlet } from "react-router-dom";
 
-export default function SavedRecipes() {
+export default function RecipeBox() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -13,19 +14,20 @@ export default function SavedRecipes() {
                 <ul className="saved-recipes-nav-links-container">
                     <li className="saved-recipes-nav-link">
                         <i className="fa-solid fa-bookmark fa-lg"/>
-                        <h3>Saved Recipes</h3>
+                        <p>Saved Recipes</p>
                     </li>
                     <li className="saved-recipes-nav-link">
-                        <h3>Cooked Recipes</h3>
+                        <i className="fa-solid fa-circle-check fa-lg"/>
+                        <p>Cooked Recipes</p>
                     </li>
                     <li className="saved-recipes-nav-link">
-                        <h3>Recently Viewed</h3>
+                        <i className="fa-regular fa-clock fa-lg"/>
+                        <p>Recently Viewed</p>
                     </li>
                 </ul>
             </div>
             <div className="saved-recipe-right-wrapper">
-                <h3>Saved Recipes</h3>
-                test
+                <Outlet />
             </div>
         </div>
     )

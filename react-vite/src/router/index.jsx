@@ -10,7 +10,8 @@ import EditRecipe from '../components/EditRecipe';
 import UserRecipe from '../components/UserRecipe/UserRecipe';
 import AboutMe from '../components/AboutMe';
 import Contact from '../components/Contact';
-import SavedRecipes from '../components/SavedRecipes';
+import RecipeBox from '../components/RecipeBox';
+import {CookedRecipes, SavedRecipes} from '../components/RecipeBox';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,13 +20,15 @@ export const router = createBrowserRouter(
       <Route path='/login' element={<LoginFormPage />} />
       <Route path='/about-me' element={<AboutMe />} />
       <Route path='/contact-me' element={<Contact />} />
-      {/* <Route path='future-features' element={<FutureFeatures />} /> */}
       <Route path='/signup' element={<SignupFormPage />} />
       <Route path='/new-recipe' element={<CreateRecipe />} />
       <Route path='/recipes/:recipeId' element={<SelectedRecipe />} />
       <Route path='/recipes/:recipeId/edit' element={<EditRecipe />} />
       <Route path='/:userId/recipes' element={<UserRecipe />} />
-      <Route path='/saved-recipes' element={<SavedRecipes />} />
+      <Route path='/recipe-box' element={<RecipeBox />}>
+        <Route path='' element={<SavedRecipes />} />
+        <Route path='cooked-recipes' element={<CookedRecipes />} />
+      </Route>
       <Route path='*' element={<Redirect />} />
     </Route>
   )

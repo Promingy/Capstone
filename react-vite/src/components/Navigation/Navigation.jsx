@@ -34,7 +34,7 @@ function Navigation() {
           <img className="logo_image" onClick={() => navigate('/')} src="https://recipe-rendezvous.s3.us-west-2.amazonaws.com/recipe-rendezvous-high-resolution-logo-transparent+(1).png" />
           <div className="header_top_right">
             <h3 className="your_recipe_box"
-              onClick={() => navigate('/saved-recipes')}>
+              onClick={() => navigate('/recipe-box')}>
               <i className="fa-bookmark fa-solid"/>
               Your Recipe Box
             </h3>
