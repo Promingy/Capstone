@@ -10,6 +10,7 @@ import EditRecipe from '../components/EditRecipe';
 import UserRecipe from '../components/UserRecipe/UserRecipe';
 import AboutMe from '../components/AboutMe';
 import Contact from '../components/Contact';
+import SavedRecipes from '../components/SavedRecipes';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,7 @@ export const router = createBrowserRouter(
       <Route path='/recipes/:recipeId' element={<SelectedRecipe />} />
       <Route path='/recipes/:recipeId/edit' element={<EditRecipe />} />
       <Route path='/:userId/recipes' element={<UserRecipe />} />
+      <Route path='/saved-recipes' element={<SavedRecipes />} />
       <Route path='*' element={<Redirect />} />
     </Route>
   )

@@ -84,6 +84,21 @@
   background-color: #BB1F17;
 }
 
+.your_recipe_box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.your_recipe_box:hover {
+  color: #777777;
+}
+
+.your_recipe_box:active {
+  color: #CF1A00;
+}
+
 .header_bottom_container {
   display: flex;
   gap: 25px;

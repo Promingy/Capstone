@@ -308,6 +308,10 @@ def delete_recipe(recipeId):
     quantities = Quantity.query.filter(Quantity.recipe_id == recipeId).all()
     steps = Step.query.filter(Step.recipe_id == recipeId).all()
 
+
+    if not recipe:
+        return {"error": "resource not found"}, 404
+
     if recipe and recipe.owner_id == int(session['_user_id']):
         db.session.delete(recipe)
         [db.session.delete(quantity) for quantity in quantities]
@@ -315,9 +319,6 @@ def delete_recipe(recipeId):
 
         db.session.commit()
         return {"message": "successful"}
-
-    elif not recipe:
-        return {"error": "resource not found"}, 404
 
     else:
         return {"error": "Unauthorized"}, 403

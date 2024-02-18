@@ -1,0 +1,27 @@
+.saved-recipe-wrapper {
+    margin: 0 auto;
+    display: flex;
+    min-height: 100vh;
+}
+
+.saved-recipe-left-wrapper {
+    background-color: white;
+    border-right: 1px solid lightgray;
+    width: 35%;
+}
+
+.saved-recipe-right-wrapper {
+    background-color: #F8F8F5;
+    width: 65%;
+}
+
+.saved-recipes-nav-links-container {
+    margin-right: 20px;
+}
+
+.saved-recipes-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+}
