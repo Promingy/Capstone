@@ -3,6 +3,7 @@ from flask import session
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from datetime import datetime
+from .saved_recipe import SavedRecipe
 
 class Recipe(db.Model, UserMixin):
     __tablename__ = 'recipes'
@@ -26,6 +27,7 @@ class Recipe(db.Model, UserMixin):
     quantities = db.relationship('Quantity', back_populates='recipe')
     steps = db.relationship('Step', back_populates='recipe')
     ratings = db.relationship('Rating', back_populates='recipe')
+    saved_users = db.relationship("User", secondary=SavedRecipe, back_populates='saved_recipes')
 
     def to_dict(self, rating=False, reviews=False, steps=False, quantities=False, user_rating=False):
         dictionary = {
