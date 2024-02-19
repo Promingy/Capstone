@@ -2,14 +2,23 @@ import { useEffect } from "react";
 import { useLocation } from "react-router";
 import "./RecipeBox.css";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function RecipeBox() {
     const navigate = useNavigate();
     const url = useLocation().pathname.split('/')[2];
+    const sessionUser = useSelector(state => state.session.user)
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [])
+
+    useEffect(() => {
+        if (!sessionUser) {
+            navigate('/')
+        }
+    }, [sessionUser])
+
 
     return (
         <div className="recipe-box-wrapper">

@@ -61,7 +61,7 @@ export default function MainPage() {
                             {categoryRecipes.map(recipe => {
                                 if (!firstRecipe) {setFirstRecipe(recipe)}
 
-                                return <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} isSaved={recipe.id in savedRecipes}/>
+                                return <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} isSaved={savedRecipes && recipe.id in savedRecipes}/>
                             })}
                         </div>
                     </div>
