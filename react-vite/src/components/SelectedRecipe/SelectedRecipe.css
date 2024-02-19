@@ -141,6 +141,31 @@ span > h3,
     align-items: center;
 }
 
+.save-recipe-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #E33D26;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.save-recipe-button > * {
+    margin: 0;
+}
+
+.save-recipe-button:hover {
+    background-color: #D02E1E;
+}
+
+.save-recipe-button:active {
+    background-color: #BB1F17;
+}
+
 .ingredients_and_steps_left > h2,
 .ingredients_and_steps_right > h2 {
     margin-top: 5px;
