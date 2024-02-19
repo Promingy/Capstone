@@ -263,7 +263,7 @@ const initialState = {}
 function recipeReducer(state=initialState, action){
     switch (action.type){
         case GET_ALL_RECIPES: {
-            const newState = { ...state, categories: {} }
+            const newState = { ...state, categories: {}}
 
             for (let category in action.recipes) {
                 newState.categories[category] = {}
@@ -277,13 +277,13 @@ function recipeReducer(state=initialState, action){
             return newState
         }
         case GET_SAVED_RECIPES: {
-            const newState = { ...state };
-            newState.savedRecipes = {};
+            const newState = { ...state, savedRecipes: {} };
 
+            console.log('test1', newState)
             for (let recipe in action.recipes){
                 newState.savedRecipes[recipe] = action.recipes[recipe];
             }
-
+            console.log('test', newState)
             return newState;
         }
         case SAVE_RECIPE: {

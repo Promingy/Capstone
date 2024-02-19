@@ -15,8 +15,6 @@ export default function MainPage() {
     const dropdowns = useSelector(state => state.dropdowns.categories)
     const allRecipes = useSelector(state => state.recipes)
     const [firstRecipe, setFirstRecipe] = useState(null)
-    let savedRecipes = allRecipes.savedRecipes
-    // const savedRecipes = useSelector(state => state.recipes.savedRecipes)
     const recipes = allRecipes.categories
 
     useEffect(() => {
@@ -29,11 +27,11 @@ export default function MainPage() {
             const body = document.getElementsByTagName('body')
             body[0].classList.remove('no_scroll')
         }
-        closeModal()
-
-        if (sessionUser) {
-            dispatch(thunkGetSavedRecipes(sessionUser.id))
+        else {
+            dispatch(thunkGetAllRecipes())
         }
+
+        closeModal()
     }, [sessionUser])
 
     useEffect(() => {
@@ -41,8 +39,6 @@ export default function MainPage() {
         // so that a new link can be grabbed by the logic below
         if (location?.state == firstRecipe?.preview_image) setFirstRecipe(null)
     }, [location.state, firstRecipe?.preview_image])
-
-    if (!savedRecipes) savedRecipes = {}
 
     return (
         <div className='recipe_tile_category_container'>
@@ -65,8 +61,7 @@ export default function MainPage() {
                         <div className={`recipe_tile_container`}>
                             {categoryRecipes.map(recipe => {
                                 if (!firstRecipe) {setFirstRecipe(recipe)}
-
-                                return <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} isSaved={recipe.id in savedRecipes}/>
+                                return <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} isSaved={recipe.saved}/>
                             })}
                         </div>
                     </div>

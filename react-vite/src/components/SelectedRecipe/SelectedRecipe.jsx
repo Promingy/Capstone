@@ -45,9 +45,7 @@ export default function SelectedRecipe() {
 
     recipeId = recipeId.split('-')[0]
     const recipes = useSelector(state => state.recipes)
-    const savedRecipes = recipes?.savedRecipes
     const recipe = recipes[recipeId]
-    const [saved, setSaved] = useState(savedRecipes?.[recipeId] ? true : false)
     const dropdowns = useSelector(state => state.dropdowns)
     const postDate = new Date(recipe?.created_at)
 
@@ -201,14 +199,14 @@ export default function SelectedRecipe() {
                         </p>
                     </div>
                     <button className='save-recipe-button' onClick={(e) => {
-                        if (savedRecipes?.[recipe?.id]) {
-                            dispatch(thunkUnsaveRecipe(recipe)).then(() => setSaved(false))
+                        if (recipe.saved) {
+                            dispatch(thunkUnsaveRecipe(recipe))
                         } else {
-                            dispatch(thunkSaveRecipe(recipe)).then(() => setSaved(true))
+                            dispatch(thunkSaveRecipe(recipe))
                         }
                     }}>
-                        <i className={`fa-${saved ? 'solid' : 'regular'} fa-bookmark fa-lg`}/>
-                        <p>{saved ? 'Saved' : 'Save'}</p>
+                        <i className={`fa-${recipe.saved ? 'solid' : 'regular'} fa-bookmark fa-lg`}/>
+                        <p>{recipe.saved ? 'Saved' : 'Save'}</p>
                     </button>
 
                     </div>
