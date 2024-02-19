@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './SelectedRecipe.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetSelectedRecipe, thunkSaveRecipe, thunkUnsaveRecipe } from '../../redux/recipe'
@@ -45,7 +45,9 @@ export default function SelectedRecipe() {
 
     recipeId = recipeId.split('-')[0]
     const recipes = useSelector(state => state.recipes)
+    const savedRecipes = recipes?.savedRecipes
     const recipe = recipes[recipeId]
+    const [saved, setSaved] = useState(savedRecipes?.[recipeId] ? true : false)
     const dropdowns = useSelector(state => state.dropdowns)
     const postDate = new Date(recipe?.created_at)
 
@@ -82,6 +84,7 @@ export default function SelectedRecipe() {
         dispatch(thunkGetSelectedRecipe(recipeId))
         dispatch(thunkGetDropdowns())
     }, [dispatch, recipeId])
+
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
 
@@ -198,12 +201,14 @@ export default function SelectedRecipe() {
                         </p>
                     </div>
                     <button className='save-recipe-button' onClick={(e) => {
-                            e.preventDefault()
-
-                            recipe.saved ? dispatch(thunkUnsaveRecipe(recipe)) : dispatch(thunkSaveRecipe(recipe))
-                        }}>
-                        <i className={`fa-${recipe.saved ? 'solid' : 'regular'} fa-bookmark fa-lg`}/>
-                        <p>{recipe.saved ? 'Saved' : 'Save'}</p>
+                        if (savedRecipes?.[recipe?.id]) {
+                            dispatch(thunkUnsaveRecipe(recipe)).then(() => setSaved(false))
+                        } else {
+                            dispatch(thunkSaveRecipe(recipe)).then(() => setSaved(true))
+                        }
+                    }}>
+                        <i className={`fa-${saved ? 'solid' : 'regular'} fa-bookmark fa-lg`}/>
+                        <p>{saved ? 'Saved' : 'Save'}</p>
                     </button>
 
                     </div>

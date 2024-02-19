@@ -10,17 +10,17 @@ import { useLocation } from 'react-router-dom'
 export default function MainPage() {
     const dispatch = useDispatch()
     const { closeModal } = useModal()
-    const sessionUser = useSelector(state => state.session.user)
-    const savedRecipes = useSelector(state => state.recipes.savedRecipes)
-    const dropdowns = useSelector(state => state.dropdowns.categories)
-    let recipes = useSelector(state => state.recipes)
     const location = useLocation()
+    const sessionUser = useSelector(state => state.session.user)
+    const dropdowns = useSelector(state => state.dropdowns.categories)
+    const allRecipes = useSelector(state => state.recipes)
     const [firstRecipe, setFirstRecipe] = useState(null)
-    recipes = recipes.categories
+    let savedRecipes = allRecipes.savedRecipes
+    // const savedRecipes = useSelector(state => state.recipes.savedRecipes)
+    const recipes = allRecipes.categories
 
     useEffect(() => {
         dispatch(thunkGetAllRecipes())
-        dispatch(thunkGetSavedRecipes(sessionUser?.id))
         dispatch(thunkGetDropdowns())
     }, [dispatch])
 
@@ -29,8 +29,11 @@ export default function MainPage() {
             const body = document.getElementsByTagName('body')
             body[0].classList.remove('no_scroll')
         }
-
         closeModal()
+
+        if (sessionUser) {
+            dispatch(thunkGetSavedRecipes(sessionUser.id))
+        }
     }, [sessionUser])
 
     useEffect(() => {
@@ -38,6 +41,8 @@ export default function MainPage() {
         // so that a new link can be grabbed by the logic below
         if (location?.state == firstRecipe?.preview_image) setFirstRecipe(null)
     }, [location.state, firstRecipe?.preview_image])
+
+    if (!savedRecipes) savedRecipes = {}
 
     return (
         <div className='recipe_tile_category_container'>
@@ -61,7 +66,7 @@ export default function MainPage() {
                             {categoryRecipes.map(recipe => {
                                 if (!firstRecipe) {setFirstRecipe(recipe)}
 
-                                return <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} isSaved={savedRecipes && recipe.id in savedRecipes}/>
+                                return <RecipeTile key={`recipe${recipe.id}`} recipe={recipe} isSaved={recipe.id in savedRecipes}/>
                             })}
                         </div>
                     </div>

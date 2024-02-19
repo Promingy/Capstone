@@ -145,13 +145,11 @@ export const thunkGetAllRecipes = () => async(dispatch) => {
 export const thunkGetSavedRecipes = (userId) => async(dispatch) => {
     const res = await fetch(`/api/users/${userId}/saved-recipes`)
 
+    const data = await res.json()
     if (res.ok){
-        const data = await res.json()
         dispatch(actionGetSavedRecipes(data.saved_recipes))
-        return data
     }
-    return await res.json()
-
+    return data
 }
 
 
@@ -279,7 +277,8 @@ function recipeReducer(state=initialState, action){
             return newState
         }
         case GET_SAVED_RECIPES: {
-            const newState = { ...state, savedRecipes: {}};
+            const newState = { ...state };
+            newState.savedRecipes = {};
 
             for (let recipe in action.recipes){
                 newState.savedRecipes[recipe] = action.recipes[recipe];
@@ -365,7 +364,7 @@ function recipeReducer(state=initialState, action){
         }
         case UPDATE_RATING: {
             const newState = { ...state }
-            
+
             newState[action.rating.recipe_id].user_rating = action.rating
 
             let newAvg = action.rating.rating
