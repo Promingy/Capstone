@@ -99,7 +99,7 @@ export default function RecipeTile({ recipe }) {
                                         dispatch(thunkSaveRecipe(recipe, recipe.category_id))
                                     } else {
                                         setBookmark("fa-regular fa-bookmark fa-lg")
-                                        dispatch(thunkUnsaveRecipe((recipe)))
+                                        dispatch(thunkUnsaveRecipe(recipe, recipe.category_id))
                                     }
                                     setSaved(!saved)
                                 }}

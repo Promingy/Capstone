@@ -180,6 +180,7 @@ export const thunkSaveRecipe = (recipe, category) => async(dispatch) => {
 }
 
 export const thunkUnsaveRecipe = (recipe, categoryId) => async(dispatch) => {
+    console.log('recipe', recipe)
     const res = await fetch(`/api/recipes/${recipe.id}/unsave`, {
         method: "DELETE"
     })
