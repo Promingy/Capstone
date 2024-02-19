@@ -27,9 +27,9 @@ export default function MainPage() {
             const body = document.getElementsByTagName('body')
             body[0].classList.remove('no_scroll')
         }
-        else {
-            dispatch(thunkGetAllRecipes())
-        }
+        
+        dispatch(thunkGetDropdowns())
+        dispatch(thunkGetAllRecipes())
 
         closeModal()
     }, [sessionUser])

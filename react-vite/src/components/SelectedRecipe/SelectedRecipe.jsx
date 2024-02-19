@@ -205,8 +205,8 @@ export default function SelectedRecipe() {
                             dispatch(thunkSaveRecipe(recipe, recipe.category_id))
                         }
                     }}>
-                        <i className={`fa-${recipe.saved ? 'solid' : 'regular'} fa-bookmark fa-lg`}/>
-                        <p>{recipe.saved ? 'Saved' : 'Save'}</p>
+                        <i className={`fa-${!sessionUser ? 'regular' : recipe.saved ? 'solid' : 'regular'} fa-bookmark fa-lg`}/>
+                        <p>{!sessionUser ? 'Save' : recipe.saved ? 'Saved' : 'Save'}</p>
                     </button>
 
                     </div>
