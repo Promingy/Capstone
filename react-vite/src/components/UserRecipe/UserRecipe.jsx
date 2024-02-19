@@ -14,13 +14,11 @@ export default function UserRecipe() {
     const sessionUser = useSelector(state => state.session.user)
     userId = +userId?.split(' ')?.[0]
     let recipes = useSelector(state => state.session)
-    const savedRecipes = useSelector(state => state.recipes.savedRecipes)
     const owner = recipes?.[+userId]?.owner
     recipes = recipes?.[+userId]
 
     useEffect(() => {
         dispatch(thunkGetUserRecipes(userId))
-        dispatch(thunkGetSavedRecipes(sessionUser?.id))
         window.scrollTo(0, 0)
     }, [dispatch, userId])
 
@@ -60,7 +58,7 @@ export default function UserRecipe() {
                     {Object.values(recipes).map(recipe => {
                         if (recipe == owner) return
                         return (
-                            <RecipeTile recipe={recipe} isSaved={savedRecipes && recipe.id in savedRecipes} key={`recipe${recipe.id}`}/>
+                            <RecipeTile recipe={recipe} key={`recipe${recipe.id}`}/>
                         )
                     })}
                 </div>

@@ -41,7 +41,7 @@ class Recipe(db.Model, UserMixin):
             "cook_time": self.cook_time,
             "preview_image": self.preview_image,
             "created_at": self.created_at,
-            "owner": self.owner.to_dict()
+            "owner": self.owner.to_dict(),
         }
 
         if steps:
@@ -86,10 +86,14 @@ class Recipe(db.Model, UserMixin):
                 if rating.to_dict()['user_id'] == int(session['_user_id']):
                     dictionary["user_rating"] = rating.to_dict()
 
-        if 'user_id' in session:
+        if '_user_id' in session:
+            dictionary['saved'] = False
             for user in self.saved_users:
                 if user.id == int(session['_user_id']):
                     dictionary["saved"] = True
                     break
+
+        else:
+            dictionary["saved"] = False
 
         return dictionary
