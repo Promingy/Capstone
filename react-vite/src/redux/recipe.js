@@ -43,6 +43,13 @@ const actionCreateRecipe = (recipe) => {
     }
 }
 
+const actionSaveRecipe = (recipeId) => {
+    return {
+        type: SAVE_RECIPE,
+        recipeId
+    }
+}
+
 const actionUnsaveRecipe = (recipeId) => {
     return {
         type: UNSAVE_RECIPE,
@@ -138,7 +145,6 @@ export const thunkGetAllRecipes = () => async(dispatch) => {
 export const thunkGetSavedRecipes = (userId) => async(dispatch) => {
     const res = await fetch(`/api/users/${userId}/saved-recipes`)
 
-    console.log(res)
     if (res.ok){
         const data = await res.json()
         dispatch(actionGetSavedRecipes(data.saved_recipes))
@@ -165,9 +171,9 @@ export const thunkSaveRecipe = (recipe) => async(dispatch) => {
 
     const data = await res.json()
 
-    // if (res.ok){
-    //     dispatch(actionSaveRecipe(data))
-    // }
+    if (res.ok){
+        dispatch(actionSaveRecipe(recipe.id))
+    }
 
     return data
 
@@ -281,16 +287,29 @@ function recipeReducer(state=initialState, action){
 
             return newState;
         }
+        case SAVE_RECIPE: {
+            const newState = { ...state }
+
+            newState[action.recipeId].saved = true
+
+            return newState
+        }
         case UNSAVE_RECIPE: {
             const newState = { ...state }
 
-            delete newState.savedRecipes[action.recipeId]
-            
+            delete newState[action.recipeId].saved
+
+            if (newState.savedRecipes) {
+                delete newState.savedRecipes[action.recipeId]
+            }
+
             return newState
         }
         case GET_SELECTED_RECIPE: {
             const newState = { ...state }
+
             newState[action.recipe.id] = action.recipe
+
             const newReviews = {}
 
             for (let review of newState[action.recipe.id].reviews) {
@@ -303,8 +322,11 @@ function recipeReducer(state=initialState, action){
         }
         case CREATE_RECIPE: {
             const newState = { ...state, categories: {[action.recipe.category_id]: {}} }
+
             newState[action.recipe.id] = action.recipe
+
             newState.categories[action.recipe.category_id][action.recipe.id] = action.recipe
+
             return newState
         }
         case UPDATE_RECIPE: {
@@ -326,8 +348,11 @@ function recipeReducer(state=initialState, action){
         }
         case ADD_RATING: {
             const newState = { ...state }
+
             newState[action.rating.recipe_id].all_ratings ++
+
             newState[action.rating.recipe_id].user_rating = action.rating
+
             let newAvg = action.rating.rating
 
             for (let rating of newState[action.rating.recipe_id].ratings){
@@ -340,7 +365,9 @@ function recipeReducer(state=initialState, action){
         }
         case UPDATE_RATING: {
             const newState = { ...state }
+            
             newState[action.rating.recipe_id].user_rating = action.rating
+
             let newAvg = action.rating.rating
 
             for (let rating of newState[action.rating.recipe_id].ratings){

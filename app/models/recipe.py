@@ -86,4 +86,9 @@ class Recipe(db.Model, UserMixin):
                 if rating.to_dict()['user_id'] == int(session['_user_id']):
                     dictionary["user_rating"] = rating.to_dict()
 
+        for user in self.saved_users:
+            if user.id == int(session['_user_id']):
+                dictionary["saved"] = True
+                break
+
         return dictionary

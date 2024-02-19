@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import './SelectedRecipe.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { thunkGetSelectedRecipe } from '../../redux/recipe'
+import { thunkGetSelectedRecipe, thunkSaveRecipe, thunkUnsaveRecipe } from '../../redux/recipe'
 import { thunkGetDropdowns } from "../../redux/dropdown"
 import { useNavigate, useParams } from 'react-router-dom'
 import { starCreator } from '../MainPage/RecipeTile'
@@ -197,6 +197,14 @@ export default function SelectedRecipe() {
                             </span>
                         </p>
                     </div>
+                    <button className='save-recipe-button' onClick={(e) => {
+                            e.preventDefault()
+
+                            recipe.saved ? dispatch(thunkUnsaveRecipe(recipe)) : dispatch(thunkSaveRecipe(recipe))
+                        }}>
+                        <i className={`fa-${recipe.saved ? 'solid' : 'regular'} fa-bookmark fa-lg`}/>
+                        <p>{recipe.saved ? 'Saved' : 'Save'}</p>
+                    </button>
 
                     </div>
 
