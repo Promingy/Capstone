@@ -200,9 +200,9 @@ export default function SelectedRecipe() {
                     </div>
                     <button className='save-recipe-button' onClick={(e) => {
                         if (recipe.saved) {
-                            dispatch(thunkUnsaveRecipe(recipe))
+                            dispatch(thunkUnsaveRecipe(recipe, recipe.category_id))
                         } else {
-                            dispatch(thunkSaveRecipe(recipe))
+                            dispatch(thunkSaveRecipe(recipe, recipe.category_id))
                         }
                     }}>
                         <i className={`fa-${recipe.saved ? 'solid' : 'regular'} fa-bookmark fa-lg`}/>

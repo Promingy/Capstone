@@ -20,7 +20,7 @@ export function starCreator(recipe) {
     return stars
 }
 
-export default function RecipeTile({ recipe, isSaved=true }) {
+export default function RecipeTile({ recipe }) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const sessionUser = useSelector(state => state.session.user)
@@ -28,8 +28,8 @@ export default function RecipeTile({ recipe, isSaved=true }) {
     const cookTimeMinutes = (recipe.cook_time + recipe.prep_time) % 60
     const ownerFirstName = recipe.owner.first_name[0].toUpperCase() + recipe.owner.first_name.slice(1)
     const ownerLastName = recipe.owner.last_name[0].toUpperCase() + recipe.owner.last_name.slice(1)
-    const [bookmark, setBookmark] = useState(`fa-bookmark fa-lg ${isSaved ? 'fa-solid' : 'fa-regular'}`) /// future feature
-    const [saved, setSaved] = useState(isSaved) /// future feature
+    const [saved, setSaved] = useState(recipe.saved) /// future feature
+    const [bookmark, setBookmark] = useState(`fa-bookmark fa-lg ${saved ? 'fa-solid' : 'fa-regular'}`) /// future feature
     const [confirmDelete, setConfirmDelete] = useState(false)
 
     function onClickHandle (e) {
@@ -42,7 +42,6 @@ export default function RecipeTile({ recipe, isSaved=true }) {
             navigate(`/recipes/${recipe.id}-${recipe.title.toLowerCase().split(' ').join('-')}`, {state: recipe})
         }
     }
-
 
     return (
         <div className='recipeTile'
@@ -97,7 +96,7 @@ export default function RecipeTile({ recipe, isSaved=true }) {
                                 onClick={() => {
                                     if (!saved){
                                         setBookmark('fa-solid fa-bookmark fa-lg')
-                                        dispatch(thunkSaveRecipe(recipe))
+                                        dispatch(thunkSaveRecipe(recipe, recipe.category_id))
                                     } else {
                                         setBookmark("fa-regular fa-bookmark fa-lg")
                                         dispatch(thunkUnsaveRecipe((recipe)))

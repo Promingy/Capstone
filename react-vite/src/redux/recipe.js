@@ -43,17 +43,19 @@ const actionCreateRecipe = (recipe) => {
     }
 }
 
-const actionSaveRecipe = (recipeId) => {
+const actionSaveRecipe = (recipeId, categoryId) => {
     return {
         type: SAVE_RECIPE,
-        recipeId
+        recipeId,
+        categoryId
     }
 }
 
-const actionUnsaveRecipe = (recipeId) => {
+const actionUnsaveRecipe = (recipeId, categoryId) => {
     return {
         type: UNSAVE_RECIPE,
-        recipeId
+        recipeId,
+        categoryId
     }
 }
 
@@ -162,7 +164,7 @@ export const thunkGetSelectedRecipe = (recipeId) => async (dispatch) => {
     }
 }
 
-export const thunkSaveRecipe = (recipe) => async(dispatch) => {
+export const thunkSaveRecipe = (recipe, category) => async(dispatch) => {
     const res = await fetch(`/api/recipes/${recipe.id}/save`, {
         method: "POST"
     })
@@ -170,14 +172,14 @@ export const thunkSaveRecipe = (recipe) => async(dispatch) => {
     const data = await res.json()
 
     if (res.ok){
-        dispatch(actionSaveRecipe(recipe.id))
+        dispatch(actionSaveRecipe(recipe.id, category))
     }
 
     return data
 
 }
 
-export const thunkUnsaveRecipe = (recipe) => async(dispatch) => {
+export const thunkUnsaveRecipe = (recipe, categoryId) => async(dispatch) => {
     const res = await fetch(`/api/recipes/${recipe.id}/unsave`, {
         method: "DELETE"
     })
@@ -185,7 +187,7 @@ export const thunkUnsaveRecipe = (recipe) => async(dispatch) => {
     const data = await res.json()
 
     if (res.ok){
-        dispatch(actionUnsaveRecipe(recipe.id))
+        dispatch(actionUnsaveRecipe(recipe.id, categoryId))
     }
 
     return data
@@ -263,7 +265,8 @@ const initialState = {}
 function recipeReducer(state=initialState, action){
     switch (action.type){
         case GET_ALL_RECIPES: {
-            const newState = { ...state, categories: {}}
+            const newState = { ...state }
+            newState.categories = {}
 
             for (let category in action.recipes) {
                 newState.categories[category] = {}
@@ -279,17 +282,19 @@ function recipeReducer(state=initialState, action){
         case GET_SAVED_RECIPES: {
             const newState = { ...state, savedRecipes: {} };
 
-            console.log('test1', newState)
             for (let recipe in action.recipes){
                 newState.savedRecipes[recipe] = action.recipes[recipe];
             }
-            console.log('test', newState)
             return newState;
         }
         case SAVE_RECIPE: {
             const newState = { ...state }
 
             newState[action.recipeId].saved = true
+            if (newState.categories){
+                console.log(newState.categories, action.categoryId, action.recipeId)
+                newState.categories[action.categoryId][action.recipeId].saved = true
+            }
 
             return newState
         }
@@ -298,8 +303,8 @@ function recipeReducer(state=initialState, action){
 
             delete newState[action.recipeId].saved
 
-            if (newState.savedRecipes) {
-                delete newState.savedRecipes[action.recipeId]
+            if (newState.categories) {
+                newState.categories[action.categoryId][action.recipeId].saved = false
             }
 
             return newState
