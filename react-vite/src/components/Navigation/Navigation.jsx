@@ -2,9 +2,11 @@ import {  useNavigate } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function Navigation() {
   const navigate = useNavigate()
+  const sessionUser = useSelector(state => state.session.user)
   const [showMenu, setShowMenu] = useState(false)
   let timeout1;
   let timeout2;
@@ -33,11 +35,15 @@ function Navigation() {
         <div className="header_top_container">
           <img className="logo_image" onClick={() => navigate('/')} src="https://recipe-rendezvous.s3.us-west-2.amazonaws.com/recipe-rendezvous-high-resolution-logo-transparent+(1).png" />
           <div className="header_top_right">
-            <h3 className="your_recipe_box"
-              onClick={() => navigate('/recipe-box')}>
-              <i className="fa-bookmark fa-solid"/>
-              Your Recipe Box
-            </h3>
+              <h3 className="your_recipe_box"
+                onClick={() => navigate('/recipe-box')}>
+                {sessionUser &&
+                <>
+                <i className="fa-bookmark fa-solid"/>
+                Your Recipe Box
+                </>
+              }
+              </h3>
             <ProfileButton />
           </div>
         </div>

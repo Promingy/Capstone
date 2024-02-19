@@ -60,7 +60,7 @@ export default function UserRecipe() {
                     {Object.values(recipes).map(recipe => {
                         if (recipe == owner) return
                         return (
-                            <RecipeTile recipe={recipe} isSaved={recipe.id in savedRecipes} key={`recipe${recipe.id}`}/>
+                            <RecipeTile recipe={recipe} isSaved={savedRecipes && recipe.id in savedRecipes} key={`recipe${recipe.id}`}/>
                         )
                     })}
                 </div>
