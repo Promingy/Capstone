@@ -43,6 +43,13 @@ const actionCreateRecipe = (recipe) => {
     }
 }
 
+const actionSaveRecipe = (recipeId) => {
+    return {
+        type: SAVE_RECIPE,
+        recipeId
+    }
+}
+
 const actionUnsaveRecipe = (recipeId) => {
     return {
         type: UNSAVE_RECIPE,
@@ -165,9 +172,9 @@ export const thunkSaveRecipe = (recipe) => async(dispatch) => {
 
     const data = await res.json()
 
-    // if (res.ok){
-    //     dispatch(actionSaveRecipe(data))
-    // }
+    if (res.ok){
+        dispatch(actionSaveRecipe(recipe.id))
+    }
 
     return data
 
@@ -281,18 +288,29 @@ function recipeReducer(state=initialState, action){
 
             return newState;
         }
+        case SAVE_RECIPE: {
+            const newState = { ...state }
+
+            newState[action.recipeId].saved = true
+
+            return newState
+        }
         case UNSAVE_RECIPE: {
             const newState = { ...state }
 
-            delete newState.savedRecipes[action.recipeId]
-            
+            delete newState[action.recipeId].saved
+
+            if (newState.savedRecipes) {
+                delete newState.savedRecipes[action.recipeId]
+            }
+
             return newState
         }
         case GET_SELECTED_RECIPE: {
             const newState = { ...state }
             newState[action.recipe.id] = action.recipe
             const newReviews = {}
-
+            console.log(action.recipe)
             for (let review of newState[action.recipe.id].reviews) {
                 newReviews[review.id] = review
             }
