@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './SelectedRecipe.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetSelectedRecipe, thunkSaveRecipe, thunkUnsaveRecipe } from '../../redux/recipe'
@@ -82,6 +82,7 @@ export default function SelectedRecipe() {
         dispatch(thunkGetSelectedRecipe(recipeId))
         dispatch(thunkGetDropdowns())
     }, [dispatch, recipeId])
+
 
     if (!recipe || !recipe.steps || !recipe.ingredients) return
 
@@ -198,12 +199,14 @@ export default function SelectedRecipe() {
                         </p>
                     </div>
                     <button className='save-recipe-button' onClick={(e) => {
-                            e.preventDefault()
-
-                            recipe.saved ? dispatch(thunkUnsaveRecipe(recipe)) : dispatch(thunkSaveRecipe(recipe))
-                        }}>
-                        <i className={`fa-${recipe.saved ? 'solid' : 'regular'} fa-bookmark fa-lg`}/>
-                        <p>{recipe.saved ? 'Saved' : 'Save'}</p>
+                        if (recipe.saved) {
+                            dispatch(thunkUnsaveRecipe(recipe, recipe.category_id))
+                        } else {
+                            dispatch(thunkSaveRecipe(recipe, recipe.category_id))
+                        }
+                    }}>
+                        <i className={`fa-${!sessionUser ? 'regular' : recipe.saved ? 'solid' : 'regular'} fa-bookmark fa-lg`}/>
+                        <p>{!sessionUser ? 'Save' : recipe.saved ? 'Saved' : 'Save'}</p>
                     </button>
 
                     </div>
