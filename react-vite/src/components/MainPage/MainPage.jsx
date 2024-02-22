@@ -40,7 +40,7 @@ export default function MainPage() {
         if (location?.state == firstRecipe?.preview_image) setFirstRecipe(null)
     }, [location.state, firstRecipe?.preview_image])
 
-    if (sessionUser && Object.values(recipes?.[1])[0].saved == undefined) return null
+    if (recipes && sessionUser && Object.values(recipes?.[1])?.[0]?.saved == undefined) return null
 
     return (
         <div className='recipe_tile_category_container'>
