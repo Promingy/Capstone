@@ -93,7 +93,7 @@ class Recipe(db.Model, UserMixin):
                     dictionary["saved"] = True
                     break
 
-        else:
-            dictionary["saved"] = False
+        # else:
+        #     dictionary["saved"] = False
 
         return dictionary

@@ -27,9 +27,10 @@ export default function MainPage() {
             const body = document.getElementsByTagName('body')
             body[0].classList.remove('no_scroll')
         }
-        
+
         dispatch(thunkGetDropdowns())
         dispatch(thunkGetAllRecipes())
+        console.log('recipes', recipes)
 
         closeModal()
     }, [sessionUser])
@@ -40,6 +41,8 @@ export default function MainPage() {
         if (location?.state == firstRecipe?.preview_image) setFirstRecipe(null)
     }, [location.state, firstRecipe?.preview_image])
 
+    if (sessionUser && Object.values(recipes[1])[1].saved == undefined) return null
+    
     return (
         <div className='recipe_tile_category_container'>
             <div className='header_image_container'>
