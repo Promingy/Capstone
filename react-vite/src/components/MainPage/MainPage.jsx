@@ -30,7 +30,6 @@ export default function MainPage() {
 
         dispatch(thunkGetDropdowns())
         dispatch(thunkGetAllRecipes())
-        console.log('recipes', recipes)
 
         closeModal()
     }, [sessionUser])
@@ -42,7 +41,7 @@ export default function MainPage() {
     }, [location.state, firstRecipe?.preview_image])
 
     if (sessionUser && Object.values(recipes[1])[1].saved == undefined) return null
-    
+
     return (
         <div className='recipe_tile_category_container'>
             <div className='header_image_container'>
