@@ -23,6 +23,7 @@ export default function UserRecipe() {
     }, [dispatch, userId])
 
     useEffect(() => {
+        dispatch(thunkGetUserRecipes(userId))
         closeModal()
     }, [sessionUser])
 
@@ -35,7 +36,7 @@ export default function UserRecipe() {
         return firstLetter + body
     }
 
-    if (!recipes || !owner) return
+    if (!recipes || !owner || (sessionUser && Object.values(recipes)[0].saved == undefined)) return
 
     return (
         <div className='user_recipes_container'>
