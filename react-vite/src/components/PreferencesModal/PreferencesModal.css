@@ -145,7 +145,8 @@
     position: fixed;
     bottom: 20px;
     margin: 0 auto;
-    width: 24vw;
+    width: 100%;
+    max-width: 325px;
 }
 
 .preference-links-header {
