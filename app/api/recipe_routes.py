@@ -159,11 +159,14 @@ def get_single_recipe(recipeId):
         includeRating = True
 
         # add recipe to users recently viewed recipes
-        user = User.query.get(userId)
-        recipe = Recipe.query.get(recipeId)
+        try:
+            user = User.query.get(userId)
+            recipe = Recipe.query.get(recipeId)
 
-        user.viewed_recipes.append(recipe)
-        db.session.commit()
+            user.viewed_recipes.append(recipe)
+            db.session.commit()
+        except:
+            ""
     except:
         ""
 
