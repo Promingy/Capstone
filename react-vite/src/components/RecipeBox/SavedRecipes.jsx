@@ -14,6 +14,7 @@ export default function SavedRecipes() {
     }, [])
 
     if (!recipes) return null
+    
     return (
         <div className="saved-recipes-wrapper">
             <div className="saved-recipes-header-container">

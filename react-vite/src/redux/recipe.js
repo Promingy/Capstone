@@ -14,10 +14,18 @@ const LIKE_REVIEW = 'recipe/likeReview'
 const DELETE_LIKE = 'recipe/deleteLike'
 const SAVE_RECIPE = 'recipe/saveRecipe'
 const UNSAVE_RECIPE = 'recipe/unsaveRecipe'
+const GET_RECENTLY_VIEWED = 'recipe/getRecentlyViewed'
 
 const actionGetAllRecipes = (recipes) => {
     return {
         type: GET_ALL_RECIPES,
+        recipes
+    }
+}
+
+const actionGetRecentlyViewed = (recipes) => {
+    return {
+        type: GET_RECENTLY_VIEWED,
         recipes
     }
 }
@@ -142,6 +150,18 @@ export const thunkGetAllRecipes = () => async(dispatch) => {
         return data
     }
     return await res.json()
+}
+
+export const thunkGetRecentlyViewed = (userId) => async(dispatch) => {
+    const res = await fetch(`/api/users/${userId}/recently-viewed`)
+
+    const data = await res.json()
+
+    if (res.ok){
+        dispatch(actionGetRecentlyViewed(data.viewed_recipes))
+    }
+
+    return data
 }
 
 export const thunkGetSavedRecipes = (userId) => async(dispatch) => {
@@ -280,6 +300,11 @@ function recipeReducer(state=initialState, action){
 
             return newState
         }
+        case GET_RECENTLY_VIEWED: {
+            const newState = { ...state, recentlyViewed: action.recipes }
+
+            return newState
+        }
         case GET_SAVED_RECIPES: {
             const newState = { ...state, savedRecipes: {} };
 
@@ -293,7 +318,6 @@ function recipeReducer(state=initialState, action){
 
             newState[action.recipeId].saved = true
             if (newState.categories){
-                console.log(newState.categories, action.categoryId, action.recipeId)
                 newState.categories[action.categoryId][action.recipeId].saved = true
             }
 

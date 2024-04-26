@@ -47,3 +47,19 @@ def get_user_saved_recipes(userId):
             # "user": user.to_dict(),
             "saved_recipes": {saved_recipe.to_dict()['id']: saved_recipe.to_dict(rating=True) for saved_recipe in saved_recipes}
         }
+
+@user_routes.route('/<int:userId>/recently-viewed')
+def get_user_recently_viewed(userId):
+    """
+    Query for all recently viewed recipes from a specific user
+    """
+
+    user = User.query.get(userId)
+    viewed_recipes = user.viewed_recipes
+    viewed_recipes = viewed_recipes[::-1]
+
+
+    return {
+        # "viewed_recipes": {viewed_recipe.to_dict()['id']: viewed_recipe.to_dict(rating=True) for viewed_recipe in viewed_recipes}
+        "viewed_recipes": [viewed_recipe.to_dict(rating=True) for viewed_recipe in viewed_recipes]
+    }
