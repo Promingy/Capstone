@@ -155,18 +155,19 @@ def get_single_recipe(recipeId):
     includeRating = False
 
     try:
-        userId = int(session['_user_id'])
+        int(session['_user_id'])
         includeRating = True
 
-        # # add recipe to users recently viewed recipes
-        # try:
-        #     user = User.query.get(userId)
-        #     recipe = Recipe.query.get(recipeId)
+    except:
+        ""
 
-        #     user.viewed_recipes.append(recipe)
-        #     db.session.commit()
-        # except:
-        #     ""
+    # add recipe to users recently viewed recipes
+    try:
+        user = User.query.get(int(session['_user_id']))
+        recipe = Recipe.query.get(recipeId)
+
+        user.viewed_recipes.append(recipe)
+        db.session.commit()
     except:
         ""
 
