@@ -163,16 +163,19 @@ def get_single_recipe(recipeId):
 
 
     recipe = Recipe.query.get(recipeId)
-    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=includeRating)
     
     # add recipe to users recently viewed recipes
     try:
         user = User.query.get(int(session['_user_id']))
+        # recipe = Recipe.query.get(recipeId)
 
         user.viewed_recipes.append(recipe)
         db.session.commit()
     except:
         ""
+
+    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=includeRating)
+
 
     return recipe
 
