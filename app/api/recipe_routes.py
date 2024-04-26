@@ -2,7 +2,6 @@ from flask import Blueprint, request, session
 from ..models import Recipe, Category, db, Quantity, Step, Rating, Review, User
 from ..forms import RecipeForm, QuantityForm, StepForm, ReviewForm, RatingForm
 from flask_login import login_required
-from app.aws import (upload_file_to_s3, get_unique_filename)
 
 recipe = Blueprint('recipes', __name__)
 
@@ -156,8 +155,15 @@ def get_single_recipe(recipeId):
     includeRating = False
 
     try:
-        int(session['_user_id'])
+        userId = int(session['_user_id'])
         includeRating = True
+
+        # add recipe to users recently viewed recipes
+        user = User.query.get(userId)
+        recipe = Recipe.query.get(recipeId)
+
+        user.viewed_recipes.append(recipe)
+        db.session.commit()
     except:
         ""
 
