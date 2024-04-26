@@ -152,7 +152,6 @@ def get_single_recipe(recipeId):
     Route that returns all of the info for a specific recipe
     """
 
-    recipe = Recipe.query.get(recipeId)
     includeRating = False
 
     try:
@@ -162,6 +161,10 @@ def get_single_recipe(recipeId):
     except:
         ""
 
+
+    recipe = Recipe.query.get(recipeId)
+    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=includeRating)
+    
     # add recipe to users recently viewed recipes
     try:
         user = User.query.get(int(session['_user_id']))
@@ -170,8 +173,6 @@ def get_single_recipe(recipeId):
         db.session.commit()
     except:
         ""
-
-    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=includeRating)
 
     return recipe
 
