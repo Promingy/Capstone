@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint
 from flask_login import login_required
-from app.models import User, Recipe
+from app.models import User, Recipe, db
+from app.models.viewed_recipe import ViewedRecipe
 
 user_routes = Blueprint('users', __name__)
 
@@ -55,11 +56,16 @@ def get_user_recently_viewed(userId):
     """
 
     user = User.query.get(userId)
-    viewed_recipes = user.viewed_recipes
-    viewed_recipes = viewed_recipes[::-1]
+    viewed_recipes = [recipe.to_dict() for recipe in user.viewed_recipes]
 
+    # add viewed_at key to each recipe in viewed_recipes
+    for recipe in viewed_recipes:
+        view_date = db.session.query(ViewedRecipe).filter(ViewedRecipe.c.user_id == userId, ViewedRecipe.c.recipe_id == int(recipe['id'])).first()
+        recipe['viewed_at'] = view_date[2]
+
+    # sort viewed_recipes by viewed_at
+    viewed_recipes = sorted(viewed_recipes, key=lambda x: x['viewed_at'], reverse=True)
 
     return {
-        # "viewed_recipes": {viewed_recipe.to_dict()['id']: viewed_recipe.to_dict(rating=True) for viewed_recipe in viewed_recipes}
-        "viewed_recipes": [viewed_recipe.to_dict(rating=True) for viewed_recipe in viewed_recipes]
+        "viewed_recipes": viewed_recipes
     }
