@@ -200,7 +200,6 @@ export const thunkSaveRecipe = (recipe, category) => async(dispatch) => {
 }
 
 export const thunkUnsaveRecipe = (recipe, categoryId) => async(dispatch) => {
-    console.log('recipe', recipe)
     const res = await fetch(`/api/recipes/${recipe.id}/unsave`, {
         method: "DELETE"
     })
@@ -317,16 +316,34 @@ function recipeReducer(state=initialState, action){
             const newState = { ...state }
 
             newState[action.recipeId].saved = true
+
             if (newState.categories){
                 newState.categories[action.categoryId][action.recipeId].saved = true
+            }
+
+            if (newState.recentlyViewed) {
+                for (let recipe of newState.recentlyViewed) {
+                    if (recipe.id === action.recipeId) {
+                        recipe.saved = true
+                        break
+                    }
+                }
             }
 
             return newState
         }
         case UNSAVE_RECIPE: {
             const newState = { ...state }
-
             delete newState[action.recipeId].saved
+
+            if (newState.recentlyViewed) {
+                for (let recipe of newState.recentlyViewed) {
+                    if (recipe.id === action.recipeId) {
+                        delete recipe.saved
+                        break
+                    }
+                }
+            }
 
             if (newState.categories) {
                 newState.categories[action.categoryId][action.recipeId].saved = false

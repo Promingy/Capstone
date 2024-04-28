@@ -80,7 +80,7 @@ export default function RecipeTile({ recipe }) {
                         </p>
                         <div className='tile_icons_container'>
                         {sessionUser &&
-                            <span ///future feature
+                            <span
                                 id='bookmark_icon_tile'
                                 className={bookmark}
                                 onMouseOver={() => {
