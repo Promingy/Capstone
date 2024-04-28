@@ -39,11 +39,8 @@
     cursor: pointer;
 }
 
-.mark-as-cooked {
-    color: black;
-}
-
-.mark-as-not-cooked:hover{
+.mark-as-cooked,
+.mark-as-not-cooked:hover {
     color: black;
 }
 
