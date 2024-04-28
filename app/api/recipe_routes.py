@@ -443,4 +443,25 @@ def set_recipe_cooked (recipeId):
     user.cooked_recipes.append(recipe)
     db.session.commit()
 
-    return user.to_dict()
+    return {
+        "message": f"recipe '{recipeId}' successfully added to cooked recipes for user '{userId}'"
+    }
+
+@recipe.route('<int:recipeId>/remove-cooked', methods=['DELETE'])
+@login_required
+def remove_cooked_recipe (recipeId):
+    """
+    Route that removes a recipe from the user's cooked recipes
+    """
+
+    userId = int(session["_user_id"])
+
+    user = User.query.get(userId)
+    recipe = Recipe.query.get(recipeId)
+
+    user.cooked_recipes.remove(recipe)
+    db.session.commit()
+
+    return {
+        "message": f"recipe '{recipeId}' successfully removed from cooked recipes for user '{userId}'"
+    }
