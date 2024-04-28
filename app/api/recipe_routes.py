@@ -394,6 +394,7 @@ def post_rating(recipeId):
 
 
 @recipe.route('/<int:recipeId>/save', methods=['POST'])
+@login_required
 def save_recipe(recipeId):
     """
     Route that saves a recipe to the user's saved recipes
@@ -411,6 +412,7 @@ def save_recipe(recipeId):
 
 
 @recipe.route('/<int:recipeId>/unsave', methods=['DELETE'])
+@login_required
 def unsave_recipe(recipeId):
     """
     Route that removes a recipe from the user's saved recipes
@@ -422,6 +424,23 @@ def unsave_recipe(recipeId):
     recipe = Recipe.query.get(recipeId)
 
     user.saved_recipes.remove(recipe)
+    db.session.commit()
+
+    return user.to_dict()
+
+@recipe.route('/<int:recipeId>/cooked', methods=['POST'])
+@login_required
+def set_recipe_cooked (recipeId):
+    """
+    Route that adds a recipe to the user's cooked recipes
+    """
+
+    userId = int(session['_user_id'])
+
+    user = User.query.get(userId)
+    recipe = Recipe.query.get(recipeId)
+
+    user.cooked_recipes.append(recipe)
     db.session.commit()
 
     return user.to_dict()

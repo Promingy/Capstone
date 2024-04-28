@@ -119,6 +119,17 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE savedrecipes SET SCHEMA {SCHEMA};")
+
+    op.create_table('cookedrecipes',
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('recipe_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['recipe_id'], ['recipes.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('user_id', 'recipe_id')
+    )
+    if environment == "production":
+        op.execute(f"ALTER TABLE viewedrecipes SET SCHEMA {SCHEMA};")
+
     op.create_table('viewedrecipes',
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('recipe_id', sa.Integer(), nullable=False),
@@ -160,6 +171,7 @@ def downgrade():
     op.drop_table('steps')
     op.drop_table('savedrecipes')
     op.drop_table('viewedrecipes')
+    op.drop_table('cookedrecipes')
     op.drop_table('reviews')
     op.drop_table('ratings')
     op.drop_table('quantities')

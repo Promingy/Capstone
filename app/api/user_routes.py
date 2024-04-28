@@ -69,3 +69,16 @@ def get_user_recently_viewed(userId):
     return {
         "viewed_recipes": viewed_recipes
     }
+
+@user_routes.route('/<int:userId>/cooked-recipes')
+def get_user_cooked_recipes(userId):
+    """
+    Query for all cooked recipes from a specific user
+    """
+
+    user = User.query.get(userId)
+    cooked_recipes = user.cooked_recipes
+
+    return {
+        "cooked_recipes": {cooked_recipe.to_dict()['id']: cooked_recipe.to_dict(rating=True) for cooked_recipe in cooked_recipes}
+    }
