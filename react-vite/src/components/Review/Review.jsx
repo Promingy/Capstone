@@ -4,6 +4,7 @@ import TextareaAutoSize from 'react-textarea-autosize'
 import ReviewTile from './ReviewTile'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkDeleteRating, thunkPostRating, thunkPostReview, thunkUpdateRating } from '../../redux/review'
+import { thunkSetRecipeCooked, thunkRemoveCookedRecipe } from '../../redux/recipe'
 
 export default function Review ({ recipe }) {
     const dispatch = useDispatch()
@@ -100,8 +101,6 @@ export default function Review ({ recipe }) {
         recipe.user_rating = undefined
     }
 
-    console.log('recipe', recipe)
-
     return (
         <div className='reviews_container'>
             <div className='review_left'>
@@ -130,7 +129,10 @@ export default function Review ({ recipe }) {
                     <div>
                         <h3>Have you cooked this?</h3>
                         <p className={isCooked ? 'mark-as-cooked' : 'mark-as-not-cooked'}
-                            onClick={() => setIsCooked(!isCooked)}
+                            onClick={() => {
+                                dispatch(isCooked ? thunkRemoveCookedRecipe(recipe.id) : thunkSetRecipeCooked(recipe.id))
+                                setIsCooked(!isCooked)
+                            }}
                         >
                             {isCooked ?
                                 <>

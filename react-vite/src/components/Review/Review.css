@@ -43,8 +43,12 @@
     color: black;
 }
 
-.mark-as-cooked:hover > span {
+.mark-as-not-cooked:hover{
     color: black;
+}
+
+.mark-as-cooked:hover > span,
+.mark-as-not-cooked:hover > span {
     text-decoration: underline;
 }
 

@@ -203,7 +203,7 @@ export const thunkSetRecipeCooked = (recipeId) => async(dispatch) => {
     return data
 }
 
-export const thunRemoveCookedRecipe = (recipeId) => async (dispatch) => {
+export const thunkRemoveCookedRecipe = (recipeId) => async (dispatch) => {
     const res = await fetch(`/api/recipes/${recipeId}/remove-cooked`, {
         method: "DELETE"
     })
@@ -367,6 +367,20 @@ function recipeReducer(state=initialState, action){
         case GET_COOKED_RECIPES: {
             const newState = { ...state, cookedRecipes: action.recipes };
 
+            return newState;
+        }
+        case SET_RECIPE_COOKED: {
+            const newState = { ...state }
+
+            newState[action.recipeId].cooked = true
+
+            return newState
+        }
+        case REMOVE_COOKED_RECIPE: {
+            const newState = { ...state };
+
+            newState[action.recipeId].cooked = false;
+            
             return newState;
         }
         case GET_RECENTLY_VIEWED: {
