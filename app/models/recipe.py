@@ -5,6 +5,7 @@ from sqlalchemy.sql import func
 from datetime import datetime
 from .saved_recipe import SavedRecipe
 from .viewed_recipe import ViewedRecipe
+from .cooked_recipe import CookedRecipe
 
 class Recipe(db.Model, UserMixin):
     __tablename__ = 'recipes'
@@ -30,6 +31,7 @@ class Recipe(db.Model, UserMixin):
     ratings = db.relationship('Rating', back_populates='recipe')
     saved_users = db.relationship("User", secondary=SavedRecipe, back_populates='saved_recipes')
     users_viewed_recipe = db.relationship("User", secondary=ViewedRecipe, back_populates='viewed_recipes')
+    users_who_cooked_recipe = db.relationship("User", secondary=CookedRecipe, back_populates='cooked_recipes')
 
     def to_dict(self, rating=False, reviews=False, steps=False, quantities=False, user_rating=False):
         dictionary = {
@@ -90,9 +92,16 @@ class Recipe(db.Model, UserMixin):
 
         if '_user_id' in session:
             dictionary['saved'] = False
+            dictionary['cooked'] = False
+
             for user in self.saved_users:
                 if user.id == int(session['_user_id']):
                     dictionary["saved"] = True
+                    break
+
+            for user in self.users_who_cooked_recipe:
+                if user.id == int(session['_user_id']):
+                    dictionary["cooked"] = True
                     break
 
 

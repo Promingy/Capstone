@@ -29,6 +29,30 @@
     padding-bottom: 10px;
 }
 
+.mark-as-cooked,
+.mark-as-not-cooked {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    color: #777777;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.mark-as-cooked,
+.mark-as-not-cooked:hover {
+    color: black;
+}
+
+.mark-as-cooked:hover > span,
+.mark-as-not-cooked:hover > span {
+    text-decoration: underline;
+}
+
+.check-icon {
+    font-size: 30px;
+}
+
 .reviews_out_of {
     margin: 4px 0 ;
 }

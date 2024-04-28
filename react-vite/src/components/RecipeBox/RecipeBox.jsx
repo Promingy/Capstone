@@ -33,20 +33,20 @@ export default function RecipeBox() {
                         <i className="fa-solid fa-bookmark fa-lg"/>
                         <p>Saved Recipes</p>
                     </li>
-                    {/*<li
+                    <li
                         id='cooked-recipes'
                         className={`recipe-box-nav-link ${url === 'cooked-recipes' && 'active'}`}
                         onClick={(e) => navigate('/recipe-box/cooked-recipes')}>
                         <i className="fa-solid fa-circle-check fa-lg"/>
                         <p>Cooked Recipes</p>
-                    </li> */
+                    </li>
                     <li
                         id='recently-viewed'
                         className={`recipe-box-nav-link ${url === 'recently-viewed' && 'active'}`}
                         onClick={(e) => navigate('/recipe-box/recently-viewed')}>
                         <i className="fa-regular fa-clock fa-lg"/>
                         <p>Recently Viewed</p>
-                    </li>}
+                    </li>
                 </ul>
             </div>
             <div className="recipe-box-right-wrapper">

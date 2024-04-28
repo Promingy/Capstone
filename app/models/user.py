@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from .like import Like
 from .saved_recipe import SavedRecipe
 from .viewed_recipe import ViewedRecipe
+from .cooked_recipe import CookedRecipe
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -25,6 +26,7 @@ class User(db.Model, UserMixin):
     user_likes = db.relationship('Review', secondary=Like, back_populates='review_likes')
     saved_recipes = db.relationship('Recipe', secondary=SavedRecipe, back_populates='saved_users')
     viewed_recipes = db.relationship('Recipe', secondary=ViewedRecipe, back_populates='users_viewed_recipe')
+    cooked_recipes = db.relationship('Recipe', secondary=CookedRecipe, back_populates='users_who_cooked_recipe')
 
     @property
     def password(self):
