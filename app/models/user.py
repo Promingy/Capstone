@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .like import Like
 from .saved_recipe import SavedRecipe
+from .viewed_recipe import ViewedRecipe
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -23,6 +24,7 @@ class User(db.Model, UserMixin):
     ratings = db.relationship('Rating', back_populates='user')
     user_likes = db.relationship('Review', secondary=Like, back_populates='review_likes')
     saved_recipes = db.relationship('Recipe', secondary=SavedRecipe, back_populates='saved_users')
+    viewed_recipes = db.relationship('Recipe', secondary=ViewedRecipe, back_populates='users_viewed_recipe')
 
     @property
     def password(self):

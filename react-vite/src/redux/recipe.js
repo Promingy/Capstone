@@ -14,10 +14,18 @@ const LIKE_REVIEW = 'recipe/likeReview'
 const DELETE_LIKE = 'recipe/deleteLike'
 const SAVE_RECIPE = 'recipe/saveRecipe'
 const UNSAVE_RECIPE = 'recipe/unsaveRecipe'
+const GET_RECENTLY_VIEWED = 'recipe/getRecentlyViewed'
 
 const actionGetAllRecipes = (recipes) => {
     return {
         type: GET_ALL_RECIPES,
+        recipes
+    }
+}
+
+const actionGetRecentlyViewed = (recipes) => {
+    return {
+        type: GET_RECENTLY_VIEWED,
         recipes
     }
 }
@@ -144,6 +152,18 @@ export const thunkGetAllRecipes = () => async(dispatch) => {
     return await res.json()
 }
 
+export const thunkGetRecentlyViewed = (userId) => async(dispatch) => {
+    const res = await fetch(`/api/users/${userId}/recently-viewed`)
+
+    const data = await res.json()
+
+    if (res.ok){
+        dispatch(actionGetRecentlyViewed(data.viewed_recipes))
+    }
+
+    return data
+}
+
 export const thunkGetSavedRecipes = (userId) => async(dispatch) => {
     const res = await fetch(`/api/users/${userId}/saved-recipes`)
 
@@ -180,7 +200,6 @@ export const thunkSaveRecipe = (recipe, category) => async(dispatch) => {
 }
 
 export const thunkUnsaveRecipe = (recipe, categoryId) => async(dispatch) => {
-    console.log('recipe', recipe)
     const res = await fetch(`/api/recipes/${recipe.id}/unsave`, {
         method: "DELETE"
     })
@@ -280,6 +299,11 @@ function recipeReducer(state=initialState, action){
 
             return newState
         }
+        case GET_RECENTLY_VIEWED: {
+            const newState = { ...state, recentlyViewed: action.recipes }
+
+            return newState
+        }
         case GET_SAVED_RECIPES: {
             const newState = { ...state, savedRecipes: {} };
 
@@ -292,17 +316,34 @@ function recipeReducer(state=initialState, action){
             const newState = { ...state }
 
             newState[action.recipeId].saved = true
+
             if (newState.categories){
-                console.log(newState.categories, action.categoryId, action.recipeId)
                 newState.categories[action.categoryId][action.recipeId].saved = true
+            }
+
+            if (newState.recentlyViewed) {
+                for (let recipe of newState.recentlyViewed) {
+                    if (recipe.id === action.recipeId) {
+                        recipe.saved = true
+                        break
+                    }
+                }
             }
 
             return newState
         }
         case UNSAVE_RECIPE: {
             const newState = { ...state }
-
             delete newState[action.recipeId].saved
+
+            if (newState.recentlyViewed) {
+                for (let recipe of newState.recentlyViewed) {
+                    if (recipe.id === action.recipeId) {
+                        delete recipe.saved
+                        break
+                    }
+                }
+            }
 
             if (newState.categories) {
                 newState.categories[action.categoryId][action.recipeId].saved = false
