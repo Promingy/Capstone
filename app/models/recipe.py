@@ -92,9 +92,16 @@ class Recipe(db.Model, UserMixin):
 
         if '_user_id' in session:
             dictionary['saved'] = False
+            dictionary['cooked'] = False
+
             for user in self.saved_users:
                 if user.id == int(session['_user_id']):
                     dictionary["saved"] = True
+                    break
+
+            for user in self.users_who_cooked_recipe:
+                if user.id == int(session['_user_id']):
+                    dictionary["cooked"] = True
                     break
 
 

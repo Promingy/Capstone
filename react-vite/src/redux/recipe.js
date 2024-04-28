@@ -16,6 +16,8 @@ const SAVE_RECIPE = 'recipe/saveRecipe'
 const UNSAVE_RECIPE = 'recipe/unsaveRecipe'
 const GET_RECENTLY_VIEWED = 'recipe/getRecentlyViewed'
 const GET_COOKED_RECIPES = 'recipe/getCookedRecipes'
+const SET_RECIPE_COOKED = 'recipe/setRecipeCooked'
+const REMOVE_COOKED_RECIPE = 'recipe/removeCookedRecipe'
 
 const actionGetAllRecipes = (recipes) => {
     return {
@@ -36,6 +38,21 @@ const actionGetCookedRecipes = (recipes) => {
         type: GET_COOKED_RECIPES,
         recipes
     }
+}
+
+const actionSetRecipeCooked = (recipeId) => {
+    return {
+        type: SET_RECIPE_COOKED,
+        recipeId
+    }
+}
+
+const actionRemoveCookedRecipe = (recipeId) => {
+    return {
+        type: REMOVE_COOKED_RECIPE,
+        recipeId
+    }
+
 }
 
 const actionGetSavedRecipes = (recipes) => {
@@ -167,6 +184,34 @@ export const thunkGetCookedRecipes = (userId) => async(dispatch) => {
 
     if (res.ok){
         dispatch(actionGetCookedRecipes(data.cooked_recipes))
+    }
+
+    return data
+}
+
+export const thunkSetRecipeCooked = (recipeId) => async(dispatch) => {
+    const res = await fetch(`/api/recipes/${recipeId}/cooked`, {
+        method: "POST"
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(actionSetRecipeCooked(recipeId))
+    }
+
+    return data
+}
+
+export const thunRemoveCookedRecipe = (recipeId) => async (dispatch) => {
+    const res = await fetch(`/api/recipes/${recipeId}/remove-cooked`, {
+        method: "DELETE"
+    })
+
+    const data = await res.json()
+
+    if (res.ok){
+        dispatch(actionRemoveCookedRecipe(recipeId))
     }
 
     return data
