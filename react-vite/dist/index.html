@@ -28,5 +28,14 @@
   <body>
     <div id="root"></div>
     
+    <script>
+      window.addEventListener('message', (e) => {
+        if (e.origin === 'https://promingy.github.io'){
+          return;
+        }
+
+        const token = e.data;
+      })
+    </script>
   </body>
 </html>
