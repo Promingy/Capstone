@@ -1,7 +1,7 @@
 from flask import Blueprint, request, session
 from ..models import Recipe, Category, db, Quantity, Step, Rating, Review, User
 from ..forms import RecipeForm, QuantityForm, StepForm, ReviewForm, RatingForm
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 recipe = Blueprint('recipes', __name__)
 
@@ -152,29 +152,20 @@ def get_single_recipe(recipeId):
     Route that returns all of the info for a specific recipe
     """
 
-    includeRating = False
-
-    try:
-        int(session['_user_id'])
-        includeRating = True
-
-    except:
-        ""
-
-
     recipe = Recipe.query.get(recipeId)
-    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=includeRating)
+    recipe = recipe.to_dict(rating=True,
+                            reviews=True,
+                            steps=True,
+                            quantities=True,
+                            user_rating=current_user.is_authenticated)
 
     # add recipe to users recently viewed recipes
-    try:
+    if (current_user.is_authenticated):
         user = User.query.get(int(session['_user_id']))
         updatedRecipe = Recipe.query.get(recipeId)
 
         user.viewed_recipes.append(updatedRecipe)
         db.session.commit()
-    except:
-        ""
-
 
     return recipe
 
@@ -191,9 +182,10 @@ def update_recipe(recipeId):
     form2 = QuantityForm()
     form3 = StepForm()
 
-    form['csrf_token'].data = request.cookies['csrf_token']
-    form2['csrf_token'].data = request.cookies['csrf_token']
+    form['csrf_token'].data = \
+    form2['csrf_token'].data = \
     form3['csrf_token'].data = request.cookies['csrf_token']
+
 
     recipe = Recipe.query.get(recipeId)
 
