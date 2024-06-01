@@ -61,12 +61,16 @@ def https_redirect():
 
 @app.after_request
 def inject_csrf_token(response):
+    # get origin
+    origin = request.headers.get("Origin")
+    trustedOrigins = ['https://recipe-rendezvous.onrender.com', 'https://promingyang.github.io']
+    
     response.set_cookie(
         'csrf_token',
         generate_csrf(),
         secure=True if os.environ.get('FLASK_ENV') == 'production' else False,
         samesite='Strict' if os.environ.get(
-            'FLASK_ENV') == 'production' else None,
+            'FLASK_ENV') == 'production' and origin not in trustedOrigins else None,
         httponly=True)
     return response
 
