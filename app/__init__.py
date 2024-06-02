@@ -60,14 +60,16 @@ def https_redirect():
 
 
 @app.after_request
-def inject_csrf_token(response):    
+def inject_csrf_token(response):
+    origin = request.headers.get('Origin')
+
     response.set_cookie(
         'csrf_token',
         generate_csrf(),
         secure=True if os.environ.get('FLASK_ENV') == 'production' else False,
         # samesite='Strict' if os.environ.get(
             # 'FLASK_ENV') == 'production' else None,
-        samesite=None,
+        samesite=None if origin == "htttp://corbinainsworth.com" or not os.environ.get('FLASK_ENV') == 'production' else 'Strict',
         httponly=True)
     return response
 
