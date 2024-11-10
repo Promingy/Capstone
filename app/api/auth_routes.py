@@ -51,6 +51,7 @@ flow = Flow.from_client_secrets_file(
     client_secrets_file=secrets.name,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
     redirect_uri="https://recipe-rendezvous.onrender.com/api/auth/callback"
+    # redirect_uri="http://localhost:8000/api/auth/callback"
 )
 
 secrets.close() # This method call deletes our temporary file from the /tmp folder! We no longer need it as our flow object has been configured!
@@ -188,5 +189,10 @@ def callback():
     login_user(user_exists)
 
     # Note that adding this BASE_URL variable to our .env file, makes the transition to production MUCH simpler, as we can just store this variable on Render and change it to our deployed URL.
-    return redirect(f"{BASE_URL}/") # This will send the final redirect to our user's browser. As depicted in Line 8 of the flow chart!
+    #/ This Redirect is for when we are in popup mode
+    return redirect(f"{BASE_URL}/oauth-popup-handler")
+    # return redirect(f"http://localhost:5173/oauth-popup-handler")
+
+    #/ This Redirect is for when we are NOT in popup mode
+    # return redirect(f"{BASE_URL}/") # This will send the final redirect to our user's browser. As depicted in Line 8 of the flow chart!
     # return redirect(f"http://localhost:5173/") # This will send the final redirect to our user's browser. As depicted in Line 8 of the flow chart!

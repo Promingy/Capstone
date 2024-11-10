@@ -4,6 +4,7 @@ import TextareaAutoSize from 'react-textarea-autosize'
 import ReviewTile from './ReviewTile'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkDeleteRating, thunkPostRating, thunkPostReview, thunkUpdateRating } from '../../redux/review'
+import { thunkSetRecipeCooked, thunkRemoveCookedRecipe } from '../../redux/recipe'
 
 export default function Review ({ recipe }) {
     const dispatch = useDispatch()
@@ -11,6 +12,7 @@ export default function Review ({ recipe }) {
     const [rating, setRating] = useState(0)
     const [hoverRating, setHoverRating] = useState(0)
     const [ratingConfirmed, setRatingConfirmed] = useState(!!recipe?.user_rating || false)
+    const [isCooked, setIsCooked] = useState(recipe.cooked)
     const [review, setReview] = useState('')
     const [ratingSubmitted, setRatingSubmitted] = useState(false)
     const [isPrivate, setIsPrivate] = useState(false)
@@ -123,6 +125,27 @@ export default function Review ({ recipe }) {
                     </p>
                     <div className='your_rating_stars'>
                         {starCreatorHover()}
+                    </div>
+                    <div>
+                        <h3>Have you cooked this?</h3>
+                        <p className={isCooked ? 'mark-as-cooked' : 'mark-as-not-cooked'}
+                            onClick={() => {
+                                dispatch(isCooked ? thunkRemoveCookedRecipe(recipe.id) : thunkSetRecipeCooked(recipe.id))
+                                setIsCooked(!isCooked)
+                            }}
+                        >
+                            {isCooked ?
+                                <>
+                                        <i className='fa-solid fa-circle-check check-icon'/>
+                                        <span>Yes I have</span>
+                                </>
+                                :
+                                <>
+                                    <i className='fa-regular fa-circle-check check-icon'/>
+                                    <span>Mark As Cooked</span>
+                                </>
+                            }
+                        </p>
                     </div>
             </div>
             <div className='review_right'>

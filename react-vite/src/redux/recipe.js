@@ -15,6 +15,9 @@ const DELETE_LIKE = 'recipe/deleteLike'
 const SAVE_RECIPE = 'recipe/saveRecipe'
 const UNSAVE_RECIPE = 'recipe/unsaveRecipe'
 const GET_RECENTLY_VIEWED = 'recipe/getRecentlyViewed'
+const GET_COOKED_RECIPES = 'recipe/getCookedRecipes'
+const SET_RECIPE_COOKED = 'recipe/setRecipeCooked'
+const REMOVE_COOKED_RECIPE = 'recipe/removeCookedRecipe'
 
 const actionGetAllRecipes = (recipes) => {
     return {
@@ -28,6 +31,28 @@ const actionGetRecentlyViewed = (recipes) => {
         type: GET_RECENTLY_VIEWED,
         recipes
     }
+}
+
+const actionGetCookedRecipes = (recipes) => {
+    return {
+        type: GET_COOKED_RECIPES,
+        recipes
+    }
+}
+
+const actionSetRecipeCooked = (recipeId) => {
+    return {
+        type: SET_RECIPE_COOKED,
+        recipeId
+    }
+}
+
+const actionRemoveCookedRecipe = (recipeId) => {
+    return {
+        type: REMOVE_COOKED_RECIPE,
+        recipeId
+    }
+
 }
 
 const actionGetSavedRecipes = (recipes) => {
@@ -150,6 +175,46 @@ export const thunkGetAllRecipes = () => async(dispatch) => {
         return data
     }
     return await res.json()
+}
+
+export const thunkGetCookedRecipes = (userId) => async(dispatch) => {
+    const res = await fetch(`/api/users/${userId}/cooked-recipes`)
+
+    const data = await res.json();
+
+    if (res.ok){
+        dispatch(actionGetCookedRecipes(data.cooked_recipes))
+    }
+
+    return data
+}
+
+export const thunkSetRecipeCooked = (recipeId) => async(dispatch) => {
+    const res = await fetch(`/api/recipes/${recipeId}/cooked`, {
+        method: "POST"
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(actionSetRecipeCooked(recipeId))
+    }
+
+    return data
+}
+
+export const thunkRemoveCookedRecipe = (recipeId) => async (dispatch) => {
+    const res = await fetch(`/api/recipes/${recipeId}/remove-cooked`, {
+        method: "DELETE"
+    })
+
+    const data = await res.json()
+
+    if (res.ok){
+        dispatch(actionRemoveCookedRecipe(recipeId))
+    }
+
+    return data
 }
 
 export const thunkGetRecentlyViewed = (userId) => async(dispatch) => {
@@ -299,6 +364,25 @@ function recipeReducer(state=initialState, action){
 
             return newState
         }
+        case GET_COOKED_RECIPES: {
+            const newState = { ...state, cookedRecipes: action.recipes };
+
+            return newState;
+        }
+        case SET_RECIPE_COOKED: {
+            const newState = { ...state }
+
+            newState[action.recipeId].cooked = true
+
+            return newState
+        }
+        case REMOVE_COOKED_RECIPE: {
+            const newState = { ...state };
+
+            newState[action.recipeId].cooked = false;
+            
+            return newState;
+        }
         case GET_RECENTLY_VIEWED: {
             const newState = { ...state, recentlyViewed: action.recipes }
 
@@ -330,6 +414,10 @@ function recipeReducer(state=initialState, action){
                 }
             }
 
+            if (newState.cookedRecipes){
+                newState.cookedRecipes[action.recipeId].saved = true
+            }
+
             return newState
         }
         case UNSAVE_RECIPE: {
@@ -343,6 +431,10 @@ function recipeReducer(state=initialState, action){
                         break
                     }
                 }
+            }
+
+            if (newState.cookedRecipes){
+                delete newState.cookedRecipes[action.recipeId].saved
             }
 
             if (newState.categories) {

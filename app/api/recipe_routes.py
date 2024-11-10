@@ -1,7 +1,7 @@
 from flask import Blueprint, request, session
 from ..models import Recipe, Category, db, Quantity, Step, Rating, Review, User
 from ..forms import RecipeForm, QuantityForm, StepForm, ReviewForm, RatingForm
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 recipe = Blueprint('recipes', __name__)
 
@@ -152,29 +152,20 @@ def get_single_recipe(recipeId):
     Route that returns all of the info for a specific recipe
     """
 
-    includeRating = False
-
-    try:
-        int(session['_user_id'])
-        includeRating = True
-
-    except:
-        ""
-
-
     recipe = Recipe.query.get(recipeId)
-    recipe = recipe.to_dict(rating=True, reviews=True, steps=True, quantities=True, user_rating=includeRating)
+    recipe = recipe.to_dict(rating=True,
+                            reviews=True,
+                            steps=True,
+                            quantities=True,
+                            user_rating=current_user.is_authenticated)
 
     # add recipe to users recently viewed recipes
-    try:
+    if (current_user.is_authenticated):
         user = User.query.get(int(session['_user_id']))
         updatedRecipe = Recipe.query.get(recipeId)
 
         user.viewed_recipes.append(updatedRecipe)
         db.session.commit()
-    except:
-        ""
-
 
     return recipe
 
@@ -191,9 +182,10 @@ def update_recipe(recipeId):
     form2 = QuantityForm()
     form3 = StepForm()
 
-    form['csrf_token'].data = request.cookies['csrf_token']
-    form2['csrf_token'].data = request.cookies['csrf_token']
+    form['csrf_token'].data = \
+    form2['csrf_token'].data = \
     form3['csrf_token'].data = request.cookies['csrf_token']
+
 
     recipe = Recipe.query.get(recipeId)
 
@@ -394,6 +386,7 @@ def post_rating(recipeId):
 
 
 @recipe.route('/<int:recipeId>/save', methods=['POST'])
+@login_required
 def save_recipe(recipeId):
     """
     Route that saves a recipe to the user's saved recipes
@@ -411,6 +404,7 @@ def save_recipe(recipeId):
 
 
 @recipe.route('/<int:recipeId>/unsave', methods=['DELETE'])
+@login_required
 def unsave_recipe(recipeId):
     """
     Route that removes a recipe from the user's saved recipes
@@ -425,3 +419,41 @@ def unsave_recipe(recipeId):
     db.session.commit()
 
     return user.to_dict()
+
+@recipe.route('/<int:recipeId>/cooked', methods=['POST'])
+@login_required
+def set_recipe_cooked (recipeId):
+    """
+    Route that adds a recipe to the user's cooked recipes
+    """
+
+    userId = int(session['_user_id'])
+
+    user = User.query.get(userId)
+    recipe = Recipe.query.get(recipeId)
+
+    user.cooked_recipes.append(recipe)
+    db.session.commit()
+
+    return {
+        "message": f"recipe '{recipeId}' successfully added to cooked recipes for user '{userId}'"
+    }
+
+@recipe.route('<int:recipeId>/remove-cooked', methods=['DELETE'])
+@login_required
+def remove_cooked_recipe (recipeId):
+    """
+    Route that removes a recipe from the user's cooked recipes
+    """
+
+    userId = int(session["_user_id"])
+
+    user = User.query.get(userId)
+    recipe = Recipe.query.get(recipeId)
+
+    user.cooked_recipes.remove(recipe)
+    db.session.commit()
+
+    return {
+        "message": f"recipe '{recipeId}' successfully removed from cooked recipes for user '{userId}'"
+    }
