@@ -12,6 +12,7 @@ import AboutMe from '../components/AboutMe';
 import Contact from '../components/Contact';
 import RecipeBox from '../components/RecipeBox';
 import {CookedRecipes, SavedRecipes, RecentlyViewed} from '../components/RecipeBox';
+import PopupHandler from '../components/PopupHandler';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ export const router = createBrowserRouter(
         <Route path='cooked-recipes' element={<CookedRecipes />} />
         <Route path='recently-viewed' element={<RecentlyViewed />} />
       </Route>
+      <Route path='/oauth-popup-handler' element={<PopupHandler />} />
       <Route path='*' element={<Redirect />} />
     </Route>
   )

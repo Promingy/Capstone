@@ -48,9 +48,9 @@ export default function ReviewTile({ review }) {
         }
 
         else if (daysAgo > 364) {
-            const yearsAgo = Math.floor(yearsAgo/365)
+            const yearsAgo = Math.floor(daysAgo/365)
 
-            returnTime `${yearsAgo} ${yearsAgo > 1 ? "years ago" : "year ago"}`
+            returnTime = `${yearsAgo} ${yearsAgo > 1 ? "years ago" : "year ago"}`
         }
 
         else if (daysAgo > 29) {

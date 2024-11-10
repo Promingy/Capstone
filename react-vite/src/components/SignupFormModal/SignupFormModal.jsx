@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkSignup } from "../../redux/session";
@@ -20,6 +20,23 @@ function SignupFormModal() {
   const { closeModal, setModalContent } = useModal();
   const [submitted, setSubmitted] = useState(false)
   const [ tempImage, setTempImage] = useState(null)
+
+  useEffect(() => {
+    // Listen for the message from the popup
+    const messageHandler = (e) => {
+      if (e.data === 'oauth-success') {
+        closeModal()
+        window.location.reload();
+      }
+    }
+
+    window.addEventListener('message', messageHandler)
+
+    // Clean up listener when component unmounts
+    return () => {
+      window.removeEventListener('message', messageHandler)
+    }
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,6 +79,18 @@ function SignupFormModal() {
       closeModal();
     }
   };
+
+  function handleOAuthClick(e) {
+    e.preventDefault();
+
+    // Open the OAuth URL in a popup window
+    // const oauthUrl = "http://localhost:5173/api/auth/oauth_login";
+    const oauthUrl = "https://recipe-rendezvous.onrender.com/api/auth/oauth_login";
+    const title = "OAuth"
+    const params = "width=800,height=600,location=no,toolbar=no,scrollbars=yes,resizable=yes,popup=yes"
+    
+    window.open(oauthUrl, title, params);
+  }
 
   function previewImageSetter(e) {
     e.stopPropagation();
@@ -178,7 +207,13 @@ function SignupFormModal() {
             />
           </label>
           <button className="login_button_submit" disabled={bio.length > 1000} type="submit">Sign Up</button>
-          <a className="oAuth" href={`https://recipe-rendezvous.onrender.com/api/auth/oauth_login`}>
+          {/* <a className="oAuth" href={`https://recipe-rendezvous.onrender.com/api/auth/oauth_login`}>
+            <button type='button'>
+              <img className="google_icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" />
+              &nbsp; Continue with Google
+            </button>
+          </a> */}
+          <a className="oAuth" href="#" onClick={handleOAuthClick}>
             <button type='button'>
               {/* <i className="fa-brands fa-google"/> */}
               <img className="google_icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" />
