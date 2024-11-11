@@ -85,7 +85,7 @@ function SignupFormModal() {
 
     // Open the OAuth URL in a popup window
     // const oauthUrl = "http://localhost:5173/api/auth/oauth_login";
-    const oauthUrl = "https://recipe-rendezvous.onrender.com/api/auth/oauth_login";
+    const oauthUrl = "https://recipes.corbinainsworth.com/api/auth/oauth_login";
     const title = "OAuth"
     const params = "width=800,height=600,location=no,toolbar=no,scrollbars=yes,resizable=yes,popup=yes"
     
