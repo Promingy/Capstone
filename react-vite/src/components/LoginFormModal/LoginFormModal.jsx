@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -15,6 +15,31 @@ function LoginFormModal() {
   const demoUser = {
     email: 'demo@aa.io',
     password: 'password'
+  }
+
+  useEffect(() => {
+    // listen for messaage from popup
+    const messageHandler = msg => {
+      if (msg.data == 'oauth-success') {
+        closeModal();
+        window.location.reload();
+      }
+    }
+
+    window.addEventListener("message", messageHandler)
+
+    return () => window.removeEventListener("message", messageHandler)
+  }, [])
+
+  const handleOAuthClick = (e) => {
+    e.preventDefault();
+
+    // Open the OAuth URL in a popup window
+    const oAuthUrl = "https://recipes.corbinainsworth.com/api/auth/oauth_login";
+    const title = "OAuth";
+    const params = "width=800,height=600,location=no,toolbar=no,scrollbars=yes,resizable=yes,popup=yes"
+
+    window.open(oAuthUrl, title, params);
   }
 
   const handleSubmit = async (e) => {
@@ -71,7 +96,8 @@ function LoginFormModal() {
             />
           </label>
           <button className="login_button_submit" type="submit">Log In</button>
-          <a className="oAuth" href={`https://recipe-rendezvous.onrender.com/api/auth/oauth_login`}>
+          {/* <a className="oAuth" href={`https://recipe-rendezvous.onrender.com/api/auth/oauth_login`}> */}
+          <a className="oAuth" href="#" onClick={handleOAuthClick}>
             <button type='button'>
               {/* <i className="fa-brands fa-google"/> */}
               <img className="google_icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" />
